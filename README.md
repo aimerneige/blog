@@ -1,0 +1,45 @@
+# blog
+
+## About
+
+[AimerNeige's Blog](https:/aimerneige.com/) Powered by [Hugo](https://gohugo.io/) & [PaperMod](https://github.com/adityatelange/hugo-PaperMod/)
+
+## Install
+
+```bash
+sudo apt install hugo
+```
+
+## Clone
+
+```bash
+git clone https://github.com/aimerneige/blog.git
+git submodule update --init --recursive
+```
+
+## Update
+
+```bash
+git submodule update --remote --merge
+```
+
+## serve
+
+```bash
+hugo serve -D
+```
+
+## build
+
+```bash
+hugo
+```
+
+## Deploy
+
+```bash
+cd public
+git add -A
+git commit -m "commit message"
+git push
+```
