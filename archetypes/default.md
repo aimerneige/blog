@@ -1,6 +1,6 @@
 ---
 title: "{{ replace .Name "-" " " | title }}"
-date: {{ .Date | time.Format "2017-03-03 14:15:59" }}
+date: {{ .Date | time.Format "2006-01-02 15:04:05" }}
 draft: true
 ShowToc: true
 # description: "description here"
