@@ -23,13 +23,13 @@ git submodule update --init --recursive
 git submodule update --remote --merge
 ```
 
-## serve
+## Serve
 
 ```bash
 hugo serve -D
 ```
 
-## build
+## Build
 
 ```bash
 hugo
