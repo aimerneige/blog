@@ -1,0 +1,134 @@
+baseURL: "https://aimerneige.com/"
+languageCode: "en-us"
+title: "AimerNeige's Blog"
+theme: "PaperMod"
+
+enableRobotsTXT: true
+buildDrafts: false
+buildFuture: false
+buildExpired: false
+
+defaultContentLanguage: en
+defaultContentLanguageInSubdir: true
+
+languages:
+  en:
+    languageName: "English"
+    weight: 1
+    menu:
+      main:
+        - name: About
+          url: about/
+          weight: 5
+        - name: Friends
+          url: friends/
+          weight: 6
+        - name: Post
+          url: post/
+          weight: 7
+        - name: Archive
+          url: archives/
+          weight: 8
+        - name: Tags
+          url: tags/
+          weight: 9
+        - name: Categories
+          url: categories/
+          weight: 10
+        - name: Search
+          url: search/
+          weight: 11
+  zh:
+    languageName: "中文"
+    weight: 2
+    menu:
+      main:
+        - name: 关于
+          url: about/
+          weight: 5
+        - name: 朋友
+          url: friends/
+          weight: 6
+        - name: 文章
+          url: post/
+          weight: 7
+        - name: 归档
+          url: archives/
+          weight: 8
+        - name: 标签
+          url: tags/
+          weight: 9
+        - name: 分类
+          url: categories/
+          weight: 10
+        - name: 搜索
+          url: search/
+          weight: 11
+    params:
+      profileMode:
+        enabled: true
+        title: "Aimer Neige"
+        subtitle: "技术宅拯救世界"
+        imageUrl: "https://avatars.githubusercontent.com/u/51701792?v=4"
+        imageTitle: "avatar.jpeg"
+        imageWidth: 140
+        imageHeight: 140
+
+params:
+  env: production
+  keywords: [Blog, OpenSource, Coding, Golang, Programming]
+  author: "Aimer Neige"
+  defaultTheme: auto
+  disableThemeToggle: false
+
+  ShowToc: true
+  TocOpen: false
+  ShowBreadCrumbs: true
+  ShowReadingTime: false
+  ShowPostNavLinks: true
+  ShowShareButtons: false
+  ShowCodeCopyButtons: true
+  displayFullLangName: true
+
+  editPost:
+    URL: "https://github.com/aimerneige/blog/content"
+    Text: "Suggest Changes"
+    appendFilePath: true
+
+  homeInfoParams:
+    Title: "Aimer Neige"
+    Content: "Tech Otakus Save The World"
+
+  profileMode:
+    enabled: true
+    title: "Aimer Neige"
+    subtitle: "Tech Otakus Save The World"
+    imageUrl: "https://avatars.githubusercontent.com/u/51701792?v=4"
+    imageTitle: "avatar.jpeg"
+    imageWidth: 140
+    imageHeight: 140
+
+  socialIcons:
+    - name: github
+      url: "https://github.com/AimerNeige"
+    - name: twitter
+      url: "https://twitter.com/NeigeAimer"
+    - name: steam
+      url: "https://steamcommunity.com/id/AimerNeige"
+    - name: Telegram
+      url: "https://t.me/AimerNeige"
+    - name: KoFi
+      url: "https://ko-fi.com/aimerneige"
+    - name: RsS
+      url: "index.xml"
+
+taxonomies:
+  category: categories
+  tag: tags
+  series: series
+
+outputs:
+  home:
+    - HTML
+    - RSS
+    - JSON
