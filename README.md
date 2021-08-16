@@ -23,6 +23,13 @@ git submodule update --init --recursive
 git submodule update --remote --merge
 ```
 
+## New Post
+
+```bash
+hugo new post/title.en.md
+hugo new post/title.zh.md
+```
+
 ## Serve
 
 ```bash
