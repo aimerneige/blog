@@ -9,6 +9,12 @@ insert_final_newline = true
 [*.{md,txt}]
 trim_trailing_whitespace = false
 
-[*.yaml]
+[*.{yaml,yml}]
 indent_style = space
 indent_size = 2
+
+[.gitconfig]
+indent_style = tab
+
+[.gitmodules]
+indent_style = tab
