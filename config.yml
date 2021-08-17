@@ -91,7 +91,7 @@ params:
   displayFullLangName: true
 
   editPost:
-    URL: "https://github.com/aimerneige/blog/content"
+    URL: "https://github.com/aimerneige/blog/edit/master/content"
     Text: "Suggest Changes"
     appendFilePath: true
 
