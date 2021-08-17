@@ -4,4 +4,93 @@ url: "/zh/friends"
 ShowToc: false
 ---
 
-朋友们
+装修中...
+
+各位大佬一定看了 yaml 就可以自动脑补一份完美的 html 吧。。。
+
+```yaml
+- {
+  title: '伞',
+  intro: '一只咸鱼的学习记录',
+  link: 'https://farewell12345.github.io/',
+  github: 'https://github.com/farewell12345',
+  image: 'https://avatars.githubusercontent.com/u/53655863?v=4'
+}
+- {
+  title: 'HelloWorld的小博客',
+  intro: '这里是一个小白的博客',
+  link: 'https://mzdluo123.github.io/',
+  github: 'https://github.com/mzdluo123',
+  image: 'https://avatars.githubusercontent.com/u/23146087?v=4'
+}
+- {
+  title: 'TangZ',
+  intro: 'TangZ 的个人页面',
+  link: 'https://wstzj.github.io/',
+  github: 'https://github.com/wstzj',
+  image: 'https://avatars.githubusercontent.com/u/55931768?v=4'
+}
+- {
+  title: 'Kenvix',
+  intro: '党明学姐',
+  link: 'https://kenvix.com/',
+  github: 'https://github.com/kenvix',
+  image: 'https://avatars.githubusercontent.com/u/4546175?v=4'
+}
+- {
+  title: 'HeoLis',
+  intro: 'We need to go faster and deeper.',
+  link: 'http://ishero.net/',
+  github: 'https://github.com/wmpscc',
+  image: 'https://avatars.githubusercontent.com/u/29891793?v=4'
+}
+- {
+  title: '🔨',
+  intro: '🔨のBlog',
+  link: 'https://geekhe-p.github.io/',
+  github: 'https://github.com/geekhe-p',
+  image: 'https://avatars.githubusercontent.com/u/55914926?v=4'
+}
+- {
+  title: '异国迷宫的十字路口',
+  intro: '一位弱鸡带学生的个人博客',
+  link: 'https://blog.fivezha.cn/',
+  github: 'https://github.com/xmmmmmovo',
+  image: 'https://avatars.githubusercontent.com/u/32405482?v=4'
+}
+- {
+  title: 'Gaein nidb',
+  intro: 'Gaein nidb的网站',
+  link: 'https://www.gaein.cn/',
+  github: 'https://github.com/nidbCN',
+  image: 'https://avatars.githubusercontent.com/u/36162655?v=4'
+}
+- {
+  title: 'fzf404',
+  intro: 'fzf的网站',
+  link: 'https://fzf404.top/',
+  github: 'https://github.com/fzf404',
+  image: 'https://avatars.githubusercontent.com/u/40832831?v=4'
+}
+- {
+  title: '凛凛酱',
+  intro: '傻逼凛凛',
+  link: 'https://baolong24.github.io/',
+  github: 'https://github.com/baolong24',
+  image: 'https://avatars.githubusercontent.com/u/30337499?v=4'
+}
+- {
+  title: 'Web-Worker',
+  intro: '道阻且长,行则将至。',
+  link: 'https://web-worker.cn/',
+  github: 'https://github.com/Star-caorui',
+  image: 'https://avatars.githubusercontent.com/u/51264180?v=4'
+}
+- {
+  title: 'vritser',
+  intro: '半斤八两',
+  link: 'https://vritser.github.io/',
+  github: 'https://github.com/vritser',
+  image: 'https://avatars.githubusercontent.com/u/16340478?v=4'
+}
+```
