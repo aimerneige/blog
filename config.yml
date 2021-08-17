@@ -3,10 +3,12 @@ languageCode: "en-us"
 title: "AimerNeige's Blog"
 theme: "PaperMod"
 
+enableInlineShortcodes: true
 enableRobotsTXT: true
 buildDrafts: false
 buildFuture: false
 buildExpired: false
+enableEmoji: true
 
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
@@ -121,6 +123,8 @@ params:
       url: "https://ko-fi.com/aimerneige"
     - name: RsS
       url: "index.xml"
+
+  comments: true
 
 taxonomies:
   category: categories
