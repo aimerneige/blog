@@ -32,7 +32,7 @@ It’s been a long time since I wrote a blog post last time. That's because I of
 
 ## Install `hugo`
 
-Install `hugo` is very simple. Take `fedora` system as a example, simply run this command:
+Install `hugo` is very simple. Take `fedora` system as an example, simply run this command:
 
 
 ```bash
