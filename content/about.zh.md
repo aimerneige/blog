@@ -1,5 +1,5 @@
 ---
-title: "About Me"
+title: "关于我 👨‍💻"
 url: "/zh/about"
 ShowToc: false
 ---
