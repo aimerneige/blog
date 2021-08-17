@@ -4,8 +4,8 @@ date: 2021-08-17T07:16:04+08:00
 draft: false
 ShowToc: true
 description: "安装和配置 hugo"
-categories: [development, publishing]
-tags: [hugo,content,static site generator]
+categories: [development,web]
+tags: [hugo,site]
 cover:
     image: "images/hugo-logo-wide.svg"
     alt: "Hugo"
@@ -66,7 +66,7 @@ git init
 git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod --depth=1
 ```
 
-> 使用 `--depth=1` 参数会忽略历史 commit 记录
+> 使用 `--depth=1` 参数会忽略历史 commit 记录。
 
 当然，下载解压压缩包的方式也是可以的。
 
