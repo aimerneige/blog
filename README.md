@@ -47,6 +47,6 @@ hugo
 ```bash
 cd public
 git add -A
-git commit -m "commit message"
+git commit -m "update"
 git push
 ```
