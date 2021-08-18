@@ -1,3 +1,0 @@
-MacTray
-
-PowerToy
