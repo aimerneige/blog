@@ -4,8 +4,8 @@ date: {{ .Date }}
 draft: true
 ShowToc: true
 # description: "description here"
-# categories: [development, publishing]
-# tags: [hugo,content,static site generator]
+# categories: [Linux]
+# tags: [tools]
 # cover:
 #     image: "images/blue_poison.jpg"
 #     alt: "Blue Poison"
