@@ -4,11 +4,12 @@ date: 2021-08-17T07:16:04+08:00
 draft: false
 ShowToc: true
 description: "Install and Config hugo"
-categories: [development,web]
+categories: [Development,Web]
 tags: [hugo,site]
 cover:
     image: "images/hugo-logo-wide.svg"
     alt: "hugo-logo"
+    relative: false
 ---
 
 # Before Start

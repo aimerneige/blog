@@ -3,7 +3,8 @@ title: "C 函数指针"
 date: 2020-11-04T21:00:39+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+description: "函数指针用法"
+categories: [ProgramLanguage]
 tags: [C/C++,Teach]
 ---
 

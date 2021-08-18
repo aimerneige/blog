@@ -8,7 +8,8 @@ categories: [development,web]
 tags: [hugo,site]
 cover:
     image: "images/hugo-logo-wide.svg"
-    alt: "Hugo"
+    alt: "hugo-logo"
+    relative: false
 ---
 
 # 前言
