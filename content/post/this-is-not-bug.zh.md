@@ -2,7 +2,7 @@
 title: "这不是 Bug，而是语言特性"
 date: 2020-11-05T14:37:41+08:00
 draft: false
-ShowToc: true
+ShowToc: false
 description: "C 语言中 goto 带来的奇怪问题"
 categories: [Program]
 tags: [C/C++]
