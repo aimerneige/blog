@@ -1,5 +1,5 @@
 ---
-title: "Diy Your Rime for Better Coding"
+title: "定制你的 rime 提升编程体验"
 date: 2021-08-19T01:50:11+08:00
 draft: false
 ShowToc: true
