@@ -5,7 +5,7 @@ draft: false
 ShowToc: true
 description: "Linux 下中文输入法安装"
 categories: [Linux]
-tags: [software,tool]
+tags: [software,tool,rime]
 cover:
     image: "images/rime.png"
     alt: "Rime logo"
