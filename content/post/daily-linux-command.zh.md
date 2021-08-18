@@ -3,8 +3,8 @@ title: "每天一个 Linux 指令"
 date: 2020-11-10T10:41:51+08:00
 draft: false
 ShowToc: true
-categories: [development, publishing]
-tags: [hugo,content,static site generator]
+categories: [Linux]
+tags: [cmd]
 ---
 
 ## ifconfig
