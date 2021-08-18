@@ -4,7 +4,7 @@ date: 2020-11-04T21:00:39+08:00
 draft: false
 ShowToc: true
 description: "函数指针用法"
-categories: [ProgramLanguage]
+categories: [Program]
 tags: [C/C++,Teach]
 ---
 
