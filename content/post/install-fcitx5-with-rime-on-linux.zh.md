@@ -9,7 +9,6 @@ tags: [software,tool]
 cover:
     image: "images/rime.png"
     alt: "Rime logo"
-    caption: "rime logo"
     relative: false
 ---
 
