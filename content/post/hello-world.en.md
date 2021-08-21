@@ -23,6 +23,11 @@ See you later!
 
 This is a simple test for my first blog article.
 
+## Mathjax
+
+$$a_{PI}(x|D) = E[u(x) | x, D] = \int_{-\infty}^{f'} \mathcal{N}(f; \mu(x), \kappa(x, x)) \ df
+=\phi(f'; \mu(x), \kappa(x, x))$$
+
 ## C
 
 ```c
