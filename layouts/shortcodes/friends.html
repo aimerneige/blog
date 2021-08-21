@@ -1,0 +1,49 @@
+<style type="text/css">
+    .friends {
+        padding: 1em 0;
+        border: 2px solid transparent;
+        border-bottom: 1px dashed var(--color-contrast-low);
+        display: flex;
+        transition: all .5s;
+    }
+
+    .friends .friend {
+        text-decoration: none;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .friends .name {
+        font-weight: bold;
+        margin: 0.375em 0;
+    }
+
+    .friends .excerpt {
+        font-size: 0.875em;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
+
+    .friends .avatar {
+        width: 4em !important;
+        height: 4em !important;
+        margin: 0 1em 0 0 !important;
+        z-index: 0;
+    }
+</style>
+
+{{ range .Site.Data.friends }}
+
+<a href="{{ .link }}" target="_blank">
+    <div class="friends">
+        <img class="avatar" src="{{ .image }}" width="100px;" />
+        <div class="friend">
+            <div class="name">{{ .title }}</div>
+            <div class="excerpt">{{ .intro }}</div>
+        </div>
+    </div>
+</a>
+
+{{ end }}
