@@ -81,7 +81,7 @@ params:
   keywords: [Blog, OpenSource, Coding, Golang, Programming]
   author: "Aimer Neige"
   defaultTheme: auto
-  disableThemeToggle: false
+  disableThemeToggle: true
 
   ShowToc: true
   TocOpen: false
