@@ -7,6 +7,8 @@ categories: [Program]
 tags: [C/C++,Teach]
 ---
 
+线程于进程的对比
+
 |         |      |              |
 | ------- | ---- | ------------ |
 | thread  | 线程 | 有共享内存   |
