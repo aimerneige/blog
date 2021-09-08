@@ -73,12 +73,6 @@ rm -rf /usr/local/go && tar -C /usr/local -xzf go1.17.linux-amd64.tar.gz
 根据你所使用的不同的 shell，直接修改对应的配置文件，写入如下内容即可。\
 例如在 bash 下要修改 `~/.bashrc`，而在 zsh 下则需要修改 `~/.zshrc`。
 
-{{< notice tip >}}
-
-上面的安装方式只有家目录对应的用户可以使用 go 指令，如果你想要全局注册，修改 `/etc/profile` 文件。
-
-{{< /notice >}}
-
 ```bash
 export GOROOT=/usr/local/go
 export GOPATH=$HOME/golang
@@ -93,6 +87,12 @@ export GO111MODULE=on
 3. `export PATH=$GOROOT/bin:$PATH` 与 `export PATH=$GOPATH/bin:$PATH` 将可执行文件目录添加到环境变量。不需要修改。
 4. `export GO111MODULE=on` 启用 `GO111MODULE`。建议启用。
 5. `export GOPROXY=https://goproxy.cn` 使用 [goproxy.cn](https://goproxy.cn/) 提供的代理服务，如果你有其他的代理服务可以注释掉它。
+
+{{< notice tip >}}
+
+上面的安装方式只有家目录对应的用户可以使用 go 指令，如果你想要全局注册，修改 `/etc/profile` 文件。
+
+{{< /notice >}}
 
 完成修改后，使用 `source` 指令应用更改，之后 go 就配置好了。
 
