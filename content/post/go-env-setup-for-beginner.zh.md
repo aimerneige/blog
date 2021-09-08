@@ -153,7 +153,7 @@ export GO111MODULE=on
 23. 选择“变量值”输入框并输入“https://goproxy.cn”
 24. 点击“确定”按钮
 
-最后记得把 `%GOROOT%\bin` 和 `%GOPATH%\bin` 添加进入环境变量。
+最后记得把 `%GOROOT%\bin` 和 `%GOPATH%\bin` 添加进环境变量。
 
 检查 `go env` 的输出，验证安装是否成功。
 
