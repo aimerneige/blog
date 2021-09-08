@@ -4,3 +4,6 @@
 [submodule "public"]
 	path = public
 	url = https://github.com/aimerneige/aimerneige.github.io
+[submodule "themes/Notice"]
+	path = themes/Notice
+	url = https://github.com/martignoni/hugo-notice.git
