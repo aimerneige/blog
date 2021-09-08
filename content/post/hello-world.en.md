@@ -3,6 +3,7 @@ title: "Hello World"
 date: 2020-01-24T15:50:47+08:00
 draft: false
 ShowToc: true
+MathJax: true
 categories: [Others]
 tags: [others]
 ---
