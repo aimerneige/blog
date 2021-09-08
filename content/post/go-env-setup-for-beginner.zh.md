@@ -1,7 +1,7 @@
 ---
 title: "配置 go 开发环境"
 date: 2021-08-24T21:31:05+08:00
-draft: true
+draft: false
 ShowToc: true
 description: "本篇文章简要介绍如何配置 go 的开发环境"
 categories: [Program]
