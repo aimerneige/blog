@@ -18,3 +18,11 @@ indent_style = tab
 
 [.gitmodules]
 indent_style = tab
+
+[*.{css,scss}]
+indent_style = space
+indent_size = 2
+
+[*.html]
+indent_style = space
+indent_size = 4
