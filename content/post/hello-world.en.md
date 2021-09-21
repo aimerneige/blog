@@ -92,3 +92,11 @@ void main (string[] args) {
     stdout.printf ("Hello world!");
 }
 ```
+
+## Hidden Text
+
+{{< heimu >}}
+
+Hidden Text
+
+{{< /heimu >}}
