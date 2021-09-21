@@ -26,8 +26,14 @@ This is a simple test for my first blog article.
 
 ## Mathjax
 
+- Test 1
+
 $$a_{PI}(x|D) = E[u(x) | x, D] = \int_{-\infty}^{f'} \mathcal{N}(f; \mu(x), \kappa(x, x)) \ df
 =\phi(f'; \mu(x), \kappa(x, x))$$
+
+- Test 2
+
+$$\frac{e}{\left( e+e^{\pi} - \pi^{e}\right) \,\left(  - e+\pi^{e}\right) }+{E(\left( e+\pi\right) \,\left( 2\,e+\pi\right) )}^{e}$$
 
 ## C
 
