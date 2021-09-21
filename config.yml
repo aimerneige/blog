@@ -1,7 +1,7 @@
 baseURL: "https://aimerneige.com/"
 languageCode: "en-us"
 title: "AimerNeige's Blog"
-theme: ["PaperMod", "Notice"]
+theme: ["PaperMod", "Notice", "Heimu"]
 
 enableInlineShortcodes: true
 enableRobotsTXT: true
