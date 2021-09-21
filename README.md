@@ -50,3 +50,5 @@ git add -A
 git commit -m "update"
 git push
 ```
+
+or just run `./deploy.sh`
