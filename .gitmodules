@@ -7,6 +7,3 @@
 [submodule "themes/Notice"]
 	path = themes/Notice
 	url = https://github.com/martignoni/hugo-notice.git
-[submodule "themes/Heimu"]
-	path = themes/Heimu
-	url = https://github.com/aimerneige/hugo-theme-heimu.git
