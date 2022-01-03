@@ -48,4 +48,6 @@ GitHub: <https://github.com/AimerNeige/>
 
 域名: `aimerneige.com` `neige.icu`
 
+# 我的故乡
+
 ![宁武](/images/Ningwu.jpg "宁武")
