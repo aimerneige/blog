@@ -41,6 +41,8 @@ Visual Studio Code 作为一款优秀的代码编辑器，有非常多的插件�
 3. [Spring Boot Extension Pack](https://marketplace.visualstudio.com/items?itemName=Pivotal.vscode-boot-dev-pack)
 4. [SonarLint](https://marketplace.visualstudio.com/items?itemName=SonarSource.sonarlint-vscode)
 5. [Java Code Generators](https://marketplace.visualstudio.com/items?itemName=sohibe.java-generate-setters-getters)
+6. [XML](https://marketplace.visualstudio.com/items?itemName=redhat.vscode-xml)
+7. [Dependency Analytics](https://marketplace.visualstudio.com/items?itemName=redhat.fabric8-analytics)
 
 ## 在 `settings.json` 中简单配置
 
