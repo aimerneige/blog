@@ -2,7 +2,7 @@
 
 ## About
 
-[AimerNeige's Blog](https:/aimerneige.com/) Powered by [Hugo](https://gohugo.io/) & [PaperMod](https://github.com/adityatelange/hugo-PaperMod/)
+[AimerNeige's Blog](https://aimerneige.com/) Powered by [Hugo](https://gohugo.io/) & [PaperMod](https://github.com/adityatelange/hugo-PaperMod/)
 
 ## Install
 
