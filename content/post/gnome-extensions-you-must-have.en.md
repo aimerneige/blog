@@ -47,3 +47,7 @@ https://extensions.gnome.org/extension/19/user-themes/
 ## GSC Connect
 
 https://extensions.gnome.org/extension/1319/gsconnect/
+
+## Ubuntu AppIndicator
+
+https://github.com/ubuntu/gnome-shell-extension-appindicator
