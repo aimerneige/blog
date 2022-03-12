@@ -51,3 +51,11 @@ https://extensions.gnome.org/extension/1319/gsconnect/
 ## Ubuntu AppIndicator
 
 https://github.com/ubuntu/gnome-shell-extension-appindicator
+
+## Lock Keys
+
+https://extensions.gnome.org/extension/36/lock-keys/
+
+## Disconnect Wifi
+
+https://extensions.gnome.org/extension/904/disconnect-wifi/
