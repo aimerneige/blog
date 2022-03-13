@@ -142,6 +142,17 @@ find /home/aimerneige /root -type f -size 0
 find /home/aimerneige /root -type f -size 0 -exec ls -l {} \;
 ```
 
+### 查找当前目录下指定大小范围内的文件
+
+```bash
+# 大于 200k
+find . -type f -size +200k
+# 小于200k
+find . -type f -size -200k
+# 在 50k 与 200k 之间
+find . -type f -size +50k -200k
+```
+
 ### 查找全部 ntfs 硬盘中拷贝出的文件。
 
 ```bash
