@@ -1,10 +1,10 @@
 ---
 title: "Find 指令的基本用法"
 date: 2022-03-12T19:36:29+08:00
-draft: true
+draft: false
 ShowToc: true
 categories: [Linux]
-tags: [tools]
+tags: [tool,cli]
 cover:
     image: "images/find.png"
     alt: "Find Command On Cool Retro Term"
