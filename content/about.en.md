@@ -13,7 +13,6 @@ ShowToc: false
 - golang
 - python
 - JavaScript
-- vala
 - Linux
 - git
 - mysql
@@ -46,7 +45,7 @@ Email: [aimer.neige@aimerneige.com](mailto:aimer.neige@aimerneige.com)
 
 Telegram: [@AimerNeige](https://t.me/AimerNeige)
 
-My Domain: `aimerneige.com` `neige.icu`
+My Domain: `aimerneige.com`
 
 # My Hometown
 

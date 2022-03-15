@@ -13,7 +13,6 @@ ShowToc: false
 - golang
 - python
 - JavaScript
-- vala
 - Linux
 - git
 - mysql
@@ -46,7 +45,7 @@ GitHub: <https://github.com/AimerNeige/>
 
 电报: [@AimerNeige](https://t.me/AimerNeige)
 
-域名: `aimerneige.com` `neige.icu`
+域名: `aimerneige.com`
 
 # 我的故乡
 
