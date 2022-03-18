@@ -81,7 +81,7 @@ params:
   env: production
   keywords: [Blog, OpenSource, Coding, Golang, Programming]
   author: "Aimer Neige"
-  defaultTheme: auto
+  defaultTheme: light
   disableThemeToggle: true
 
   ShowToc: true
