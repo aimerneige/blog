@@ -162,6 +162,18 @@ find . -type f -perm 777 -exec ls -l {} \;
 find . -type f -perm 777 -exec chmod 664 {} \;
 ```
 
+### 看一下当前目录下文件占用情况
+
+```bash
+find . -type d -exec du -sh {} \;
+```
+
+### 批量添加文件后缀
+
+```bash
+find . -type f -name "*.JPG" -exec mv {} {}.jpg \;
+```
+
 # 使用技巧
 
 ###  当搜索目标路径为当前目录`.`时，可以省略不写。
