@@ -1,5 +1,5 @@
 ---
-title: "Find 指令的基本用法"
+title: "find 指令的基本用法"
 date: 2022-03-12T19:36:29+08:00
 draft: false
 ShowToc: true
