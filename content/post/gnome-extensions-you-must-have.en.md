@@ -59,3 +59,7 @@ https://extensions.gnome.org/extension/36/lock-keys/
 ## Disconnect Wifi
 
 https://extensions.gnome.org/extension/904/disconnect-wifi/
+
+## Dock from Dash
+
+https://extensions.gnome.org/extension/4703/dock-from-dash/
