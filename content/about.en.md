@@ -23,7 +23,7 @@ ShowToc: false
 - VSCode
 - VirtualBox
 - Dbeaver
-- Joplin
+- Inkdrop
 - Spotify
 
 # Language
