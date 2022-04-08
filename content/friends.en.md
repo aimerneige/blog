@@ -4,6 +4,8 @@ url: "/en/friends"
 ShowToc: false
 ---
 
+Not listed in order. Sort by time added.
+
 {{< friends >}}
 
-> 感谢 https://guanqr.com/tech/website/add-blogroll/ 提供的代码
+> Thanks for https://guanqr.com/tech/website/add-blogroll/.
