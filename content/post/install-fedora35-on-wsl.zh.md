@@ -1,5 +1,5 @@
 ---
-title: "Install Fedora35 on wsl"
+title: "在 wsl 下安装 fedora 35"
 date: 2022-04-09T22:22:44+08:00
 draft: false
 ShowToc: true
@@ -21,7 +21,7 @@ cover:
 wsl.exe --install
 ```
 
-等待安装完成后在开始菜单执行重启(reboot)
+等待安装完成后在开始菜单执行重启(Restart)
 
 {{< notice warning >}}
 
