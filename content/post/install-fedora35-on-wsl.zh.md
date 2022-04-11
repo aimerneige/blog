@@ -236,7 +236,7 @@ printf "\n[user]\ndefault = myusername\n" | sudo tee -a /etc/wsl.conf
 
 ```toml
 [user]
-default = my username
+default = myusername
 ```
 
 关闭 fedora 子系统。
