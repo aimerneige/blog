@@ -192,7 +192,7 @@ dnf update
 dnf install -y passwd cracklib-dicts
 ```
 
-在 whell 用户组下创建名为 `myusername` 的用户
+在 wheel 用户组下创建名为 `myusername` 的用户
 
 ```bash
 useradd -G wheel myusername
@@ -236,7 +236,7 @@ printf "\n[user]\ndefault = myusername\n" | sudo tee -a /etc/wsl.conf
 
 ```toml
 [user]
-default = aimerneige
+default = my username
 ```
 
 关闭 fedora 子系统。
