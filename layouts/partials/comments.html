@@ -1,14 +1,33 @@
-<a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/">CC-BY-NC-4.0</a>
+<!-- License -->
+<div id="license">
+    <p>
+        This article is licensed under <a target="_blank" rel="noopener"
+            href="http://creativecommons.org/licenses/by-nc/4.0/" style="color: #ee5b32;">
+            <u>CC-BY-NC-4.0</u>
+        </a>
+    </p>
+</div>
 <!-- Comment System Support -->
-<script src="https://utteranc.es/client.js"
+<div id="comment">
+    <script
+        id="utterances"
+        src="https://utteranc.es/client.js"
         repo="aimerneige/aimerneige.github.io"
         issue-term="title"
         label="comment"
         theme="preferred-color-scheme"
         crossorigin="anonymous"
         async>
-</script>
+    </script>
+    <script>
+        let ua = navigator.userAgent.toLocaleLowerCase();
+        if (ua.match(/QQ/i) == "qq") {
+            document.getElementById("utterances").remove();
+        }
+    </script>
+</div>
+
 <!-- MathJax Support -->
 {{ if $.Page.Params.MathJax }}
-    {{ partial "mathjax_support.html" . }}
+{{ partial "mathjax_support.html" . }}
 {{ end }}
