@@ -269,7 +269,7 @@ sudo sysctl -w net.ipv4.ping_group_range="0 2000"
 安装下面的包来启用 Linux 下常用指令：
 
 ```bash
-sudo dnf -y install iproute findutils ncurses
+sudo dnf -y install iproute findutils ncurses initscripts
 ```
 
 ### 编辑器
