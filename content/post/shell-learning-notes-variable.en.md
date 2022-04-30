@@ -158,7 +158,7 @@ Limitations of single-quoted strings:
 1. Any character in single quotes will be output as is, variables in single quoted strings are invalid;
 2. A single quote cannot appear in a single quote string (even after using an escape character for a single quote), but it can appear in pairs and be used as string concatenation.
 
-Enclosing characters in single quotation marks (‘) holds onto the literal value of each character within the quotes.  In simpler words, the shell will interpret the enclosed text within single quotes literally and will not interpolate anything including variables, backtracks, certain \ escapes, etc. <mark>No character in the single quote has special meaning. This is convenient when you do not want to use the escape characters to change the way the bash interprets the input string.</mark>
+Enclosing characters in single quotation marks (‘) holds onto the literal value of each character within the quotes.  In simpler words, the shell will interpret the enclosed text within single quotes literally and will not interpolate anything including variables, backticks, certain \ escapes, etc. <mark>No character in the single quote has special meaning. This is convenient when you do not want to use the escape characters to change the way the bash interprets the input string.</mark>
 
 ### double-quoted string
 
