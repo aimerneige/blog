@@ -3,7 +3,6 @@ title: "Shell Learning Notes Variable"
 date: 2022-04-30T00:42:38+08:00
 draft: false
 ShowToc: true
-description: "Learning notes for shell script variable"
 categories: [Linux,shell]
 tags: [linux,bash,shell,notes]
 cover:

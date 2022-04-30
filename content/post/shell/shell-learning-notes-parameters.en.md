@@ -3,7 +3,6 @@ title: "Shell Learning Notes Parameters"
 date: 2022-05-01T02:22:52+08:00
 draft: false
 ShowToc: true
-description: "Learning notes for shell script parameters"
 categories: [Linux,shell]
 tags: [linux,bash,shell,notes]
 cover:
