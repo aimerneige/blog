@@ -367,14 +367,17 @@ Subscripts can be no-continuous and the range is without any limit.
 
 ### access array
 
+Access elements by:
+
 ```bash
 value=${array_name[3]}
 ```
 
-Use `@` to access all of the elements:
+Use `@` or `*` to access all of the elements:
 
 ```bash
 echo ${array_name[@]}
+echo ${array_name[*]}
 ```
 
 ### get array length
