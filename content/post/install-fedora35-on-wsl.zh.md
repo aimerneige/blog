@@ -369,6 +369,12 @@ wsl --update
 wsl --update --rollback
 ```
 
+### 删除子系统
+
+```ps1
+wsl --unregister <Distro>
+```
+
 ## wsl 使用技巧
 
 在文件资源管理器中输入 `\\wsl$` 即可进入 wsl 的目录。可以将它添加到文件资源管理器的网络路径里便于访问。
