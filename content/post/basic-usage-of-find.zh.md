@@ -176,7 +176,7 @@ find . -type f -name "*.JPG" -exec mv {} {}.jpg \;
 
 # 使用技巧
 
-###  当搜索目标路径为当前目录`.`时，可以省略不写。
+### 当搜索目标路径为当前目录`.`时，可以省略不写。
 
 ```bash
 find -type f -name "*.go"
