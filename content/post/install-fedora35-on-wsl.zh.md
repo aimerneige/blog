@@ -308,6 +308,21 @@ sudo dnf install -y man man-pages
 for pkg in $(dnf repoquery --installed --qf "%{name}"); do sudo dnf reinstall -qy $pkg; done
 ```
 
+### 允许调用 Windows 的浏览器
+
+首先安装 [wslu](https://github.com/wslutilities/wslu)
+
+```bash
+sudo dnf copr enable wslutilities/wslu
+sudo dnf install wslu
+```
+
+添加如下配置
+
+```bash
+export BROWSER=wslview
+```
+
 ### 导出系统
 
 为了方便之后安装，可以将系统导出。
