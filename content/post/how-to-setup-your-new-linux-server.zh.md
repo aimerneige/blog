@@ -11,8 +11,6 @@ cover:
     relative: false
 ---
 
-# 如何配置新购置的 Linux 服务器
-
 ## 更新系统
 
 ```bash
