@@ -66,8 +66,8 @@ ssh aimerneige@server
 sudo vim /etc/ssh/sshd_config
 ```
 
-- 将 `PermitRootLogin` 修改为 `no` 可以禁用 `root` 用户登录
-- 将 `PasswordAuthentication` 修改为 `no` 可以禁用密码登录
+- Set `PermitRootLogin` as `no` To disable `root` login
+- Set `PasswordAuthentication` ad `no` To disable password login
 
 ## Skip password for sudo
 
