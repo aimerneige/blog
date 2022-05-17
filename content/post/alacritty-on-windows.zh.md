@@ -15,7 +15,7 @@ tags: [software,windows]
 
 本次演示中可执行文件存储目录：
 
-`‪C:\Tools\Alacritty\alacritty.exe`
+`C:\Tools\Alacritty\alacritty.exe`
 
 ## 配置 alacritty
 
