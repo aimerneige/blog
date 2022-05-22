@@ -67,3 +67,8 @@ https://extensions.gnome.org/extension/4703/dock-from-dash/
 ## ibus font setting
 
 https://extensions.gnome.org/extension/1121/ibus-font-setting/
+
+
+## IBus Tweaker
+
+https://extensions.gnome.org/extension/2820/ibus-tweaker/
