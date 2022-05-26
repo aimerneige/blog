@@ -77,13 +77,13 @@ find [-H] [-L] [-P] [-D debugopts] [-Olevel] [starting-point...] [expression]
 
 # 使用样例
 
-### 搜索当前目录下全部名称为 `avatar` 的文件或文件夹。
+### 搜索当前目录下全部名称为 `avatar` 的文件或文件夹
 
 ```bash
 find . -name "avatar"
 ```
 
-### 搜索当前目录下所有 go 源代码文件。
+### 搜索当前目录下所有 go 源代码文件
 
 ```bash
 find . -name "*.go" -type f
@@ -93,7 +93,7 @@ find . -name "*.go" -type f
 如果没有 `-type f`，输出结果可能包含有以 `*.go` 结尾的文件夹。
 {{< /notice >}}
 
-### 查找最近 20 天内更新过的文件。
+### 查找最近 20 天内更新过的文件
 
 ```bash
 find . -ctime -20
@@ -116,7 +116,7 @@ find . -name "*avatar*" -maxdepth 1
 ```
 {{< /notice >}}
 
-### 删除当前目录下名为 temp 的文件。
+### 删除当前目录下名为 temp 的文件
 
 ```bash
 # 直接删
@@ -127,13 +127,13 @@ find . -type f -name "temp" -delete -print
 find . -type f -name "temp" -ok rm {} \;
 ```
 
-### 查找一下七天前的旧日志，并在删除之前询问它们。
+### 查找一下七天前的旧日志，并在删除之前询问它们
 
 ```bash
 find ./log -type f -mtime +7 -ok rm {} \;
 ```
 
-### 查找指定目录下有哪些空文件。
+### 查找指定目录下有哪些空文件
 
 ```bash
 # 打印文件名
@@ -153,7 +153,7 @@ find . -type f -size -200k
 find . -type f -size +50k -200k
 ```
 
-### 查找全部 ntfs 硬盘中拷贝出的文件。
+### 查找全部 ntfs 硬盘中拷贝出的文件
 
 ```bash
 # 查找权限为 777 的文件，并打印详细信息
@@ -174,9 +174,15 @@ find . -type d -exec du -sh {} \;
 find . -type f -name "*.JPG" -exec mv {} {}.jpg \;
 ```
 
+### 使用 bat 查看当前目录下全部 go 源代码
+
+```bash
+find . -type f -name "*.go" -exec bat {} \;
+```
+
 # 使用技巧
 
-### 当搜索目标路径为当前目录`.`时，可以省略不写。
+### 当搜索目标路径为当前目录`.`时，可以省略不写
 
 ```bash
 find -type f -name "*.go"
