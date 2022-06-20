@@ -8,4 +8,4 @@ Not listed in order. Sort by time added.
 
 {{< friends >}}
 
-> Thanks for https://guanqr.com/tech/website/add-blogroll/.
+<!-- > Thanks for https://guanqr.com/tech/website/add-blogroll/. -->
