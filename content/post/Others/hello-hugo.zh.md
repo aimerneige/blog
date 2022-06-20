@@ -3,8 +3,8 @@ title: "Hello Hugo"
 date: 2021-08-17T07:16:04+08:00
 draft: false
 ShowToc: true
-description: "Install and Config hugo"
-categories: [Development,Web]
+description: "安装和配置 hugo"
+categories: [Others]
 tags: [hugo,site]
 cover:
     image: "images/hugo-logo-wide.svg"
@@ -12,102 +12,100 @@ cover:
     relative: false
 ---
 
-# Before Start
+# 前言
 
-It’s been a long time since I wrote a blog post last time. That's because I often reinstall my system on computer, and every time I install and configure the blog of `hexo` on my computer is a troublesome thing. But recently, I discovered `hugo`, a simple and easy-to-use blog system, which can keep me away from `hexo`, which is slow and troublesome to configure and install. It has a great experience to use and I happened to change a blog theme, so I decided to use `hugo` to build my new blog. This article briefly introduces how to install and use `hugo`.
+距离上一次写博客文章已经很长时间了，因为经常重装系统，而每次在电脑上安装和配置 `hexo` 的博客都是一件比较麻烦的事情，于是就一直咕了。但是最近我发现了 `hugo` 这一简洁好用的博客系统，可以让我远离配置安装都又慢又麻烦的 `hexo`，使用下来体验很棒，而我恰好又打算换一个博客主题，于是决定使用 `hugo` 来搭建我的新博客。本文简要介绍如何安装和使用 `hugo`。
 
-# Install
+# 安装
 
-## You may need
+## 你可能需要
 
-1. golang
+1. go 的开发环境
 2. git
-3. text editor you love
+3. 一个顺手的编辑器
 
-## You must needn't
+## 你一定不需要
 
 1. nodejs
 2. npm
 
 ![js joke](/images/node-models-black-hole.jpg)
 
-## Install `hugo`
+## 安装 `hugo`
 
-Install `hugo` is very simple. Take `fedora` system as an example, simply run this command:
-
+要安装 `hugo` 非常简单，以 `fedora` 系统为例，只需要执行如下指令：
 
 ```bash
 sudo dnf install hugo
 ```
 
-## Create Site Directory
+## 创建站点文件夹
 
-Create your site directory with this command:
+使用以下指令创建你的站点文件夹：
 
 ```bash
 hugo new site blog
 ```
 
-Change to work directory:
+切换到工作目录进行后续操作：
 
 ```bash
 cd blog
 ```
 
-Use git for version control:
+使用 git 进行版本控制：
 
 ```bash
 git init
 ```
 
-## Install Theme
+## 安装主题
 
-
-Pick up your favorite theme, clone it into `./themes` directory directly.
+挑选好合适的主题后，将其直接 clone 在 `./themes` 文件夹下即可。
 
 ```bash
 git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod --depth=1
 ```
 
-> Use `--depth=1` to ignore the commit history.
+> 使用 `--depth=1` 参数会忽略历史 commit 记录。
 
-Of course, you can download a zip file and unzip it.
+当然，下载解压压缩包的方式也是可以的。
 
-If you wants to make version control more convenient and update more easily, use this command to add submodule:
+如果想要方便版本控制和更新，使用如下指令添加 submodule：
 
 ```bash
 git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod --depth=1
 ```
 
-Clone submodules when reclone repo:
+当重新 clone 仓库后，执行如下指令 clone 主题子仓库：
 
 ```bash
 git submodule update --init --recursive
 ```
 
-Update theme:
+更新主题：
 
 ```bash
 git submodule update --remote --merge
 ```
 
-# Config
+# 配置
 
-`hugo` support many config file format. The `yaml` file is more readable, so in the next article we will use `yaml`.
+`hugo` 支持多种配置文件格式，由于 `yaml` 格式的配置文件更易读，下文将默认使用 `yaml` 配置。
 
-Different from `hexo`, you have only one config file, just follow you theme's doc and edit config file.
+与 hexo 不同，hugo 的配置文件只有一个，按照你所使用的主题提供的文档来修改你的配置文件即可。
 
-## Apply Theme
+## 应用主题
 
 ```yaml
 theme: "PaperMod"
 ```
 
-## Edit Theme Config
+## 修改主题配置
 
-Different thems has different way to config, please follow your theme's doc.
+不同的主题会有不同的配置方法，具体查看主题提供的文档。
 
-Follow config for reference:
+请参考如下配置：
 
 ```yaml
 baseURL: "https://aimerneige.com/"
@@ -246,27 +244,27 @@ outputs:
     - JSON
 ```
 
-# Migrate
+# 迁移
 
-Copy your markdown file to new site directory and edit config.
+将原有文章复制到站点文件夹下，修改配置。
 
-# Test
+# 测试
 
-Use this command to run a local test server:
+使用如下指令启动本地测试服务。
 
 ```bash
 hugo serve -D
 ```
 
-# Deploy
+# 部署
 
-Generate static file with this command:
+使用如下指令生成静态文件：
 
 ```bash
 hugo
 ```
 
-Then public it to github:
+之后上传到 github 即可：
 
 ```bash
 cd public

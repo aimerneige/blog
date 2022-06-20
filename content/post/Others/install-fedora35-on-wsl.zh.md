@@ -3,8 +3,8 @@ title: "在 wsl 下安装 fedora 35"
 date: 2022-04-09T22:22:44+08:00
 draft: false
 ShowToc: true
-categories: [Windows,wsl]
-tags: [wsl,fedora35]
+categories: [Others]
+tags: [wsl,wsl2,fedora35,windows]
 cover:
     image: "images/fedora-wsl.png"
     alt: "Fedora Windows"

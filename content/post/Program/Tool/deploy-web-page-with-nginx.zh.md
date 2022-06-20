@@ -4,7 +4,7 @@ date: 2020-10-04T01:18:44+08:00
 draft: false
 ShowToc: true
 categories: [Program]
-tags: [web]
+tags: [web,nginx]
 cover:
     image: "images/nginx.png"
     alt: "nginx-logo"

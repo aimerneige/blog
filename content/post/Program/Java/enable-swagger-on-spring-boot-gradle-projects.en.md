@@ -3,7 +3,7 @@ title: "Enable Swagger on Spring Boot Gradle Projects"
 date: 2021-12-30T15:35:21+08:00
 draft: false
 ShowToc: true
-categories: [Development]
+categories: [Program]
 tags: [java,swagger,spring]
 cover:
     image: "images/spring_swagger.svg"

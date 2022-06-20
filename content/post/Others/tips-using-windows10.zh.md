@@ -3,7 +3,7 @@ title: "写给小白的 win10 使用技巧"
 date: 2020-08-26T22:46:52+08:00
 draft: false
 ShowToc: true
-categories: [Computer]
+categories: [Others]
 tags: [windows]
 ---
 

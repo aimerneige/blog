@@ -3,7 +3,7 @@ title: "How to Setup Your New Linux Server"
 date: 2022-05-17T22:09:41+08:00
 draft: false
 ShowToc: true
-categories: [Linux,Devops]
+categories: [DevOps]
 tags: [linux]
 cover:
     image: "images/linux-server-setup.webp"

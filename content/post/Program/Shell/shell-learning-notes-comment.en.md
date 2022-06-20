@@ -3,7 +3,7 @@ title: "Shell Learning Notes Comment"
 date: 2022-05-01T02:25:48+08:00
 draft: false
 ShowToc: true
-categories: [Linux,shell]
+categories: [Program]
 tags: [linux,bash,shell,notes]
 cover:
     image: "images/Gnu-bash-logo.svg"

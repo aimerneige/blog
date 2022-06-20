@@ -3,8 +3,8 @@ title: "Install WSA With Google Play Store and Root"
 date: 2022-05-17T23:13:13+08:00
 draft: false
 ShowToc: true
-categories: [Windows]
-tags: [wsa]
+categories: [Others]
+tags: [wsa,windows]
 cover:
     image: "images/wsl-play-store-magisk.webp"
     alt: "wsl play-store magisk"

@@ -77,14 +77,6 @@ func main() {
 }
 ```
 
-## vala
-
-```vala
-void main (string[] args) {
-    stdout.printf ("Hello world!");
-}
-```
-
 ## Hidden Text
 
 {{< heimu >}}

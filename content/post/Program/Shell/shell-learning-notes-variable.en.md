@@ -3,7 +3,7 @@ title: "Shell Learning Notes Variable"
 date: 2022-04-30T00:42:38+08:00
 draft: false
 ShowToc: true
-categories: [Linux,shell]
+categories: [Program]
 tags: [linux,bash,shell,notes]
 cover:
     image: "images/Gnu-bash-logo.svg"

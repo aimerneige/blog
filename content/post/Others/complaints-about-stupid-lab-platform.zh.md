@@ -3,7 +3,7 @@ title: "对于某实验平台的吐槽"
 date: 2021-08-19T21:44:21+08:00
 draft: false
 ShowToc: false
-categories: [Web]
+categories: [Others]
 tags: [web,javascript]
 ---
 
