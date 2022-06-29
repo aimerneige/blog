@@ -1,7 +1,7 @@
 ---
 title: "[转载] Rust 大佬给初学者的学习建议"
 date: 2022-06-29T07:57:57+08:00
-draft: true
+draft: false
 ShowToc: true
 categories: [Program]
 tags: [Rust]
