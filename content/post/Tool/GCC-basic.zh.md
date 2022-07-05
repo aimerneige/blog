@@ -3,7 +3,7 @@ title: "GCC 基础"
 date: 2020-10-17T22:37:01+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+categories: [Tool]
 tags: [C/C++,Linux]
 ---
 

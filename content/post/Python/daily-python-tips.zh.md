@@ -3,7 +3,7 @@ title: "每天一个 Python 小知识 isinstance"
 date: 2020-05-29T09:38:41+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+categories: [Python]
 tags: [python]
 ---
 

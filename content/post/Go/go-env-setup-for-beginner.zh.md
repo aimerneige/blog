@@ -4,7 +4,7 @@ date: 2021-08-24T21:31:05+08:00
 draft: false
 ShowToc: true
 description: "本篇文章简要介绍如何配置 go 的开发环境"
-categories: [Program]
+categories: [Go]
 tags: [golang,env,teach]
 cover:
     image: "images/golang.jpeg"

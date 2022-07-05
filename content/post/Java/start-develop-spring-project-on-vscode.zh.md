@@ -3,7 +3,7 @@ title: "使用 vscode 开发 Spring 项目"
 date: 2021-12-28T15:37:39+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+categories: [Java]
 tags: [vscode,java,spring,tools]
 cover:
     image: "images/spring_vscode.svg"

@@ -4,7 +4,7 @@ date: 2021-01-30T20:17:30+08:00
 draft: false
 ShowToc: true
 description: "使用 nodejs 开发简单后端"
-categories: [Program]
+categories: [JavaScript]
 tags: [nodejs,javascript,api,mysql]
 cover:
     image: "images/nodejs.png"

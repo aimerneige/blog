@@ -3,7 +3,7 @@ title: "[Reproduce] Learning Rust in 2022"
 date: 2022-06-29T07:58:02+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+categories: [Rust]
 tags: [Rust]
 ---
 

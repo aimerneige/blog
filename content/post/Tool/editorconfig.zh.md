@@ -4,7 +4,7 @@ date: 2021-01-29T16:37:25+08:00
 draft: false
 ShowToc: true
 description: "EditorConfig 的简要介绍"
-categories: [Program]
+categories: [Tool]
 tags: [editor,tool]
 cover:
     image: "images/editorconfig.png"

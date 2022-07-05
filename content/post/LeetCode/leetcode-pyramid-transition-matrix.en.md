@@ -3,7 +3,7 @@ title: "LeetCode Pyramid Transition Matrix"
 date: 2020-09-11T15:30:34+08:00
 draft: false
 ShowToc: false
-categories: [Program]
+categories: [LeetCode]
 tags: [LeetCode]
 ---
 

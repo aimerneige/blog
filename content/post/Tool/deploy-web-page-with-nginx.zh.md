@@ -3,7 +3,7 @@ title: "使用 Nginx 搭建静态网页服务"
 date: 2020-10-04T01:18:44+08:00
 draft: false
 ShowToc: true
-categories: [Program]
+categories: [Tool]
 tags: [web,nginx]
 cover:
     image: "images/nginx.png"
