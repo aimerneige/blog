@@ -1,5 +1,5 @@
 ---
-title: "Friends"
+title: "Friends 🧑‍🤝‍🧑"
 url: "/zh/friends"
 ShowToc: false
 ---
