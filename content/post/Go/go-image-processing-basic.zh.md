@@ -6,7 +6,7 @@ ShowToc: true
 categories: [Go]
 tags: [go,image]
 cover:
-    image: "images/go-image-processing-basic.svg"
+    image: "images/go-image-processing-basic.webp"
     alt: "go image processing"
     relative: false
 ---
