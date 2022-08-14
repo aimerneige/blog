@@ -1,7 +1,7 @@
 ---
 title: "Golang embed"
 date: 2022-08-13T23:57:11+08:00
-draft: true
+draft: false
 ShowToc: true
 categories: [Go]
 tags: [golang,embed]
