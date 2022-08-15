@@ -244,7 +244,7 @@ func main() {
 
 注意 embed 的路径是相对于源代码文件而言的。如下例：
 
-```
+```bash
 ➜ tree . 
 .
 ├── go.mod
