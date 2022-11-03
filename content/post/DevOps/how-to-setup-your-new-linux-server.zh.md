@@ -24,9 +24,9 @@ dnf update
 
 ```bash
 # Debain
-apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget lsd batcat
+apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
 # Fedora
-dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget lsd cat
+dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
 ```
 
 ## 创建 sudo 用户
