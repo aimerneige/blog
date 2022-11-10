@@ -11,7 +11,7 @@ cover:
     relative: false
 ---
 
-## Update system
+## Update System
 
 ```bash
 # Debian
@@ -20,16 +20,16 @@ apt update
 dnf update
 ```
 
-## Install most used tools
+## Install Most Used Tools
 
 ```bash
 # Debain
-apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget lsd batcat
+apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
 # Fedora
-dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget lsd bat
+dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget util-linux-user
 ```
 
-## Create sudo user
+## Create Sudo User
 
 ```bash
 # Debian
@@ -40,27 +40,27 @@ useradd -G wheel aimerneige
 passwd aimerneige
 ```
 
-## Test root privileges
+## Test Root Privileges
 
 ```bash
 su - aimerneige
 sudo cat /etc/shadow
 ```
 
-## Setup SSH public key
+## Setup SSH Public Key
 
 ```bash
 # run this on your local machine
 ssh-copy-id aimerneige@server
 ```
 
-## Test if you can connect to server
+## Test if You Can Connect to Server
 
 ```bash
 ssh aimerneige@server
 ```
 
-## Disable root and password login
+## Disable Root and Password Login
 
 ```bash
 sudo vim /etc/ssh/sshd_config
@@ -69,7 +69,7 @@ sudo vim /etc/ssh/sshd_config
 - Set `PermitRootLogin` as `no` To disable `root` login
 - Set `PasswordAuthentication` ad `no` To disable password login
 
-## Skip password for sudo
+## Skip Password for Sudo
 
 ```bash
 sudo visudo
@@ -81,7 +81,7 @@ Add this on the end of file:
 aimerneige ALL=(ALL) NOPASSWD:ALL
 ```
 
-## Delete other user that provider created
+## Delete Other User That Provider Created
 
 ```bash
 sudo deluser default
@@ -93,15 +93,17 @@ Do not delete the root user.
 
 {{</ notice >}}
 
-## Restart your server
+## Restart Your Server
 
 ```bash
 sudo reboot
 ```
 
-## Other config
+## Other Config
 
-### Setup zsh config
+### Setup zsh Config
+
+#### oh-my-zsh
 
 ```bash
 # Install oh-my-zsh
@@ -116,14 +118,104 @@ git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
 curl -sS https://starship.rs/install.sh | sh
 ```
 
+#### lsd
+
+Install lsd
+
+```bash
+# ubuntu
+# https://github.com/Peltoche/lsd/releases
+sudo dpkg -i lsd_0.23.1_amd64.deb
+
+# fedora
+sudo dnf install lsd -y
+```
+
+Edit .zshrc, add bellow alias record
+
+```bash
+alias ls=lsd
+```
+
+#### bat
+
+Install bat
+
+```bash
+# ubuntu
+sudo apt install bat -y
+
+# fedora
+sudo dnf install bat -y
+```
+
+Edit .zshrc, add bellow alias record
+
+```bash
+# add bellow line on ubuntu
+# alias bat=batcat
+alias cat=bat
+```
+
+### Install Node
+
+Install nvm
+
+```bash
+# use curl
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+
+# use bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+```
+
+Use nvm Install latest LTS version of nodejs
+
+```bash
+nvm install --lts
+```
+
+Test if it works
+
+```bash
+node --version
+npm --version
+```
+
+### Install Python
+
+```bash
+# ubuntu
+sudo apt install -y python-is-python3 python2 python3-pip
+
+# fedora
+sudo dnf install -y python-is-python3 python2 python3-pip
+```
+
 ### Setup neovim config
+
+#### Install Requirements
+
+```
+pip install neovim
+npm install --location=global neovim
+```
+
+#### Download config file
 
 ```bash
 rm -rf ~/.config/nvim
 # Use your own config file!!!!!
-git clone git@github.com:aimerneige/nvim.git ~/.config/nvim
+git clone https://github.com/aimerneige/nvim.git ~/.config/nvim
 ```
 
-## Refer link
+#### Install Plugin
+
+```bash
+# download will start automatically after start neovim
+nvim
+```
+
+## Refer Link
 
 - [Best-practice for authentication after creating a new Linux server](https://anduin.aiursoft.com/post/2020/7/26/bestpractice-for-authentication-after-creating-a-new-linux-server)

@@ -26,7 +26,7 @@ dnf update
 # Debain
 apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
 # Fedora
-dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
+dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget util-linux-user
 ```
 
 ## 创建 sudo 用户
@@ -103,6 +103,8 @@ sudo reboot
 
 ### 配置 zsh 环境
 
+#### oh-my-zsh
+
 ```bash
 # 安装 oh-my-zsh
 sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -116,12 +118,102 @@ git clone https://github.com/supercrabtree/k $ZSH_CUSTOM/plugins/k
 curl -sS https://starship.rs/install.sh | sh
 ```
 
+#### lsd
+
+安装 lsd
+
+```bash
+# ubuntu
+# https://github.com/Peltoche/lsd/releases
+sudo dpkg -i lsd_0.23.1_amd64.deb
+
+# fedora
+sudo dnf install lsd -y
+```
+
+修改 .zshrc 文件，添加 alias
+
+```bash
+alias ls=lsd
+```
+
+#### bat
+
+安装 bat
+
+```bash
+# ubuntu
+sudo apt install bat -y
+
+# fedora
+sudo dnf install bat -y
+```
+
+修改 .zshrc 文件，添加 alias
+
+```bash
+# add bellow line on ubuntu
+# alias bat=batcat
+alias cat=bat
+```
+
+### 安装 node 环境
+
+安装 nvm
+
+```bash
+# 使用 curl
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+
+# 使用 bash
+wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+```
+
+使用 nvm 安装 lts 版本的 nodejs
+
+```bash
+nvm install --lts
+```
+
+测试是否生效
+
+```bash
+node --version
+npm --version
+```
+
+### 安装 python 环境
+
+```bash
+# ubuntu
+sudo apt install -y python-is-python3 python2 python3-pip
+
+# fedora
+sudo dnf install -y python-is-python3 python2 python3-pip
+```
+
 ### 配置 neovim
+
+#### 安装依赖
+
+```bash
+pip install neovim
+npm install --location=global neovim
+```
+
+#### 下载配置
 
 ```bash
 rm -rf ~/.config/nvim
 # 使用你自己的配置文件！！！！！
-git clone git@github.com:aimerneige/nvim.git ~/.config/nvim
+git clone https://github.com/aimerneige/nvim.git ~/.config/nvim
+```
+
+#### 安装插件
+
+```bash
+# 启动 neovim 后自动下载
+nvim
 ```
 
 ## 参考链接
