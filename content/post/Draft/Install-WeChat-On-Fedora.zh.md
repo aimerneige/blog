@@ -1,11 +1,11 @@
 ---
 title: "在 Fedora 系统下安装微信"
 date: 2022-11-10T12:03:27+08:00
-draft: true
+draft: false
 ShowToc: true
 # description: "description here"
-# categories: [Linux]
-# tags: [tools]
+categories: [Linux]
+tags: [wechat,fedora,wine]
 # cover:
 #     image: "images/blue_poison.jpg"
 #     alt: "Blue Poison"
@@ -95,6 +95,20 @@ StartupWMClass=wechat.exe
 ## 启动微信
 
 安装过程中会自动添加 desktop 文件，直接打开即可。
+
+## 已知问题
+
+1. 只能使用中文，使用英文时无法正常显示中文字符
+2. 表情包的名称显示不正常
+3. 通过微信调用的进程会携带中文的环境变量
+4. 程序窗口被覆盖后窗口阴影依然显示在最前
+5. 小程序有可能闪退
+
+## 替代方案
+
+如过你不介意安装一个 systemd-nspawn 的容器的话，可以尝试这个项目：
+
+- [GitHub - loaden/nspawn-qq](https://github.com/loaden/nspawn-qq)
 
 # 参考链接
 
