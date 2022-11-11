@@ -1,5 +1,5 @@
 ---
-title: "在 Fedora 系统下安装微信"
+title: "在 Fedora 系统上安装微信"
 date: 2022-11-10T12:03:27+08:00
 draft: false
 ShowToc: true
@@ -11,7 +11,7 @@ cover:
     relative: false
 ---
 
-# 在 Fedora 下运行微信
+# 在 Fedora 系统上运行微信
 
 ## 安装 wine
 
