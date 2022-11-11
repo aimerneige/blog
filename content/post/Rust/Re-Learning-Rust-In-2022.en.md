@@ -5,6 +5,10 @@ draft: false
 ShowToc: true
 categories: [Rust]
 tags: [Rust]
+cover:
+    image: "images/rust-social-wide.jpg"
+    alt: "Rust Logo"
+    relative: false
 ---
 
 > This article are reproduce from [pretzelhammer/rust-blog](https://github.com/pretzelhammer/rust-blog/blob/master/posts/learning-rust-in-2020.md)
