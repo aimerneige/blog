@@ -5,11 +5,10 @@ draft: false
 ShowToc: true
 categories: [Linux]
 tags: [wechat,fedora,wine]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+cover:
+    image: "images/fedora-wechat.svg"
+    alt: "Fedora WeChat"
+    relative: false
 ---
 
 # Install WeChat on Fedora

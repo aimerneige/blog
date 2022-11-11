@@ -3,14 +3,12 @@ title: "在 Fedora 系统下安装微信"
 date: 2022-11-10T12:03:27+08:00
 draft: false
 ShowToc: true
-# description: "description here"
 categories: [Linux]
 tags: [wechat,fedora,wine]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+cover:
+    image: "images/fedora-wechat.svg"
+    alt: "Fedora WeChat"
+    relative: false
 ---
 
 # 在 Fedora 下运行微信
