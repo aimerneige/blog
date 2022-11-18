@@ -104,7 +104,7 @@ StartupWMClass=wechat.exe
 
 ## 替代方案
 
-如过你不介意安装一个 systemd-nspawn 的容器的话，可以尝试这个项目：
+如果你不介意安装一个 systemd-nspawn 的容器的话，可以尝试这个项目：
 
 - [GitHub - loaden/nspawn-qq](https://github.com/loaden/nspawn-qq)
 
