@@ -104,3 +104,43 @@ patch:
 # 应用配置
 
 保存好你的配置文件之后，切换输入法到 rime，在托盘右击你的输入法（fedora 下左键单击也是一样的效果）选择 **部署** ，稍等片刻，等待 rime 部署你的配置文件后，如果没有错误警告，那么恭喜你应用成功。之后在中文半角状态下输入 `/` 时会直接输入 `/` 而没有烦人的二级窗口提示你选择要输入的内容，可以愉快的写中文注释了。
+
+# 其他配置
+
+除了上面提到的内容，还可以修改其他配置，具体可以查看官方文档，这里额外介绍几个常用的配置：
+
+## 候选词 水平/垂直 切换
+
+在 rime 用户资料夹下 `build/ibus_rime.yaml` 这个文件中写入如下内容：
+
+```yaml
+style:
+  horizontal: true
+```
+
+## 候选词数量设置
+
+在 rime 用户资料夹下 `default.custom.yaml` 这个文件中写入如下内容：
+
+```yaml
+patch:
+  menu/page_size: 7
+```
+
+{{< notice info >}}
+数值范围为 1 ~ 9
+{{< /notice >}}
+
+# 实用插件
+
+如果你正在使用 Gnome，又懒得修改配置文件，请一定要尝试一下 [IBus Tweaker](https://extensions.gnome.org/extension/2820/ibus-tweaker/) 这个插件。
+
+{{< notice note >}}
+你必须先安装 [Extensions](https://flathub.org/apps/details/org.gnome.Extensions) 才可以在 Gnome 下使用这个插件。
+{{< /notice >}}
+
+# 参考链接
+
+- [Rime](https://rime.im/)
+- [Rime 定製指南](https://github.com/rime/home/wiki/CustomizationGuide)
+- [鼠须管输入法配置](https://www.hawu.me/others/2666)
