@@ -24,7 +24,7 @@ dnf update
 
 ```bash
 # Debain
-apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget
+apt install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget net-tools
 # Fedora
 dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget util-linux-user
 ```
