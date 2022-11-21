@@ -169,6 +169,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
 
+Reload your shell.
+
 Use nvm Install latest LTS version of nodejs
 
 ```bash
@@ -214,6 +216,48 @@ git clone https://github.com/aimerneige/nvim.git ~/.config/nvim
 ```bash
 # download will start automatically after start neovim
 nvim
+```
+
+### Remove snap
+
+List all of the installed snap package
+
+```bash
+snap list
+```
+
+Remove all of the snap package one by one
+
+```bash
+sudo snap remove --purge lxd
+sudo snap remove --purge core20
+sudo snap remove --purge snapd
+```
+
+Remove snapd
+
+```bash
+sudo apt remove --autoremove snapd
+```
+
+Edit config file to permit system download snap automatically
+
+```bash
+sudo vim /etc/apt/preferences.d/nosnap.pref
+```
+
+Write things like this:
+
+```pref
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+```
+
+Update your system
+
+```bash
+sudo apt update
 ```
 
 ## Refer Link

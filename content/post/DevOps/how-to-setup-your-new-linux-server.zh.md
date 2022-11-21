@@ -169,6 +169,8 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
 
+重新加载你的 shell
+
 使用 nvm 安装 lts 版本的 nodejs
 
 ```bash
@@ -214,6 +216,48 @@ git clone https://github.com/aimerneige/nvim.git ~/.config/nvim
 ```bash
 # 启动 neovim 后自动下载
 nvim
+```
+
+### 移除 snap
+
+查看已安装的 snap 包
+
+```bash
+snap list
+```
+
+依次移除全部的 snap 包
+
+```bash
+sudo snap remove --purge lxd
+sudo snap remove --purge core20
+sudo snap remove --purge snapd
+```
+
+移除 snapd
+
+```bash
+sudo apt remove --autoremove snapd
+```
+
+修改如下文件来防止自动更新下载 snap 的包
+
+```bash
+sudo vim /etc/apt/preferences.d/nosnap.pref
+```
+
+写入如下内容：
+
+```pref
+Package: snapd
+Pin: release a=*
+Pin-Priority: -10
+```
+
+更新系统
+
+```bash
+sudo apt update
 ```
 
 ## 参考链接
