@@ -80,7 +80,7 @@ After=network.target
 Type=forking
 User=qbittorrent-nox
 Group=qbittorrent-nox
-UMask=007
+UMask=022
 ExecStart=/usr/bin/qbittorrent-nox -d --webui-port=8080
 Restart=on-failure
 
