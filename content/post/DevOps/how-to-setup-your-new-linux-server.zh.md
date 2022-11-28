@@ -260,6 +260,23 @@ Pin-Priority: -10
 sudo apt update
 ```
 
+### 命令手册工具
+
+#### tldr
+
+```bash
+# Debain
+sudo apt install tldr
+# Fedora
+sudo dnf install tldr
+```
+
+#### cheat.sh
+
+```bash
+curl -s https://cht.sh/:cht.sh | sudo tee /usr/local/bin/cht.sh && sudo chmod +x /usr/local/bin/cht.sh
+```
+
 ## 参考链接
 
 - [Best-practice for authentication after creating a new Linux server](https://anduin.aiursoft.com/post/2020/7/26/bestpractice-for-authentication-after-creating-a-new-linux-server)
