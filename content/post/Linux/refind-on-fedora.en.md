@@ -30,7 +30,7 @@ sudo rpm -Uvh refind-0.6.11-1.x86_64.rpm
 sudo yum localinstall refind-0.6.11-1.x86_64.rpm
 ```
 
-At the most of the time, your are ready to use rEFInd, if it did not work on your system, run `redind-install`:
+At the most of the time, your are ready to use rEFInd, if it did not work on your system, run `refind-install`:
 
 ```bash
 # ./refind-install
