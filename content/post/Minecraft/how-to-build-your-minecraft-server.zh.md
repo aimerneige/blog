@@ -1,16 +1,14 @@
 ---
 title: "如何搭建你自己的 Minecraft 服务器"
 date: 2023-01-12T21:00:37+08:00
-draft: true
+draft: false
 ShowToc: true
-# description: "description here"
-# categories: [Linux]
-# tags: [tools]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+categories: [Minecraft]
+tags: [game,minecraft,server]
+cover:
+    image: "images/Minecraft_Java_Edtion.svg"
+    alt: "Minecraft Java Edtion"
+    relative: false
 ---
 
 # 阅前须知
@@ -49,7 +47,7 @@ ShowToc: true
 
 在 [官网](https://www.minecraft.net/zh-hans/download/server) 下载服务器运行所需的 jar 文件。
 
-如果你需要历史版本，使用官方启动器下载。
+官方只提供最新版的文件，如果你需要历史版本，使用官方启动器下载。
 
 ### 运行服务器
 
