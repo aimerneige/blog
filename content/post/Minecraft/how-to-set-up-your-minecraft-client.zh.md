@@ -96,3 +96,9 @@ UI 主题，石墙主题，制作精美，看腻了单调的原版 UI 可以尝�
 
 # 效能模组
 
+
+# 娱乐模组
+
+- **Immersive Portals**\
+沉浸式传送门，更好的传送门体验。可以实现挖通主世界后到达地狱，挖通地狱到达末地。
+  - [Curseforge](https://www.curseforge.com/minecraft/mc-mods/immersive-portals-mod)
