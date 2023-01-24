@@ -28,6 +28,11 @@ description: "Minecraft 客户端配置推荐"
   - [Faithful](https://faithfulpack.net/)
   - [Curseforge 32x](https://www.curseforge.com/minecraft/texture-packs/faithful-32x)
   - [Curseforge 64x](https://www.curseforge.com/minecraft/texture-packs/faithful-64x)
+  - [Faithful 32x](https://faithfulpack.net/faithful32x/latest)
+  - [Faithful 64x Beta 7](https://faithfulpack.net/faithful64x/latest)
+  - [Classic Faithful 32x PA](https://faithfulpack.net/classicfaithful/32x-programmer-art)
+  - [Classic Faithful 32x Jappa](https://faithfulpack.net/classicfaithful/32x-jappa)
+  - [Classic Faithful 64x Jappa](https://faithfulpack.net/classicfaithful/64x-jappa)
 - **Jicklus**\
 这个材质包算是非常著名了，作者是一名来自英国的插画师、动画师和游戏开发者，所有的材质都精心设计过，能带来完全不同的游戏体验。
   - [Jicklus](https://www.jicklus.com/)
