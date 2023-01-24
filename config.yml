@@ -87,6 +87,8 @@ languages:
             url: "/zh/friends"
           - name: "项目"
             url: "/zh/projects"
+          - name: "捐赠"
+            url: "/zh/donate"
 
 params:
   env: production
@@ -126,6 +128,8 @@ params:
         url: "/en/friends"
       - name: "Projects"
         url: "/en/projects"
+      - name: "Donate"
+        url: "/en/donate"
 
   socialIcons:
     - name: github
