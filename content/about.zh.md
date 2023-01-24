@@ -1,6 +1,7 @@
 ---
 title: "关于我 👨‍💻"
 url: "/zh/about"
+summary: "about"
 ShowToc: false
 ---
 
