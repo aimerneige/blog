@@ -6,7 +6,7 @@ ShowToc: true
 categories: [Linux]
 tags: [ubuntu,filebrowser]
 cover:
-    image: "images/ubuntu-filebrowser.svg"
+    image: "images/ubuntu-filebrowser.png"
     alt: "Ubuntu Filebrowser"
     relative: false
 ---

@@ -1,15 +1,14 @@
 ---
 title: "如何编写 .desktop 文件"
 date: 2023-01-25T14:41:12+08:00
-draft: true
+draft: false
 ShowToc: true
-# categories: [Linux]
-# tags: [tools]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+categories: [Linux]
+tags: [desktop,application]
+cover:
+    image: "images/linux-desktopfile.png"
+    alt: "Desktop File"
+    relative: false
 ---
 
 # 前言
