@@ -19,7 +19,6 @@ https://extensions.gnome.org/extension/3628/arcmenu/
 
 https://extensions.gnome.org/extension/3193/blur-my-shell/
 
-
 ## Dash to Panel
 
 https://extensions.gnome.org/extension/1160/dash-to-panel/
@@ -60,14 +59,9 @@ https://extensions.gnome.org/extension/36/lock-keys/
 
 https://extensions.gnome.org/extension/904/disconnect-wifi/
 
-## Dock from Dash
-
-https://extensions.gnome.org/extension/4703/dock-from-dash/
-
 ## ibus font setting
 
 https://extensions.gnome.org/extension/1121/ibus-font-setting/
-
 
 ## IBus Tweaker
 
