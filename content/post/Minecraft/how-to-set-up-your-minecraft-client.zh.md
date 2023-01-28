@@ -40,9 +40,6 @@ description: "Minecraft 客户端配置推荐"
 - **Stratum**\
 超真实材质包，使用之前先考虑下自己的显卡能不能跑起来。
   - [Stratum](https://continuum.graphics/stratum-resourcepack/)
-- **Pollachius Potens**\
-超低配材质包，电脑不行的可以考虑下？
-  - [Curseforge](https://www.curseforge.com/minecraft/texture-packs/pollachius-potens)
 - **Bare Bones**\
 我的世界官方宣传片中使用的材质包。
   - [Bare Bones](https://www.planetminecraft.com/texture-pack/bare-bones/)
@@ -92,6 +89,9 @@ UI 主题，石墙主题，制作精美，看腻了单调的原版 UI 可以尝�
 在 mc 视频制作者中广为使用的光影，各方面表现都很不错。
   - [Curseforge](https://www.complementary.dev/shaders-v4/)
   - [Curseforge](https://www.curseforge.com/minecraft/customization/complementary-shaders)
+- **Kappa Shader**\
+社区评选的 2022 年年度最佳光影之一。
+  - [Curseforge](https://www.curseforge.com/minecraft/customization/kappa-shader-by-rre36)
 
 # 界面优化模组
 
