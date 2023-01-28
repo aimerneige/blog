@@ -102,27 +102,80 @@ Terminal=false
 Type=Application
 ```
 
-## Categories
+## HMCL
+
+HMCL 是一个 Minecraft 启动器，其提供的 Linux 客户端不是前文所述的 AppImage 文件，而是 Jar 文件。后文以此为例介绍如何编写 Jar 文件的 .desktop 文件。
+
+### 下载
+
+在 [HMCL 官网](https://hmcl.huangyuhui.net/download/) 或 [GitHub release](https://github.com/huanghongxun/HMCL/releases) 下载即可。
+
+下载好后保存在适当的位置，本文以 `/home/aimer/Software/hmcl/HMCL-3.5.3.228.jar` 为例。
+
+### 准备 jdk 环境
+
+新版的 Minecraft 需要 Java 17 的环境，可以通过包管理来安装 Java 17 的 JDK 环境：
+
+```bash
+sudo pacman -S jdk17-openjdk
+```
+
+也可以解压在 OpenJDK 下载的压缩包并解压：
+
+- [OpenJDK JDK 17](https://openjdk.org/projects/jdk/17/)
+- [Java SE 17](https://jdk.java.net/java-se-ri/17)
+
+要保证 java 指令在环境变量中并可直接调用，如果不想将其添加到环境变量，在后文 `Exec` 中需要将 `java` 替换为完整路径。
+
+### 准备一个图标
+
+在这里下载我使用的图标：
+
+<https://www.deviantart.com/dharmainitiative2010/art/Minecraft-Icon-187010413>
+
+当然你也可以使用其他图标文件。
+
+### 编写 .desktop 文件
+
+```bash
+vim ~/.local/share/applications/hmcl.desktop
+```
+
+```bash
+[Desktop Entry]
+Categories=Game;ActionGame;AdventureGame;RolePlaying;
+Exec=java -jar /home/aimer/Software/hmcl/HMCL-3.5.3.228.jar
+Icon=/home/aimer/Software/hmcl/icon.png
+Name=HMCL
+Comment=Hello Minecraft! Launcher
+Terminal=false
+Type=Application
+```
+
+# Categories
+
+Categories 的具体内容可以参考下面内容：
 
 > https://specifications.freedesktop.org/menu-spec/latest/apa.html
 
-| Main Category | Description                                                                    | Notes |
-| ------------- | ------------------------------------------------------------------------------ | ----- |
-| AudioVideo    | Application for presenting, creating, or processing multimedia (audio/video)   |       |
-| Audio         | An audio application                                                           |  	Desktop entry must include AudioVideo as well     |
-| Video         | A video application                                                            |   	Desktop entry must include AudioVideo as well    |
-| Development   | An application for development                                                 |       |
-| Education     | Educational software                                                           |       |
-| Game          | A game                                                                         |       |
-| Graphics      | Application for viewing, creating, or processing graphics                      |       |
-| Network       | Network application such as a web browser                                      |       |
-| Office        | An office type application                                                     |       |
-| Science       | Scientific software                                                            |       |
-| Settings      | Settings applications                                                          |       |
-| System        | System application, "System Tools" such as say a log viewer or network monitor |       |
-| Utility       | Small utility application, "Accessories"                                       |       |
+| Main Category | Description                                                                    | Notes                                         |
+| ------------- | ------------------------------------------------------------------------------ | --------------------------------------------- |
+| AudioVideo    | Application for presenting, creating, or processing multimedia (audio/video)   |                                               |
+| Audio         | An audio application                                                           | Desktop entry must include AudioVideo as well |
+| Video         | A video application                                                            | Desktop entry must include AudioVideo as well |
+| Development   | An application for development                                                 |                                               |
+| Education     | Educational software                                                           |                                               |
+| Game          | A game                                                                         |                                               |
+| Graphics      | Application for viewing, creating, or processing graphics                      |                                               |
+| Network       | Network application such as a web browser                                      |                                               |
+| Office        | An office type application                                                     |                                               |
+| Science       | Scientific software                                                            |                                               |
+| Settings      | Settings applications                                                          |                                               |
+| System        | System application, "System Tools" such as say a log viewer or network monitor |                                               |
+| Utility       | Small utility application, "Accessories"                                       |                                               |
 
 # 参考链接
 
 - [Arch Linux Wiki - Desktop entries](https://wiki.archlinux.org/title/desktop_entries)
+- [Ask Ubuntu](https://askubuntu.com/questions/192477/how-do-i-create-a-desktop-file-for-a-jar-file)
 - [A. Registered Categories](https://specifications.freedesktop.org/menu-spec/latest/apa.html)
