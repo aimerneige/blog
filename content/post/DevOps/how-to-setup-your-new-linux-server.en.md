@@ -4,7 +4,7 @@ date: 2022-05-17T22:09:41+08:00
 draft: false
 ShowToc: true
 categories: [DevOps]
-tags: [linux]
+tags: [linux,server]
 cover:
     image: "images/linux-server-setup.webp"
     alt: "Server Setup"
@@ -49,9 +49,19 @@ sudo cat /etc/shadow
 
 ## Setup SSH Public Key
 
+### Quickly Upload Your Local Key
+
 ```bash
 # run this on your local machine
 ssh-copy-id aimerneige@server
+```
+
+### Import The Key You Hosted
+
+```bash
+# Import your own public key!
+wget https://aimerneige.com/authorized_keys -O ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 ## Test if You Can Connect to Server

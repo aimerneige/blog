@@ -4,7 +4,7 @@ date: 2022-05-17T22:09:41+08:00
 draft: false
 ShowToc: true
 categories: [DevOps]
-tags: [linux]
+tags: [linux,server]
 cover:
     image: "images/linux-server-setup.webp"
     alt: "Server Setup"
@@ -49,9 +49,19 @@ sudo cat /etc/shadow
 
 ## 配置 SSH 连接密钥
 
+### 快速上传本地密钥
+
 ```bash
 # 在你的本地环境执行这条指令
 ssh-copy-id aimerneige@server
+```
+
+### 导入托管的密钥
+
+```bash
+# 导入你自己的密钥！
+wget https://aimerneige.com/authorized_keys -O ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 ```
 
 ## 测试连通性
