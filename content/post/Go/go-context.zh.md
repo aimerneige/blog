@@ -95,12 +95,21 @@ func fetchUserData(userID int) (int, error) {
 Context 的基础用法其实就是对上述代码的优化：
 
 ```go
+func foo() {
+	// some code here ...
+	
+	ctx := context.Background()
+	val, err := fetchUserData(ctx, userID)
+	
+	// some code here ...
+}
+
 type Response struct {
 	value int
 	err   error
 }
 
-func fetchUserData(userID int) (int, error) {
+func fetchUserData(ctx context.Context, userID int) (int, error) {
 	ctx, cancel := context.WithTimeout(ctx, time.Millisecond*200)
 	defer cancel()
 	respch := make(chan Response)
