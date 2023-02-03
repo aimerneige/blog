@@ -97,10 +97,10 @@ Context 的基础用法其实就是对上述代码的优化：
 ```go
 func foo() {
 	// some code here ...
-	
+
 	ctx := context.Background()
 	val, err := fetchUserData(ctx, userID)
-	
+
 	// some code here ...
 }
 
