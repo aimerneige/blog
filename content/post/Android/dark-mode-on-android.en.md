@@ -3,8 +3,8 @@ title: "Dark Mode on Android"
 date: 2020-09-05T17:43:46+08:00
 draft: false
 ShowToc: true
-categories: [Program]
-tags: [Android]
+categories: [Android]
+tags: [android]
 ---
 
 > In this example, I am using Material Design. But you can also use the `Theme.AppCompat.DayNight`.
