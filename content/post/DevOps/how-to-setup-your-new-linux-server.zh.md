@@ -33,17 +33,17 @@ dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget util-
 
 ```bash
 # Debian
-adduser aimerneige
-usermod -aG sudo aimerneige
+adduser aimer
+usermod -aG sudo aimer
 # Fedora
-useradd -G wheel aimerneige
-passwd aimerneige
+useradd -G wheel aimer
+passwd aimer
 ```
 
 ## 测试 root 权限
 
 ```bash
-su - aimerneige
+su - aimer
 sudo cat /etc/shadow
 ```
 
@@ -53,7 +53,7 @@ sudo cat /etc/shadow
 
 ```bash
 # 在你的本地环境执行这条指令
-ssh-copy-id aimerneige@server
+ssh-copy-id aimer@server
 ```
 
 ### 导入托管的密钥
@@ -67,7 +67,7 @@ chmod 600 ~/.ssh/authorized_keys
 ## 测试连通性
 
 ```bash
-ssh aimerneige@server
+ssh aimer@server
 ```
 
 ## 禁用 root 和密码登录
@@ -88,7 +88,7 @@ sudo visudo
 在末尾添加如下内容
 
 ```
-aimerneige ALL=(ALL) NOPASSWD:ALL
+aimer ALL=(ALL) NOPASSWD:ALL
 ```
 
 ## 删除云服务商提供的其他用户
@@ -177,7 +177,7 @@ alias cat=bat
 # 使用 curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
-# 使用 bash
+# 使用 wget
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
 

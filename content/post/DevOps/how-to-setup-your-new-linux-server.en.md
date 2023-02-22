@@ -33,17 +33,17 @@ dnf install -y neofetch htop tree ncdu ranger zsh vim neovim git curl wget util-
 
 ```bash
 # Debian
-adduser aimerneige
-usermod -aG sudo aimerneige
+adduser aimer
+usermod -aG sudo aimer
 # Fedora
-useradd -G wheel aimerneige
-passwd aimerneige
+useradd -G wheel aimer
+passwd aimer
 ```
 
 ## Test Root Privileges
 
 ```bash
-su - aimerneige
+su - aimer
 sudo cat /etc/shadow
 ```
 
@@ -53,7 +53,7 @@ sudo cat /etc/shadow
 
 ```bash
 # run this on your local machine
-ssh-copy-id aimerneige@server
+ssh-copy-id aimer@server
 ```
 
 ### Import The Key You Hosted
@@ -67,7 +67,7 @@ chmod 600 ~/.ssh/authorized_keys
 ## Test if You Can Connect to Server
 
 ```bash
-ssh aimerneige@server
+ssh aimer@server
 ```
 
 ## Disable Root and Password Login
@@ -88,7 +88,7 @@ sudo visudo
 Add this on the end of file:
 
 ```
-aimerneige ALL=(ALL) NOPASSWD:ALL
+aimer ALL=(ALL) NOPASSWD:ALL
 ```
 
 ## Delete Other User That Provider Created
@@ -177,7 +177,7 @@ Install nvm
 # use curl
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
-# use bash
+# use wget
 wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 ```
 
