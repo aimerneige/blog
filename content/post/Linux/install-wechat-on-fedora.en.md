@@ -104,9 +104,17 @@ Durning the install process, a desktop file has been added to your system. Just 
 
 ## Alternative
 
+### nspawn
+
 If you don't mind installing a nspawn sub-system into your computer, try this awesome project:
 
 - [GitHub - loaden/nspawn-qq](https://github.com/loaden/nspawn-qq)
+
+### community package:
+
+View this blog article for more detail:
+
+- [XUTHUS - fedora 安装微信和企业微信](https://www.xuthus.cc/linux/fedora34-install-wechat.html)
 
 # Refer Link
 

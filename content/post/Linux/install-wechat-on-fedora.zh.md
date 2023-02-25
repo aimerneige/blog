@@ -104,9 +104,17 @@ StartupWMClass=wechat.exe
 
 ## 替代方案
 
+### nspawn
+
 如果你不介意安装一个 systemd-nspawn 的容器的话，可以尝试这个项目：
 
 - [GitHub - loaden/nspawn-qq](https://github.com/loaden/nspawn-qq)
+
+### 社区包
+
+请参考这篇博客文章：
+
+- [XUTHUS - fedora 安装微信和企业微信](https://www.xuthus.cc/linux/fedora34-install-wechat.html)
 
 # 参考链接
 
