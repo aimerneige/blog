@@ -1,15 +1,14 @@
 ---
-title: "rEFInd on Fedora"
+title: "Install rEFInd on Fedora"
 date: 2022-11-20T20:10:58+08:00
 draft: false
 ShowToc: true
 categories: [Linux]
 tags: [tools,refind,boot,fedora]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+cover:
+    image: "images/rEFInd-banner-logo.png"
+    alt: "eEFInd logo"
+    relative: false
 ---
 
 # rEFInd on Fedora

@@ -5,11 +5,10 @@ draft: false
 ShowToc: true
 categories: [Linux]
 tags: [smb,fileshare]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+cover:
+    image: "images/Logo_Samba_Software.svg"
+    alt: "Samba Logo"
+    relative: false
 ---
 
 # SMB File Share

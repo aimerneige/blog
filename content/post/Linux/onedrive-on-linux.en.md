@@ -1,18 +1,17 @@
 ---
-title: "Onedrive on Linux"
+title: "OneDrive on Linux"
 date: 2022-11-20T20:10:48+08:00
 draft: false
 ShowToc: true
 categories: [Linux]
 tags: [tools,onedrive]
-# cover:
-#     image: "images/blue_poison.jpg"
-#     alt: "Blue Poison"
-#     caption: "A Cute Blue Poison"
-#     relative: false
+cover:
+    image: "images/OneDrive-Logo-2014.png"
+    alt: "OneDrive Logo"
+    relative: false
 ---
 
-# Onedrive on Linux
+# OneDrive on Linux
 
 ## Install
 
