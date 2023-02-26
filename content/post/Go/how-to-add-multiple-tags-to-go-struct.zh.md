@@ -13,7 +13,7 @@ cover:
 
 > 本来很简单的东西，但是老忘，干脆写个博客吧
 
-### 正确写法
+### 错误写法
 
 ```go
 type Page struct {
@@ -22,7 +22,7 @@ type Page struct {
 }
 ```
 
-### 错误写法
+### 正确写法
 
 ```go
 type Page struct {

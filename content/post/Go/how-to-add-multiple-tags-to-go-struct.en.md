@@ -13,7 +13,7 @@ cover:
 
 > It is easy but always be forgotten, so write this post
 
-### Correct
+### Incorrect
 
 ```go
 type Page struct {
@@ -22,7 +22,7 @@ type Page struct {
 }
 ```
 
-### Incorrect
+### Correct
 
 ```go
 type Page struct {
