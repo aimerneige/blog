@@ -4,7 +4,7 @@ date: 2022-08-12T22:40:28+08:00
 draft: false
 ShowToc: true
 categories: [Go]
-tags: [go,image]
+tags: [golang,image]
 cover:
     image: "images/go-image-processing-basic.webp"
     alt: "go image processing"
