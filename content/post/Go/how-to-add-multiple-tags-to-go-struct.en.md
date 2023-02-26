@@ -5,6 +5,10 @@ draft: false
 ShowToc: true
 categories: [Go]
 tags: [golang]
+cover:
+    image: "images/GO-Development-Banner.jpg"
+    alt: "go banner"
+    relative: false
 ---
 
 > It is easy but always be forgotten, so write this post
