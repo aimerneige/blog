@@ -94,3 +94,9 @@ sequenceDiagram
     John-->>Alice: Great!
     Alice-)John: See you later!
 {{< /mermaid >}}
+
+## Custom
+
+{{< custom >}}
+<iframe src="https://aimerneige.com/en/post/others/hello-world/" title="Aimer's Blog" width="100%" height="380"></iframe>
+{{< /custom >}}
