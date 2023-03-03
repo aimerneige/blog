@@ -4,6 +4,7 @@ date: 2020-01-24T15:50:47+08:00
 draft: false
 ShowToc: true
 MathJax: true
+mermaid: true
 categories: [Others]
 tags: [others]
 ---
@@ -84,3 +85,12 @@ func main() {
 Hidden Text
 
 {{< /heimu >}}
+
+## Mermaid
+
+{{< mermaid >}}
+sequenceDiagram
+    Alice->>John: Hello John, how are you?
+    John-->>Alice: Great!
+    Alice-)John: See you later!
+{{< /mermaid >}}

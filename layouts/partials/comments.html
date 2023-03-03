@@ -2,7 +2,12 @@
 <div id="license">
     <p>
         This article is licensed under
-        <a target="_blank" rel="noopener" href="http://creativecommons.org/licenses/by-nc/4.0/" style="color: #00b5da">
+        <a
+            target="_blank"
+            rel="noopener"
+            href="http://creativecommons.org/licenses/by-nc/4.0/"
+            style="color: #00b5da"
+        >
             <u>CC-BY-NC-4.0</u>
         </a>
     </p>
@@ -30,8 +35,12 @@
         }
     </script>
 </div>
-
 <!-- MathJax Support -->
-{{ if $.Page.Params.MathJax }}
-{{ partial "mathjax_support.html" . }}
+{{ if $.Page.Params.MathJax }} {{ partial "mathjax_support.html" . }} {{ end }}
+<!-- MermaidJS support -->
+{{ if (.Params.mermaid) }}
+<script
+    async
+    src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"
+></script>
 {{ end }}
