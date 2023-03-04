@@ -74,7 +74,7 @@ git clone https://github.com/adityatelange/hugo-PaperMod themes/PaperMod --depth
 如果想要方便版本控制和更新，使用如下指令添加 submodule：
 
 ```bash
-git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod --depth=1
+git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
 ```
 
 当重新 clone 仓库后，执行如下指令 clone 主题子仓库：

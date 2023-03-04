@@ -76,7 +76,7 @@ Of course, you can download a zip file and unzip it.
 If you wants to make version control more convenient and update more easily, use this command to add submodule:
 
 ```bash
-git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod --depth=1
+git submodule add https://github.com/adityatelange/hugo-PaperMod.git themes/PaperMod
 ```
 
 Clone submodules when reclone repo:
