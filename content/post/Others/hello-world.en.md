@@ -95,8 +95,13 @@ sequenceDiagram
     Alice-)John: See you later!
 {{< /mermaid >}}
 
-## Custom
+## Gallery
 
-{{< custom >}}
-<iframe src="https://aimerneige.com/en/post/others/hello-world/" title="Aimer's Blog" width="100%" height="380"></iframe>
-{{< /custom >}}
+Yalong Bay No.2, Longhai Road No., Jinyang, Sanya, Hainan China
+
+{{< gallery hover-effect="grow" >}}
+  {{< figure link="images/gallery/Hainan/1.jpg" >}}
+  {{< figure link="images/gallery/Hainan/2.jpg" >}}
+  {{< figure link="images/gallery/Hainan/3.jpg" >}}
+{{< /gallery >}}
+{{< load-photoswipe >}}
