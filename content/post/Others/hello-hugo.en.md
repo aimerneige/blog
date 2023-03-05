@@ -266,7 +266,7 @@ Generate static file with this command:
 hugo
 ```
 
-Then public it to github:
+Then push it to github:
 
 ```bash
 cd public
