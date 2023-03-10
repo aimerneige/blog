@@ -119,7 +119,7 @@ params:
     enabled: true
     title: "Aimer Neige"
     subtitle: "Tech Otakus Save The World"
-    imageUrl: "/images/avatar.jpg"
+    imageUrl: "https://avatars.githubusercontent.com/u/51701792?v=4"
     imageTitle: "avatar"
     imageWidth: 140
     imageHeight: 140
