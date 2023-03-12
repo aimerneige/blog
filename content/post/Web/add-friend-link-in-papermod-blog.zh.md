@@ -4,7 +4,7 @@ date: 2023-03-12T13:25:06+08:00
 draft: false
 ShowToc: true
 categories: [Web]
-tags: [blog,papermod,fonts,css]
+tags: [blog,papermod,css]
 cover:
     image: "images/friend-link.png"
     alt: "Friend Link"
