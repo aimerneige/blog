@@ -3,7 +3,7 @@ title: "Spotify Short Codes"
 date: 2023-03-01T20:57:21+08:00
 draft: false
 ShowToc: true
-categories: [Others]
+categories: [Web]
 tags: [hugo,spotify,music]
 cover:
     image: "images/Spotify_Logo_CMYK_Green.png"
