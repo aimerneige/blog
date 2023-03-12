@@ -1,7 +1,7 @@
 ---
 title: "在 PaperMod 博客中添加友链"
 date: 2023-03-12T13:25:06+08:00
-draft: true
+draft: false
 ShowToc: true
 categories: [Web]
 tags: [blog,papermod,fonts,css]
