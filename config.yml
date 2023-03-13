@@ -9,7 +9,6 @@ buildDrafts: false
 buildFuture: false
 buildExpired: false
 enableEmoji: true
-googleAnalytics: G-5QJPQTJ618
 
 defaultContentLanguage: en
 defaultContentLanguageInSubdir: true
