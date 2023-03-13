@@ -15,12 +15,12 @@ cover:
 >
 > More detail in this video: <https://www.youtube.com/watch?v=3c-iBn73dDE>
 
-**Difference Image and Container**
+## **Difference Image and Container**
 
 - CONTAINER is a running environment for IMAGE
-    - virtual file system
-    - port blinded: talk to application running inside of container
-    - application image: postgres, redis, mongo, ...
+  - virtual file system
+  - port blinded: talk to application running inside of container
+  - application image: postgres, redis, mongo, ...
 - redis in dockerhub are images
 
 ```bash
@@ -58,7 +58,7 @@ docker start <CONTAINER ID>
 docker run redis:4.0
 ```
 
-**CONTAINER Ports vs HOST ports**
+## **CONTAINER Ports vs HOST ports**
 
 - Multiple containers can run on your host machine
 - Your laptop has only certain ports available
@@ -88,11 +88,11 @@ docker run -d -p6000:6379 --name redis-older redis:4.0
 
 ```bash
 # it Interactive Terminal
-dcoker exec -it <CONTAINER ID> /bin/bash
-dcoker exec -it <CONTAINER NAMES> /bin/bash
+docker exec -it <CONTAINER ID> /bin/bash
+docker exec -it <CONTAINER NAMES> /bin/bash
 # if no bash installed
-dcoker exec -it <CONTAINER ID> /bin/sh
-dcoker exec -it <CONTAINER NAMES> /bin/sh
+docker exec -it <CONTAINER ID> /bin/sh
+docker exec -it <CONTAINER NAMES> /bin/sh
 ```
 
 ```bash
@@ -143,7 +143,7 @@ docker logs <CONTAINER ID> | tail
 docker logs <CONTAINER ID> | more
 ```
 
-**Docker Compose**
+## **Docker Compose**
 
 docker run command
 
@@ -198,13 +198,13 @@ docker-compose -f mongo-docker-compose.yaml up -d
 docker-compose -f mongo-docker-compose.yaml down
 ```
 
-**Dockerfile**
+## **Dockerfile**
 
 - Blueprint for building images
 
-*Image Environment Blueprint*
+`Image Environment Blueprint`
 
-```
+```bash
 install node
 
 set MONGO_DB_USERNAME = admin
@@ -217,7 +217,7 @@ copy current folder files to /home/app
 start the app with: "node server.js"
 ```
 
-*DOCKERFILE*
+`DOCKERFILE`
 
 ```dockerfile
 FROM node
@@ -267,13 +267,13 @@ docker tag my-app:1.0 327587328957.dkr.ecr.eu-central-1.amazonaws.com/my-app:1.0
 docker push 327587328957.dkr.ecr.eu-central-1.amazonaws.com/my-app:1.0
 ```
 
-**Docker Volumes**
+## **Docker Volumes**
 
 Container use virtual file system. When you stop or restart the container, all the data is GONE!
 
 Folder in physical host file system is **mounted** into the virtual file system of Docker.
 
-*Host Volumes*
+### *Host Volumes*
 
 ```bash
 docker run \
@@ -282,7 +282,7 @@ docker run \
 
 You decide **where on the host file system** the reference is made.
 
-*Anonymous Volumes*
+### *Anonymous Volumes*
 
 ```bash
 docker run \
@@ -293,7 +293,7 @@ for **each container a foldre is generated** that gets mounted.
 
 Automatically created by Docker
 
-*Named Volumes*
+### *Named Volumes*
 
 ```bash
 docker run \
@@ -304,7 +304,7 @@ you can **reference** the volume **by name**
 
 should be used in production
 
-**Docker Volumes in docker-compose**
+## **Docker Volumes in docker-compose**
 
 ```yaml
 version: '3'
@@ -355,7 +355,7 @@ volumes:
     driver: local
 ```
 
-**Docker Volume Locations**
+## **Docker Volume Locations**
 
 - Windows: `C:\ProgramData\docker\volumes`
 - Linux: `/var/lib/docker/volumes`
