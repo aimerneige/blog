@@ -11,7 +11,7 @@ cover:
     relative: false
 ---
 
-# Install Filebrowser
+## Install Filebrowser
 
 Install file browser to your server:
 
@@ -30,7 +30,7 @@ Access your server and try to login in.
 Username: `admin`\
 Password: `admin`
 
-# Create Your Own Config
+## Create Your Own Config
 
 Write your config file:
 
@@ -48,7 +48,7 @@ root: /path/to/your/file
 database: /etc/filebrowser/filebrowser.db
 ```
 
-# Create Service
+## Create Service
 
 Write a service file:
 
@@ -56,7 +56,7 @@ Write a service file:
 sudo vim /etc/systemd/system/filebrowser.service
 ```
 
-Wirte something like this:
+Write something like this:
 
 ```service
 [Unit]
@@ -80,8 +80,8 @@ sudo systemctl start filebrowser.service
 sudo systemctl enable filebrowser.service
 ```
 
-Makesure to change your access password!
+Make sure to change your access password!
 
-# Link
+## Link
 
 - [File Browser](https://filebrowser.org/)
