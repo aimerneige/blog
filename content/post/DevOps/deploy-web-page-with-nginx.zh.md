@@ -72,7 +72,7 @@ scp site.tar.xz root@test.aimerneige.com:~/
 
 ### 在服务器解压压缩包
 
-通常，我们会将静态网站的源文件放置在 `/var/www/` 这个目录下，但是你也可以放置在家目录或其他你喜欢的位置下。当然，你要保证你喜欢的目录没有问题。<sub>~~（喜欢放在 `/tmp` 下的给爷爬）~~</sub>
+通常，我们会将静态网站的源文件放置在 `/var/www/` 这个目录下，但是你也可以放置在家目录或其他你喜欢的位置下。
 
 ```bash
 tar -Jxv -f site.tar.xz -C ./
@@ -87,14 +87,14 @@ sudo mv public/ /var/www/blog
 
 直接使用 `vim` 修改默认的配置文件即可。 如果你没有安装 `vim` ，执行 `sudo apt install vim` 来安装它，当然你也可以使用自己喜欢的编辑器。
 
-```
+```bash
 sudo vim /etc/nginx/sites-available/default
 ```
 
 找到这一行：
 
 ```nginx
-	root /var/www/html;
+    root /var/www/html;
 ```
 
 修改为源文件所在目录：
@@ -106,7 +106,7 @@ sudo vim /etc/nginx/sites-available/default
 如果你需要配置域名，找到这一行：
 
 ```nginx
-	server_name _;
+    server_name _;
 ```
 
 将 `_` 修改为你的域名。
@@ -138,17 +138,9 @@ sudo nginx -s reload
 
 ---
 
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
-</br>
+## 后记
 
-# 后记
-
-## 为什么 `Nginx` 的配置文件要这样改
+### 为什么 `Nginx` 的配置文件要这样改
 
 `Nginx` 的默认配置文件位于 `/etc/nginx/` 目录下，主配置文件为 `nginx.conf`
 
@@ -161,84 +153,84 @@ pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 
 events {
-	worker_connections 768;
-	# multi_accept on;
+    worker_connections 768;
+    # multi_accept on;
 }
 
 http {
 
-	##
-	# Basic Settings
-	##
+    ##
+    # Basic Settings
+    ##
 
-	sendfile on;
-	tcp_nopush on;
-	tcp_nodelay on;
-	keepalive_timeout 65;
-	types_hash_max_size 2048;
-	# server_tokens off;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
+    # server_tokens off;
 
-	# server_names_hash_bucket_size 64;
-	# server_name_in_redirect off;
+    # server_names_hash_bucket_size 64;
+    # server_name_in_redirect off;
 
-	include /etc/nginx/mime.types;
-	default_type application/octet-stream;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
 
-	##
-	# SSL Settings
-	##
+    ##
+    # SSL Settings
+    ##
 
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
-	ssl_prefer_server_ciphers on;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+    ssl_prefer_server_ciphers on;
 
-	##
-	# Logging Settings
-	##
+    ##
+    # Logging Settings
+    ##
 
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
 
-	##
-	# Gzip Settings
-	##
+    ##
+    # Gzip Settings
+    ##
 
-	gzip on;
+    gzip on;
 
-	# gzip_vary on;
-	# gzip_proxied any;
-	# gzip_comp_level 6;
-	# gzip_buffers 16 8k;
-	# gzip_http_version 1.1;
-	# gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
+    # gzip_vary on;
+    # gzip_proxied any;
+    # gzip_comp_level 6;
+    # gzip_buffers 16 8k;
+    # gzip_http_version 1.1;
+    # gzip_types text/plain text/css application/json application/javascript text/xml application/xml application/xml+rss text/javascript;
 
-	##
-	# Virtual Host Configs
-	##
+    ##
+    # Virtual Host Configs
+    ##
 
-	include /etc/nginx/conf.d/*.conf;
-	include /etc/nginx/sites-enabled/*;
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
 }
 
 
 #mail {
-#	# See sample authentication script at:
-#	# http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
+#    # See sample authentication script at:
+#    # http://wiki.nginx.org/ImapAuthenticateWithApachePhpScript
 #
-#	# auth_http localhost/auth.php;
-#	# pop3_capabilities "TOP" "USER";
-#	# imap_capabilities "IMAP4rev1" "UIDPLUS";
+#    # auth_http localhost/auth.php;
+#    # pop3_capabilities "TOP" "USER";
+#    # imap_capabilities "IMAP4rev1" "UIDPLUS";
 #
-#	server {
-#		listen     localhost:110;
-#		protocol   pop3;
-#		proxy      on;
-#	}
+#    server {
+#        listen     localhost:110;
+#        protocol   pop3;
+#        proxy      on;
+#    }
 #
-#	server {
-#		listen     localhost:143;
-#		protocol   imap;
-#		proxy      on;
-#	}
+#    server {
+#        listen     localhost:143;
+#        protocol   imap;
+#        proxy      on;
+#    }
 #}
 ```
 
@@ -251,39 +243,39 @@ pid /run/nginx.pid;
 include /etc/nginx/modules-enabled/*.conf;
 
 events {
-	worker_connections 768;
+    worker_connections 768;
 }
 
 http {
 
-	sendfile on;
-	tcp_nopush on;
-	tcp_nodelay on;
-	keepalive_timeout 65;
-	types_hash_max_size 2048;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 65;
+    types_hash_max_size 2048;
 
-	include /etc/nginx/mime.types;
-	default_type application/octet-stream;
+    include /etc/nginx/mime.types;
+    default_type application/octet-stream;
 
-	ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
-	ssl_prefer_server_ciphers on;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 TLSv1.3; # Dropping SSLv3, ref: POODLE
+    ssl_prefer_server_ciphers on;
 
-	access_log /var/log/nginx/access.log;
-	error_log /var/log/nginx/error.log;
+    access_log /var/log/nginx/access.log;
+    error_log /var/log/nginx/error.log;
 
-	gzip on;
+    gzip on;
 
-	xml application/xml application/xml+rss text/javascript;
+    xml application/xml application/xml+rss text/javascript;
 
-	include /etc/nginx/conf.d/*.conf;
-	include /etc/nginx/sites-enabled/*;
+    include /etc/nginx/conf.d/*.conf;
+    include /etc/nginx/sites-enabled/*;
 }
 ```
 
 默认的服务为什么可以跑呢？注意这一行：
 
 ```nginx
-	include /etc/nginx/sites-enabled/*;
+    include /etc/nginx/sites-enabled/*;
 ```
 
 切换到 `/etc/nginx/sites-enabled/` 目录下，并查看文件
@@ -319,56 +311,56 @@ ls
 # Default server configuration
 #
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-	# SSL configuration
-	#
-	# listen 443 ssl default_server;
-	# listen [::]:443 ssl default_server;
-	#
-	# Note: You should disable gzip for SSL traffic.
-	# See: https://bugs.debian.org/773332
-	#
-	# Read up on ssl_ciphers to ensure a secure configuration.
-	# See: https://bugs.debian.org/765782
-	#
-	# Self signed certs generated by the ssl-cert package
-	# Don't use them in a production server!
-	#
-	# include snippets/snakeoil.conf;
+    # SSL configuration
+    #
+    # listen 443 ssl default_server;
+    # listen [::]:443 ssl default_server;
+    #
+    # Note: You should disable gzip for SSL traffic.
+    # See: https://bugs.debian.org/773332
+    #
+    # Read up on ssl_ciphers to ensure a secure configuration.
+    # See: https://bugs.debian.org/765782
+    #
+    # Self signed certs generated by the ssl-cert package
+    # Don't use them in a production server!
+    #
+    # include snippets/snakeoil.conf;
 
-	root /var/www/html;
+    root /var/www/html;
 
-	# Add index.php to the list if you are using PHP
-	index index.html index.htm index.nginx-debian.html;
-	# index test.json;
+    # Add index.php to the list if you are using PHP
+    index index.html index.htm index.nginx-debian.html;
+    # index test.json;
 
-	server_name _;
+    server_name _;
 
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
+    location / {
+        # First attempt to serve request as file, then
+        # as directory, then fall back to displaying a 404.
+        try_files $uri $uri/ =404;
+    }
 
-	# pass PHP scripts to FastCGI server
-	#
-	#location ~ \.php$ {
-	#	include snippets/fastcgi-php.conf;
-	#
-	#	# With php-fpm (or other unix sockets):
-	#	fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
-	#	# With php-cgi (or other tcp sockets):
-	#	fastcgi_pass 127.0.0.1:9000;
-	#}
+    # pass PHP scripts to FastCGI server
+    #
+    #location ~ \.php$ {
+    #    include snippets/fastcgi-php.conf;
+    #
+    #    # With php-fpm (or other unix sockets):
+    #    fastcgi_pass unix:/var/run/php/php7.4-fpm.sock;
+    #    # With php-cgi (or other tcp sockets):
+    #    fastcgi_pass 127.0.0.1:9000;
+    #}
 
-	# deny access to .htaccess files, if Apache's document root
-	# concurs with nginx's one
-	#
-	#location ~ /\.ht {
-	#	deny all;
-	#}
+    # deny access to .htaccess files, if Apache's document root
+    # concurs with nginx's one
+    #
+    #location ~ /\.ht {
+    #    deny all;
+    #}
 }
 
 
@@ -378,17 +370,17 @@ server {
 # to sites-enabled/ to enable it.
 #
 #server {
-#	listen 80;
-#	listen [::]:80;
+#    listen 80;
+#    listen [::]:80;
 #
-#	server_name example.com;
+#    server_name example.com;
 #
-#	root /var/www/example.com;
-#	index index.html;
+#    root /var/www/example.com;
+#    index index.html;
 #
-#	location / {
-#		try_files $uri $uri/ =404;
-#	}
+#    location / {
+#        try_files $uri $uri/ =404;
+#    }
 #}
 ```
 
@@ -396,18 +388,18 @@ server {
 
 ```nginx
 server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
+    listen 80 default_server;
+    listen [::]:80 default_server;
 
-	root /var/www/html;
+    root /var/www/html;
 
-	index index.html index.htm index.nginx-debian.html;
+    index index.html index.htm index.nginx-debian.html;
 
-	server_name _;
+    server_name _;
 
-	location / {
-		try_files $uri $uri/ =404;
-	}
+    location / {
+        try_files $uri $uri/ =404;
+    }
 }
 ```
 
