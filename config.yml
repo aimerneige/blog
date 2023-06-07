@@ -22,9 +22,6 @@ languages:
         - name: About
           url: about/
           weight: 5
-        # - name: Friends
-        #   url: friends/
-        #   weight: 6
         - name: Post
           url: post/
           weight: 7
@@ -37,9 +34,6 @@ languages:
         - name: Categories
           url: categories/
           weight: 10
-        # - name: Projects
-        #   url: projects/
-        #   weight: 11
         - name: Search
           url: search/
           weight: 12
@@ -51,9 +45,6 @@ languages:
         - name: 关于
           url: about/
           weight: 5
-        # - name: 朋友
-        #   url: friends/
-        #   weight: 6
         - name: 文章
           url: post/
           weight: 7
@@ -66,9 +57,6 @@ languages:
         - name: 分类
           url: categories/
           weight: 10
-        # - name: 项目
-        #   url: projects/
-        #   weight: 11
         - name: 搜索
           url: search/
           weight: 12
@@ -93,7 +81,7 @@ params:
   env: production
   keywords: [Blog, OpenSource, Coding, Golang, Programming]
   author: "Aimer Neige"
-  defaultTheme: light
+  defaultTheme: auto
   disableThemeToggle: true
 
   ShowToc: true
