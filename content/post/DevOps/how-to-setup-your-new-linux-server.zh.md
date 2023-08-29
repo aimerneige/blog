@@ -232,6 +232,12 @@ nvim
 
 ### 移除 snap
 
+[一键移除脚本](https://github.com/BryanDollery/remove-snap)
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/BryanDollery/remove-snap/main/remove-snap.sh)"
+```
+
 查看已安装的 snap 包
 
 ```bash

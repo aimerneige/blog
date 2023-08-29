@@ -232,6 +232,11 @@ nvim
 
 ### Remove snap
 
+[Remove snap from Ubuntu](https://github.com/BryanDollery/remove-snap)
+
+```bash
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/BryanDollery/remove-snap/main/remove-snap.sh)"
+
 List all of the installed snap package
 
 ```bash
