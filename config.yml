@@ -70,12 +70,14 @@ languages:
         imageWidth: 140
         imageHeight: 140
         buttons:
-          - name: 朋友
+          - name: "朋友"
             url: "/zh/friends"
           - name: "项目"
             url: "/zh/projects"
           - name: "捐赠"
             url: "/zh/donate"
+          - name: "国内镜像站"
+            url: "https://aimer.aiursoft.cn/zh/"
 
 params:
   env: production
@@ -111,12 +113,14 @@ params:
     imageWidth: 140
     imageHeight: 140
     buttons:
-      - name: Friends
+      - name: "Friends"
         url: "/en/friends"
       - name: "Projects"
         url: "/en/projects"
       - name: "Donate"
         url: "/en/donate"
+      - name: "CN Mirror Site"
+        url: "https://aimer.aiursoft.cn/en/"
 
   socialIcons:
     - name: github
