@@ -1,7 +1,7 @@
 ---
 title: "Shell Learning Notes Variable"
 date: 2022-04-30T00:42:38+08:00
-draft: false
+draft: true
 ShowToc: true
 categories: [Shell]
 tags: [linux,bash,shell,notes]

@@ -1,7 +1,7 @@
 ---
 title: "Shell Learning Notes Comment"
 date: 2022-05-01T02:25:48+08:00
-draft: false
+draft: true
 ShowToc: true
 categories: [Shell]
 tags: [linux,bash,shell,notes]
