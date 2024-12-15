@@ -291,7 +291,7 @@ Counter 的一个有趣的应用是判断易位词。
 >
 > 来源: [中文维基 易位构词游戏](https://zh.wikipedia.org/wiki/%E6%98%93%E4%BD%8D%E6%9E%84%E8%AF%8D%E6%B8%B8%E6%88%8F)
 >
-> 推荐阅读：[百度百科 易位词](<[https://baike.baidu.com/item/%E5%8F%98%E4%BD%8D%E8%AF%8D/3844597](https://baike.baidu.com/item/变位词/3844597)>) [English wiki Anagram](https://en.wikipedia.org/wiki/Anagram)
+> 推荐阅读：[百度百科 易位词](https://baike.baidu.com/item/%E5%8F%98%E4%BD%8D%E8%AF%8D/3844597) [English wiki Anagram](https://en.wikipedia.org/wiki/Anagram)
 
 如果俩个字符串的 Counter 对象是相同的，那么他们是易位词。
 

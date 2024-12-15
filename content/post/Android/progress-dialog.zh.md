@@ -46,4 +46,6 @@ tags: [android]
     progressDialog.hide();
 ```
 
-很简单不是吗<sub><sub>又水了一期，不过好像没人看我的博客</sub></sub>
+很简单不是吗
+
+~~又水了一期，不过好像没人看我的博客~~

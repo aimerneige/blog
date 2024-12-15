@@ -91,7 +91,7 @@ nginx 用于将服务反向代理到 80 端口，以 `Ubuntu` 系统为例，直
 sudo apt install nginx
 ```
 
-Windows 用户自行查阅相关资料。<sub>~~不会吧，不会吧，不会有人服务器用 windows 吧？？~~</sub>
+Windows 用户自行查阅相关资料。~~不会吧，不会吧，不会有人服务器用 windows 吧？？~~
 
 ## 项目构建
 

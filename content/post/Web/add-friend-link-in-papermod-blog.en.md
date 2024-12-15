@@ -17,6 +17,7 @@ PaperMod is a good hugo blog theme, but it did not support a friend link officia
 
 Put this shortcode into `layouts/shortcodes/friends.html`
 
+
 ```html
 <style type="text/css">
     .friends {

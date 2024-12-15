@@ -60,7 +60,7 @@ ssh-copy-id aimer@server
 
 ```bash
 # Import your own public key!
-wget https://aimerneige.com/authorized_keys -O ~/.ssh/authorized_keys
+wget https://aimer.aiursoft.cn/authorized_keys -O ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
 
@@ -77,7 +77,9 @@ sudo vim /etc/ssh/sshd_config
 ```
 
 - Set `PermitRootLogin` as `no` To disable `root` login
-- Set `PasswordAuthentication` ad `no` To disable password login
+- Set `PasswordAuthentication` as `no` To disable password login
+
+Delete this file `/etc/ssh/sshd_config.d/50-cloud-init.conf`
 
 ## Skip Password for Sudo
 
@@ -236,6 +238,7 @@ nvim
 
 ```bash
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/BryanDollery/remove-snap/main/remove-snap.sh)"
+```
 
 List all of the installed snap package
 

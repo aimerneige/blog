@@ -63,6 +63,6 @@ So, If you want to change the color on night mode, just add it on `values-night/
 
 Like what I write on `Adapt colors`, just add a `themes.xml` on folder `project/app/src/main/res/values-night`.
 
-<!-- ## Adapt Pictures
+## Adapt Pictures
 
-Most simplest way: **You can just use the transparent picture**. -->
+Most simplest way: **You can just use the transparent picture**.

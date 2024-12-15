@@ -60,7 +60,7 @@ ssh-copy-id aimer@server
 
 ```bash
 # 导入你自己的密钥！
-wget https://aimerneige.com/authorized_keys -O ~/.ssh/authorized_keys
+wget https://aimer.aiursoft.cn/authorized_keys -O ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 ```
 
@@ -78,6 +78,8 @@ sudo vim /etc/ssh/sshd_config
 
 - 将 `PermitRootLogin` 修改为 `no` 可以禁用 `root` 用户登录
 - 将 `PasswordAuthentication` 修改为 `no` 可以禁用密码登录
+
+删除这个文件 `/etc/ssh/sshd_config.d/50-cloud-init.conf`
 
 ## 设置 sudo 免密码
 

@@ -444,7 +444,7 @@ Commercial support is available at
 
 回到 `/etc/nginx/sites-enabled/` 目录下，我想你应该明白应该修改什么了吧。
 
-<!-- ```nginx
+```nginx
 server {
     listen 80;
 
@@ -454,4 +454,4 @@ server {
         proxy_pass http://localhost:3000/;
     }
 }
-``` -->
+```

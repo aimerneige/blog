@@ -194,7 +194,6 @@ x = isinstance(y, myObj)
 > type(B()) == A        # returns False
 > ```
 >
-> 来源： https://aimerneige.com/2020/05/29/Daily-Python-Tips-isinstance/
 
 更多示例：
 
