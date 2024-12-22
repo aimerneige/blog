@@ -183,6 +183,85 @@ The alias path need to be the father directory of `dists` and `pool`.
         - universe/
 ```
 
+You can serve website with nginx's autoindex. Also, you can use some other static-web-server to make the website looks better.
+
+You can start [static-web-server](https://github.com/static-web-server/static-web-server) like this:
+
+```bash
+static-web-server \
+    --host 127.0.0.1 \
+    --port 8080 \
+    --root /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu \
+    --directory-listing true
+```
+
+or [ghfs](https://github.com/mjpclab/go-http-file-server) like this:
+
+```bash
+ghfs --listen 8080 --root /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu
+```
+
+or [Aiursoft.Static](https://github.com/AiursoftWeb/Static) like this:
+
+```bash
+static --path /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu -p 8080 --allow-directory-browsing
+```
+
+Run these binary under tmux or write a service file like this:
+
+```bash
+sudo vim /etc/systemd/system/mirror-web.service
+```
+
+```
+[Unit]
+Description=Apt Mirror Web Server
+After=network.target
+Wants=network.target
+
+[Service]
+User=www-data
+Type=simple
+Restart=on-failure
+RestartSec=5s
+ExecStart=/usr/local/bin/ghfs --listen 8080 --root /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu
+WorkingDirectory=/mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu
+LimitNOFILE=1048576
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Then start service like this:
+
+```bash
+sudo systemctl start mirror-web
+```
+
+Make it runs automatically after system boot:
+
+```bash
+sudo systemctl enable mirror-web
+```
+
+Finally configure reverse proxy for nginx:
+
+```nginx
+server {
+    listen 80;
+    server_name mirrors.aimersoft.org;
+    
+    location /ubuntu {
+        proxy_pass http://localhost:8080;
+
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header Upgrade $http_upgrade;
+    }
+}
+```
+
 ## Setup https (optional)
 
 If you want to setup https too, here is an example:
