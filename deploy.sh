@@ -20,7 +20,7 @@ info "Deploying updates to GitHub..."
 
 if [[ -d ./public ]]; then
   info "Deleting old public directory..."
-  rm -r public/
+  rm -rf public/
 fi
 
 info "Generating static files..."
