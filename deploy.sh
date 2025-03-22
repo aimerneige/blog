@@ -10,6 +10,12 @@ err() {
   printf "\033[0;31m$1\033[0m\n"
 }
 
+if ! command -v hugo 2>&1 >/dev/null
+then
+    err "hugo could not be found"
+    exit 1
+fi
+
 cwd=$(pwd)
 if [[ ! -d "content" ]]; then
     err "Run this under project root dir, currend dir: $cwd"

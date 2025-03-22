@@ -47,10 +47,5 @@ hugo
 ## Deploy
 
 ```bash
-cd public
-git add -A
-git commit -m "update"
-git push
+bash ./deploy.sh
 ```
-
-or just run `./deploy.sh`
