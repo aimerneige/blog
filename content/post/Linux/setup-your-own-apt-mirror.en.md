@@ -224,8 +224,8 @@ User=www-data
 Type=simple
 Restart=on-failure
 RestartSec=5s
-ExecStart=/usr/local/bin/ghfs --listen 8080 --root /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu
-WorkingDirectory=/mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com/ubuntu
+ExecStart=/usr/local/bin/ghfs --listen 8080 --root /mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com
+WorkingDirectory=/mnt/data/apt-mirror/mirror/mirrors.huaweicloud.com
 LimitNOFILE=1048576
 
 [Install]
@@ -251,7 +251,7 @@ server {
     listen 80;
     server_name mirrors.aimersoft.org;
     
-    location /ubuntu {
+    location / {
         proxy_pass http://localhost:8080;
 
         proxy_set_header Host $host;
