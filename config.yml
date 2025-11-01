@@ -77,7 +77,7 @@ languages:
           - name: "捐赠"
             url: "/zh/donate"
           - name: "国内镜像站"
-            url: "https://aimer.aiursoft.cn/zh/"
+            url: "https://aimer.aiursoft.com/zh/"
 
 params:
   env: production
