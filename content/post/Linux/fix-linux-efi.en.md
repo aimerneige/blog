@@ -131,6 +131,8 @@ sudo reboot
 
 ## Restore EFI files with grub
 
+![meme](/images/windows_broken_uefi.png)
+
 If you have already delete the entire disk which store your EFI files, here is how you can restore them.
 
 The basic concept is:
