@@ -121,8 +121,6 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/AimerNeige"
-    - name: twitter
-      url: "https://twitter.com/NeigeAimer"
     - name: steam
       url: "https://steamcommunity.com/id/AimerNeige"
     - name: Telegram
