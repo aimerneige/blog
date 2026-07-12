@@ -15,7 +15,7 @@ For any drafting, rewriting, translating, or review task, read [references/aimer
 
 1. Identify the task mode: new post, polish existing post, translate zh/en pair, review only, or frontmatter/title/summary cleanup.
 2. Read the target file before editing. For a new post, read `archetypes/default.md` and one or two existing posts in the same language/category as style references.
-3. For any Codex-generated new article or substantial Codex rewrite, insert the AI draft notice immediately after the frontmatter and before the first body paragraph or heading. Preserve it until the author manually removes it after review.
+3. For any Codex-generated new article or substantial Codex rewrite, insert the language-appropriate AI draft notice immediately after the frontmatter and before the first body paragraph or heading. Preserve it until the author manually removes it after review.
 4. Preserve Hugo structure: frontmatter keys, `cover`, `ShowToc`, headings, links, code fences, footnotes, and shortcodes such as `{{< notice tip >}}`.
 5. Preserve facts and author experience. Do not invent personal anecdotes, test results, version claims, screenshots, or "official" recommendations. Ask or leave an explicit gap when source material is missing.
 6. Edit from large to small: structure, missing prerequisites or warnings, paragraph flow, sentence-level AI taste, then punctuation.
@@ -23,12 +23,24 @@ For any drafting, rewriting, translating, or review task, read [references/aimer
 
 ## AI Draft Notice
 
-For Codex-generated new articles and substantial Codex rewrites, put this notice at the very beginning of the article body, immediately after YAML frontmatter:
+For Codex-generated new articles and substantial Codex rewrites, put the matching notice at the very beginning of the article body, immediately after YAML frontmatter. Choose the notice by the article language, normally from the filename suffix (`.zh.md` or `.en.md`) and the dominant prose language.
+
+Chinese notice:
 
 ```markdown
 {{< notice warning >}}
 
 本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+```
+
+English notice:
+
+```markdown
+{{< notice warning >}}
+
+This post was generated entirely with Codex and has not been manually verified. Please read it critically.
 
 {{</ notice >}}
 ```
