@@ -15,10 +15,25 @@ For any drafting, rewriting, translating, or review task, read [references/aimer
 
 1. Identify the task mode: new post, polish existing post, translate zh/en pair, review only, or frontmatter/title/summary cleanup.
 2. Read the target file before editing. For a new post, read `archetypes/default.md` and one or two existing posts in the same language/category as style references.
-3. Preserve Hugo structure: frontmatter keys, `cover`, `ShowToc`, headings, links, code fences, footnotes, and shortcodes such as `{{< notice tip >}}`.
-4. Preserve facts and author experience. Do not invent personal anecdotes, test results, version claims, screenshots, or "official" recommendations. Ask or leave an explicit gap when source material is missing.
-5. Edit from large to small: structure, missing prerequisites or warnings, paragraph flow, sentence-level AI taste, then punctuation.
-6. Keep procedural content scannable. Lists, numbered steps, code blocks, and known-issue sections are normal for this blog; do not prose-merge real instructions just to look less list-like.
+3. For any Codex-generated new article or substantial Codex rewrite, insert the AI draft notice immediately after the frontmatter and before the first body paragraph or heading. Preserve it until the author manually removes it after review.
+4. Preserve Hugo structure: frontmatter keys, `cover`, `ShowToc`, headings, links, code fences, footnotes, and shortcodes such as `{{< notice tip >}}`.
+5. Preserve facts and author experience. Do not invent personal anecdotes, test results, version claims, screenshots, or "official" recommendations. Ask or leave an explicit gap when source material is missing.
+6. Edit from large to small: structure, missing prerequisites or warnings, paragraph flow, sentence-level AI taste, then punctuation.
+7. Keep procedural content scannable. Lists, numbered steps, code blocks, and known-issue sections are normal for this blog; do not prose-merge real instructions just to look less list-like.
+
+## AI Draft Notice
+
+For Codex-generated new articles and substantial Codex rewrites, put this notice at the very beginning of the article body, immediately after YAML frontmatter:
+
+```markdown
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+```
+
+Do not add this notice for review-only tasks or tiny metadata/prose fixes unless the user asks for it. Do not remove an existing notice unless the user explicitly says the article has been manually reviewed.
 
 ## Mode Rules
 

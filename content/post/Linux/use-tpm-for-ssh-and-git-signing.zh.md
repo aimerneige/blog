@@ -8,6 +8,12 @@ categories: [Linux]
 tags: [ssh,git,security,tpm]
 ---
 
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+
 读完“笔记本已经内置安全密钥”的思路后，很自然会想到一个问题：Linux 设备能不能也这么玩？
 
 答案是可以，但它和 macOS Touch ID、Windows Hello 的体验不完全一样。Linux 上更现实的路线是使用 TPM 2.0 托管 SSH key，让私钥绑定在主板 TPM 里，再通过 `ssh-tpm-agent` 给 SSH 和 Git signing 使用。

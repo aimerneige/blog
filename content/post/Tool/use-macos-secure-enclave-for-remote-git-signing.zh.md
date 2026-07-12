@@ -8,6 +8,12 @@ categories: [Tool]
 tags: [ssh,git,security,macos]
 ---
 
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+
 我的日常开发环境有点绕：MacBook 在手边，真正干活的是一台 Linux 服务器，VS Code 通过 Remote SSH 连过去。
 
 如果 Git 签名密钥放在 YubiKey 里，本地提交还好，远程服务器上执行 `git commit` 就尴尬了。Git 命令跑在服务器上，YubiKey 插在 MacBook 上，服务器摸不到它。

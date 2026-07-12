@@ -8,6 +8,12 @@ categories: [Tool]
 tags: [ssh,security]
 ---
 
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+
 SSH key 不设置密码能不能用？能用。
 
 安不安全？要看你愿不愿意接受一个前提：只要本地私钥文件被别人读走，对方就能直接拿它登录所有信任这把 key 的服务器。

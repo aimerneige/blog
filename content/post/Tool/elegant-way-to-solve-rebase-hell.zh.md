@@ -8,6 +8,12 @@ categories: [Tool]
 tags: [git]
 ---
 
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
+
 长期没合主分支的 feature 分支，最怕遇到一个文件两边都反复改过。
 
 直接 `rebase` 的时候，Git 会把 feature 上的 commit 一个个拿出来重放。你刚解完第一个 commit 的冲突，`git rebase --continue`，下一个 commit 又在同一个文件上炸一次。改动越琐碎，冲突次数越多。
