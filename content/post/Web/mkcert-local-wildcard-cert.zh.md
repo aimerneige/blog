@@ -1,12 +1,17 @@
 ---
 title: "使用 mkcert 为本地 Homelab 签发泛域名证书"
 date: 2026-07-12T00:00:00+08:00
-draft: true
+draft: false
 ShowToc: true
-description: "使用 mkcert 为本地 NAS 和 Docker 服务配置内网 HTTPS 泛域名证书。"
 categories: [Web]
 tags: [mkcert,https,nginx,homelab]
 ---
+
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
 
 我的场景很简单：主机是 Fedora，NAS 是 Ubuntu Server，NAS 上跑 Nginx 做反向代理，本地还有一些 Docker 服务。访问方式希望统一成 `app.aimersoft.org` 这种子域名。
 

@@ -1,12 +1,17 @@
 ---
 title: "在 Fedora 上添加 Btrfs RAID0 数据池"
 date: 2026-07-12T00:00:00+08:00
-draft: true
+draft: false
 ShowToc: true
-description: "记录在 Fedora 中使用三块 NVMe 硬盘创建 Btrfs RAID0 数据池，并通过子卷挂载到 home 目录的过程。"
 categories: [Linux]
 tags: [fedora,btrfs,raid]
 ---
+
+{{< notice warning >}}
+
+本文完全使用 codex 生成，未经过人工核验，请注意鉴别其中内容
+
+{{</ notice >}}
 
 # 在 Fedora 上添加 Btrfs RAID0 数据池
 
