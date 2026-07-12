@@ -1,7 +1,7 @@
 ---
 title: "解决 Rebase 地狱的优雅技巧"
 date: 2026-07-12T17:58:00+08:00
-draft: true
+draft: false
 ShowToc: true
 description: "用先 merge 再 reset --soft 的方式只解决一次冲突，同时保留线性历史"
 categories: [Tool]

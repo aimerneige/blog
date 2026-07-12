@@ -1,7 +1,7 @@
 ---
 title: "使用 Linux TPM 托管 SSH 密钥和 Git 签名"
 date: 2026-07-12T18:11:00+08:00
-draft: true
+draft: false
 ShowToc: true
 description: "记录在 Linux 设备上使用 TPM 生成 SSH key、配置 ssh-tpm-agent，以及它和指纹识别、磁盘加密的关系"
 categories: [Linux]

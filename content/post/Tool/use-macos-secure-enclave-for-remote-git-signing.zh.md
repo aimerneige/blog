@@ -1,7 +1,7 @@
 ---
 title: "使用 MacBook 内置安全密钥完成远程 Git 签名"
 date: 2026-07-12T18:04:00+08:00
-draft: true
+draft: false
 ShowToc: true
 description: "用 macOS Secure Enclave、Touch ID 和 SSH Agent Forwarding 支撑 VS Code Remote SSH 开发"
 categories: [Tool]

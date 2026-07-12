@@ -1,7 +1,7 @@
 ---
 title: "SSH Key 密码和 SSH Agent 的基本用法"
 date: 2026-07-12T18:01:00+08:00
-draft: true
+draft: false
 ShowToc: true
 description: "记录 SSH 私钥密码、SSH Agent、macOS Keychain 和 Agent Socket 泄露风险"
 categories: [Tool]
