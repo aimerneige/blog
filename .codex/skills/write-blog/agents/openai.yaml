@@ -1,0 +1,4 @@
+interface:
+  display_name: "Write Blog"
+  short_description: "Optimize AimerNeige blog posts"
+  default_prompt: "Use $write-blog to draft or polish a post for the current blog."
