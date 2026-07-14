@@ -225,8 +225,6 @@ params:
       url: "https://steamcommunity.com/id/AimerNeige"
     - name: Telegram
       url: "https://t.me/AimerNeige"
-    - name: KoFi
-      url: "https://ko-fi.com/aimerneige"
     - name: RsS
       url: "index.xml"
 
