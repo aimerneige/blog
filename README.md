@@ -44,6 +44,11 @@ hugo serve -D
 hugo
 ```
 
+## Local Admin
+
+Run `npm --prefix admin install` and `npm --prefix admin start` to manage content locally.
+See [本地管理工具说明](admin/README.md) for usage, security boundaries, and tests.
+
 ## Deploy
 
 ```bash
