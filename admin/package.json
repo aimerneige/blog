@@ -1,0 +1,7 @@
+{
+  "name": "blog-local-admin",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.js", "test": "node --test" },
+  "dependencies": { "yaml": "^2.8.1" }
+}

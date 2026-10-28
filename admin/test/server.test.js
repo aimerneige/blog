@@ -1,0 +1,58 @@
+import { test } from 'node:test';
+import assert from 'node:assert/strict';
+import * as fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
+import http from 'node:http';
+import { createApp, parsePost, updatePost, safePath } from '../server.js';
+
+const sample = '---\ntitle: "Original" # keep comment\ndate: 2023-01-01T10:00:00+08:00\ncustom:\n  nested: [one, two]\n# tail\ndraft: false\n---\n\nHello\n';
+test('front matter preserves unchanged bytes, unknown nodes, comments and ordering', () => {
+  const parsed = parsePost(sample);
+  assert.equal(updatePost(sample, { title: 'Original' }, parsed.body), sample);
+  const updated = updatePost(sample, { title: 'Changed' }, parsed.body);
+  assert.deepEqual(parsePost(updated).data.custom, parsed.data.custom);
+  assert.ok(updated.includes('# keep comment'));
+  assert.ok(updated.includes('# tail'));
+  assert.ok(updated.indexOf('title:') < updated.indexOf('custom:'));
+  assert.ok(updated.indexOf('custom:') < updated.indexOf('draft:'));
+  assert.throws(() => updatePost(sample, { custom: null }, ''), /不可编辑/);
+});
+test('API CRUD and security use an isolated BLOG_ROOT fixture', async t => {
+  const root = await fs.mkdtemp(path.join(os.tmpdir(), 'blog-admin-'));
+  await fs.mkdir(path.join(root,'content/post/Test'),{recursive:true});
+  await fs.mkdir(path.join(root,'static'),{recursive:true});
+  await fs.writeFile(path.join(root,'content/post/Test/example.zh.md'),sample);
+  const server = createApp(root);
+  await new Promise(resolve => server.listen(0,'127.0.0.1',resolve));
+  t.after(async()=>{ await new Promise(resolve=>server.close(resolve)); await fs.rm(root,{recursive:true,force:true}); });
+  const base = `http://127.0.0.1:${server.address().port}`;
+  const request = (route,data,headers={}) => fetch(`${base}/api/${route}`,data === undefined ? {headers} : {method:'POST',headers:{'Content-Type':'application/json',...headers},body:JSON.stringify(data)});
+  assert.equal((await request('posts',undefined,{Origin:'https://evil.test'})).status,403);
+  const badHost = await new Promise((resolve,reject) => {
+    const req = http.get(`${base}/api/posts`,{headers:{Host:'evil.test'}},res=>{ res.resume(); resolve(res.statusCode); }); req.on('error',reject);
+  });
+  assert.equal(badHost,403);
+  for (const relative of ['../config.yml','/etc/passwd','post/../../config.yml','post\\x.md']) await assert.rejects(safePath(root,relative));
+  await fs.symlink(os.tmpdir(),path.join(root,'content','escape'));
+  await assert.rejects(safePath(root,'escape/out.md'),/符号链接/);
+  assert.equal((await request('post?path=..%2Fconfig.md')).status,400);
+  const list = await (await request('posts')).json(); assert.equal(list.posts.length,1); assert.equal(list.posts[0].language,'zh');
+  const name='post/Test/example.zh.md';
+  const post = await (await request(`post?path=${name}`)).json();
+  const before = await fs.stat(path.join(root,'content',name));
+  assert.equal((await request('save',{path:name,fields:{title:'Original'},body:post.body,revision:post.revision})).status,200);
+  assert.equal((await fs.stat(path.join(root,'content',name))).mtimeMs,before.mtimeMs);
+  assert.equal((await request('save',{path:name,fields:{title:'Updated'},body:'New body',revision:post.revision})).status,200);
+  assert.equal((await request('save',{path:name,fields:{},body:'stale',revision:post.revision})).status,409);
+  const created = await (await request('create',{category:'New',slug:'new-post',language:'both'})).json(); assert.equal(created.paths.length,2);
+  assert.equal((await request('create',{category:'New',slug:'new-post',language:'both'})).status,409);
+  assert.equal((await request('move',{path:name,target:'post/New/moved.zh.md'})).status,200);
+  assert.equal((await request('post?path='+name)).status,404);
+  const deleted = await (await request('delete',{path:'post/New/moved.zh.md'})).json();
+  assert.equal(await fs.readFile(path.join(root,deleted.trash),'utf8').then(v=>parsePost(v).body),'New body');
+  const upload = await (await request('upload',{name:'a.png',data:Buffer.from('fixture').toString('base64')})).json();
+  assert.equal(await fs.readFile(path.join(root,'static',upload.url),'utf8'),'fixture');
+  assert.equal((await request('upload',{name:'x.html',data:''})).status,400);
+  assert.equal((await request('move',{path:created.paths[0],target:'../escape.md'})).status,400);
+});
