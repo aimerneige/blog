@@ -129,7 +129,16 @@ test('server and dev refuse missing or empty ADMIN_TOKEN', () => {
     const env = {...process.env};
     if (value === undefined) delete env.ADMIN_TOKEN; else env.ADMIN_TOKEN = value;
     const result = spawnSync(process.execPath,[script],{cwd:new URL('..',import.meta.url),env,encoding:'utf8',timeout:10000});
-    assert.notEqual(result.status,0);
-    assert.match(result.stderr,/ADMIN_TOKEN=xxx npm --prefix admin start/);
+    assert.equal(result.error,undefined);
+    assert.equal(result.status,1);
+    assert.equal(result.stdout,'');
+    assert.equal(result.stderr,'错误：请设置 ADMIN_TOKEN，例如：ADMIN_TOKEN=$(openssl rand -hex 24) npm --prefix admin start\n');
+    const previousToken = process.env.ADMIN_TOKEN;
+    try {
+      delete process.env.ADMIN_TOKEN;
+      assert.throws(() => createApp(os.tmpdir()), /请设置 ADMIN_TOKEN/);
+    } finally {
+      if (previousToken === undefined) delete process.env.ADMIN_TOKEN; else process.env.ADMIN_TOKEN = previousToken;
+    }
   }
 });

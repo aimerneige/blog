@@ -102,6 +102,13 @@ try {
   });
   await page.goto(base.replace("127.0.0.1", "localhost"));
   await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  await fs.mkdir(shots, {recursive:true});
+  await page.screenshot({path:`${shots}/login-light.png`});
+  await page.emulateMedia({colorScheme:"dark"});
+  await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === "rgb(23, 28, 26)");
+  await page.screenshot({path:`${shots}/login-dark.png`});
+  await page.emulateMedia({colorScheme:"light"});
+  await page.waitForFunction(() => getComputedStyle(document.body).backgroundColor === "rgb(245, 246, 243)");
   const login = async () => {
     await page.getByLabel("Token", {exact:true}).fill(token);
     await page.getByRole("button", {name:"登录",exact:true}).click();
@@ -109,6 +116,7 @@ try {
   await page.getByLabel("Token", {exact:true}).fill('wrong');
   await page.getByLabel("Token", {exact:true}).press('Enter');
   await page.getByText('Token 错误',{exact:true}).waitFor();
+  await page.screenshot({path:`${shots}/login-error.png`});
   await page.route('**/api/login', route => route.fulfill({status:429,contentType:'application/json',body:JSON.stringify({error:'尝试过多，请稍后再试'})}));
   await page.getByRole('button',{name:'登录',exact:true}).click();
   await page.getByText('尝试过多，请稍后再试',{exact:true}).waitFor();
@@ -129,7 +137,8 @@ try {
   const dashboardURL = page.url();
   await page.getByRole("button", {name:"编辑",exact:true}).first().click();
   await page.waitForURL(/\/edit\//);
-  assert.equal(await page.getByRole("table").count(),0);
+  await page.getByTestId("filepath").waitFor();
+  await page.getByRole("table", {name:"文章列表"}).waitFor({state:"detached"});
   await page.reload();
   await page.getByTestId("filepath").waitFor();
   assert.equal(decodeURIComponent(new URL(page.url()).pathname), `/edit/${filename}`);
@@ -298,7 +307,7 @@ try {
   await page.locator(".document-scroll").evaluate((element) => {
     element.scrollTop = 0;
   });
-  assert.equal(await page.locator(".sidebar").count(), 0);
+  await page.locator(".sidebar").waitFor({state:"detached"});
   assert.equal(
     await page.getByRole("textbox", { name: "标题", exact: true }).isVisible(),
     true,
@@ -317,7 +326,8 @@ try {
   await page.keyboard.press("Control+s");
   await page.getByText("已保存", { exact: true }).waitFor();
   await page.getByRole("button", { name: "返回管理面板" }).click();
-  assert.equal(await page.locator(".sidebar").count(), 1);
+  await page.getByRole("textbox", {name:"搜索文章"}).waitFor();
+  await page.locator(".sidebar").waitFor();
   await page.screenshot({ path: `${shots}/mobile-dashboard.png` });
   await page.getByText(/让写作回归思考/, {exact:false}).filter({visible:true}).first().click();
   await page

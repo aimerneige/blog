@@ -239,6 +239,10 @@ export function createApp(root) {
   return server;
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  if (!process.env.ADMIN_TOKEN) {
+    console.error('错误：请设置 ADMIN_TOKEN，例如：ADMIN_TOKEN=$(openssl rand -hex 24) npm --prefix admin start');
+    process.exit(1);
+  }
   const server = createApp(process.env.BLOG_ROOT || path.join(here, '..'));
   server.listen(Number(process.env.PORT || 4321), '127.0.0.1', () => console.log(`博客管理：http://127.0.0.1:${server.address().port}`));
   for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => server.close(() => process.exit(0)));

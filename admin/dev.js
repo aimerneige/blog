@@ -1,5 +1,9 @@
 import { spawn } from "node:child_process";
 import { createServer } from "vite";
+if (!process.env.ADMIN_TOKEN) {
+  console.error('错误：请设置 ADMIN_TOKEN，例如：ADMIN_TOKEN=$(openssl rand -hex 24) npm --prefix admin start');
+  process.exit(1);
+}
 const backend = spawn(process.execPath, ["server.js"], {
   stdio: ["inherit", "pipe", "inherit"],
   env: { ...process.env, PORT: process.env.PORT || "4321", ADMIN_DEV: "1" },
