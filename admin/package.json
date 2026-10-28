@@ -2,6 +2,15 @@
   "name": "blog-local-admin",
   "private": true,
   "type": "module",
-  "scripts": { "start": "node server.js", "test": "node --test" },
-  "dependencies": { "yaml": "^2.8.1" }
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test test/*.test.js",
+    "test:e2e": "node test/e2e.js"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  },
+  "devDependencies": {
+    "playwright": "^1.64.1"
+  }
 }
