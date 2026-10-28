@@ -7,7 +7,7 @@ import { chromium } from "playwright";
 import { parsePost } from "../server.js";
 
 const root = await fs.mkdtemp(path.join(os.tmpdir(), "admin-mui-"));
-const shots = "/tmp/admin-shots-v3";
+const shots = "/tmp/admin-shots-v4";
 let browser, child, devChild;
 try {
   await fs.cp(
@@ -23,7 +23,7 @@ try {
   await fs.mkdir(path.join(root, "content/post/Studio"), { recursive: true });
   const fixture =
     '---\ntitle: "让写作回归思考" # keep comment\ndate: 2026-10-28T20:57:21+08:00\ndraft: true\nShowToc: true\ntags: [写作,设计]\ncategories: [Studio]\ncover:\n    image: "images/pixel.png"\n    relative: false\ncustom:\n  nested: [one, two]\n---\n# 给想法，留一点空间\n\n好的工具让人专注于内容。这是一个关于写作、设计与日常观察的小小工作台。\n\n## 从一份草稿开始\n\n- 记录今天值得留下的想法\n- 用 Markdown 组织文字\n- 在预览中检查阅读的节奏\n\n> 写作是把模糊的想法，慢慢变得清晰。\n\n```javascript\nconst idea = "Keep creating";\nconsole.log(idea);\n```\n\n| 关注 | 状态 |\n| --- | --- |\n| 阅读体验 | 持续打磨 |\n\n{{< note >}}\n\n![local](/images/pixel.png)\n![relative](images/pixel.png)\n![remote](https://example.com/image.png)\n<script>throw Error("unsafe")</script>\n';
-  const filename = "post/Studio/studio.zh.md";
+  const filename = "post/Studio/中文 空格.zh.md";
   await fs.writeFile(path.join(root, "content", filename), fixture);
   await fs.writeFile(
     path.join(root, "static/images/pixel.png"),
@@ -97,7 +97,40 @@ try {
       external.push(request.url());
   });
   await page.goto(base.replace("127.0.0.1", "localhost"));
-  await page.getByRole("button", { name: /让写作回归思考/ }).click();
+  await page.getByRole("heading", {name:"管理面板"}).waitFor();
+  await page.waitForFunction(() => !document.querySelector(".summary-grid")?.textContent.includes("—"));
+  assert.equal(await page.getByTestId("monaco").count(), 0);
+  await fs.mkdir(shots, {recursive:true});
+  await page.screenshot({path:`${shots}/dashboard-light.png`});
+  await page.getByRole("button", {name:"切换深色模式"}).click();
+  await page.waitForFunction(() => getComputedStyle(document.querySelector('[aria-label="搜索文章"]')).color === "rgb(229, 234, 230)");
+  await page.screenshot({path:`${shots}/dashboard-dark.png`});
+  await page.getByRole("button", {name:"切换浅色模式"}).click();
+  await page.getByRole("textbox", {name:"搜索文章"}).fill("让写作");
+  await page.getByRole("button", {name:"中文",exact:true}).click();
+  await page.waitForURL(/q=.*language=zh/);
+  const dashboardURL = page.url();
+  await page.getByRole("button", {name:"编辑",exact:true}).first().click();
+  await page.waitForURL(/\/edit\//);
+  assert.equal(await page.getByRole("table").count(),0);
+  await page.reload();
+  await page.getByTestId("filepath").waitFor();
+  assert.equal(decodeURIComponent(new URL(page.url()).pathname), `/edit/${filename}`);
+  await page.goBack();
+  await page.getByRole("textbox", {name:"搜索文章"}).waitFor();
+  assert.equal(page.url(),dashboardURL);
+  assert.equal(await page.getByRole("textbox", {name:"搜索文章"}).inputValue(),"让写作");
+  await page.goForward();
+  await page.getByTestId("filepath").waitFor();
+  await page.getByRole("textbox", {name:"标题",exact:true}).fill("browser back unsaved");
+  const blockedBack = new Promise(resolve => page.once("dialog", async dialog => {assert.match(dialog.message(),/未保存/);await dialog.dismiss();resolve();}));
+  await page.evaluate(() => history.back());
+  await blockedBack;
+  await page.waitForURL(/\/edit\//);
+  await page.getByRole("textbox", {name:"标题",exact:true}).fill("让写作回归思考");
+  await page.getByRole("button", {name:"返回管理面板"}).click();
+
+  await page.getByText(/让写作回归思考/, {exact:false}).filter({visible:true}).first().click();
   await page
     .getByTestId("monaco")
     .locator("textarea")
@@ -146,7 +179,8 @@ try {
     element.scrollTop = 0;
   });
   await page.getByRole("alert").getByRole("button", { name: "Close" }).click();
-  await page.screenshot({ path: `${shots}/desktop-light.png` });
+  await page.locator(".MuiSnackbar-root").waitFor({ state: "hidden" });
+  await page.screenshot({ path: `${shots}/editor-light.png` });
   await page.getByRole("button", { name: "切换深色模式" }).click();
   await page.mouse.move(950, 100);
   await page.getByRole("button", { name: "切换浅色模式" }).waitFor();
@@ -184,11 +218,15 @@ try {
       );
     });
   assert.ok(contrast >= 4.5, `Dark input contrast: ${contrast}`);
-  await page.screenshot({ path: `${shots}/desktop-dark.png` });
+  await page.screenshot({ path: `${shots}/editor-dark.png` });
   await page.reload();
   await page.getByRole("button", { name: "切换浅色模式" }).waitFor();
-  await page.getByRole("button", { name: /让写作回归思考/ }).click();
   await page.getByRole("button", { name: "切换浅色模式" }).click();
+  await page.getByRole("button", {name:"收起文章信息"}).click();
+  await page.waitForFunction(() => document.querySelector(".monaco-editor")?.clientHeight > 600);
+  await page.screenshot({path:`${shots}/editor-collapsed.png`});
+  await page.getByRole("button", {name:"展开文章信息"}).click();
+  await page.getByRole("button", {name:"返回管理面板"}).click();
   await page.getByRole("button", { name: "新建文章", exact: true }).click();
   await page
     .getByRole("dialog")
@@ -220,6 +258,7 @@ try {
     ),
     /title: "新的旅程"/,
   );
+  await page.getByRole("button", {name:"返回管理面板"}).click();
   await page.getByRole("button", { name: "Git", exact: true }).click();
   await page
     .getByRole("dialog")
@@ -236,13 +275,13 @@ try {
     await page.getByRole("textbox", { name: "搜索文章" }).inputValue(),
     "灵感",
   );
-  await page.getByRole("textbox", { name: "搜索文章" }).fill("");
-  await page.getByRole("button", { name: /让写作回归思考/ }).click();
+  await page.getByRole("button", {name:/清除筛选/}).click();
+  await page.getByText(/让写作回归思考/, {exact:false}).filter({visible:true}).first().click();
   await page.setViewportSize({ width: 390, height: 844 });
   await page.locator(".document-scroll").evaluate((element) => {
     element.scrollTop = 0;
   });
-  assert.equal(await page.locator("aside").isVisible(), false);
+  assert.equal(await page.locator(".sidebar").count(), 0);
   assert.equal(
     await page.getByRole("textbox", { name: "标题", exact: true }).isVisible(),
     true,
@@ -260,10 +299,10 @@ try {
   await page.keyboard.type("\nMobile edit.");
   await page.keyboard.press("Control+s");
   await page.getByText("已保存", { exact: true }).waitFor();
-  await page.getByRole("button", { name: "返回文章列表" }).click();
-  assert.equal(await page.locator("aside").isVisible(), true);
-  await page.screenshot({ path: `${shots}/mobile-list.png` });
-  await page.getByRole("button", { name: /让写作回归思考/ }).click();
+  await page.getByRole("button", { name: "返回管理面板" }).click();
+  assert.equal(await page.locator(".sidebar").count(), 1);
+  await page.screenshot({ path: `${shots}/mobile-dashboard.png` });
+  await page.getByText(/让写作回归思考/, {exact:false}).filter({visible:true}).first().click();
   await page
     .getByRole("textbox", { name: "标题", exact: true })
     .fill("outside shortcut");
@@ -283,9 +322,9 @@ try {
       resolve();
     }),
   );
-  await page.getByRole("button", { name: "返回文章列表" }).click();
+  await page.getByRole("button", { name: "返回管理面板" }).click();
   await dismissed;
-  assert.equal(await page.locator("aside").isVisible(), false);
+  assert.equal(await page.locator(".sidebar").count(), 0);
   await page.keyboard.press("Control+s");
   await page.getByText("已保存", { exact: true }).waitFor();
   await page
@@ -350,6 +389,11 @@ try {
     [...withImages.matchAll(/!\[图片\]\(\/images\/[a-f0-9-]+\.png\)/g)].length,
     3,
   );
+  await page.getByRole("button", {name:"返回管理面板"}).click();
+  await page.getByRole("button", {name:"删除 新的旅程",exact:true}).last().click();
+  await page.getByRole("button", {name:"移入回收目录"}).click();
+  await page.getByText("已移入回收目录",{exact:true}).waitFor();
+  await assert.rejects(fs.stat(path.join(root,"content/post/Studio/new-journey.zh.md")));
   devChild = spawn(process.execPath, ["dev.js"], {
     cwd: new URL("..", import.meta.url),
     env: { ...process.env, BLOG_ROOT: root, ADMIN_DEV_PORT: "5175" },
@@ -377,7 +421,7 @@ try {
     403,
   );
   await page.goto(devBase);
-  await page.getByRole("button", { name: /unsaved title/ }).click();
+  await page.getByText("unsaved title", {exact:true}).filter({visible:true}).first().click();
   await page.getByTestId("monaco").waitFor();
   await page
     .getByRole("textbox", { name: "标题", exact: true })

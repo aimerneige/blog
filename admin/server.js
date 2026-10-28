@@ -123,7 +123,7 @@ export function createApp(root) {
         if (relative !== 'index.html' && !relative.startsWith('assets/')) await safePath(root, relative, 'static');
         let target = await safePath(here, relative, 'dist');
         try { if (!(await fs.stat(target)).isFile()) target = await safePath(here, 'index.html', 'dist'); }
-        catch (error) { if (error.code !== 'ENOENT') throw error; if (path.extname(relative)) throw error; target = await safePath(here, 'index.html', 'dist'); }
+        catch (error) { if (error.code !== 'ENOENT') throw error; if (path.extname(relative) && !relative.startsWith('edit/')) throw error; target = await safePath(here, 'index.html', 'dist'); }
         const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.ttf': 'font/ttf', '.woff2': 'font/woff2', '.woff': 'font/woff', '.svg': 'image/svg+xml' };
         res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'none'" });
         res.end(await fs.readFile(target)); return;

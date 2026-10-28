@@ -35,6 +35,13 @@ import {
   Toolbar,
   Tooltip,
   Typography,
+  Table,
+  TableHead,
+  TableBody,
+  TableRow,
+  TableCell,
+  TableSortLabel,
+  TableContainer,
   createTheme,
   useMediaQuery,
 } from "@mui/material";
@@ -212,11 +219,23 @@ function App() {
   );
   const [posts, setPosts] = useState<Post[]>([]),
     [folders, setFolders] = useState<string[]>([]);
-  const [query, setQuery] = useState(""),
-    [category, setCategory] = useState(""),
-    [language, setLanguage] = useState(""),
-    [draft, setDraft] = useState(""),
-    [ascending, setAscending] = useState(false);
+  const params = new URLSearchParams(location.search);
+  const [query, setQuery] = useState(params.get("q") || ""),
+    [category, setCategory] = useState(params.get("category") || ""),
+    [language, setLanguage] = useState(params.get("language") || ""),
+    [draft, setDraft] = useState(params.get("draft") || ""),
+    [tag, setTag] = useState(params.get("tag") || ""),
+    [sort, setSort] = useState(params.get("sort") || "date"),
+    [ascending, setAscending] = useState(params.get("order") === "asc");
+  const [collapsed, setCollapsed] = useState(false);
+  const [gitCount, setGitCount] = useState<number | null>(null);
+  const dashboardUrl = useRef(location.pathname === "/" ? location.pathname + location.search : sessionStorage.getItem("admin-dashboard") || "/");
+  const dashboardScroll = useRef(Number(sessionStorage.getItem("admin-scroll") || 0));
+  const dashboard = useRef<HTMLElement | null>(null);
+  const tableScroll = useRef(Number(sessionStorage.getItem("admin-table-scroll") || 0));
+  const historyIndex = useRef(history.state?.adminIndex || 0);
+  const routeLoad = useRef(0);
+  const [actionPath, setActionPath] = useState("");
   const [path, setPath] = useState(""),
     [original, setOriginal] = useState<Document | null>(null);
   const [fields, setFields] = useState<Fields>({}),
@@ -262,6 +281,8 @@ function App() {
     const data = await api("posts");
     setPosts(data.posts);
     setFolders(data.folders);
+    const git = await api("git");
+    setGitCount(git.status.output.trim().split("\n").filter(Boolean).length);
   }
   useEffect(() => {
     void run(async () => {
@@ -292,16 +313,84 @@ function App() {
     return () => window.removeEventListener("beforeunload", unload);
   }, []);
   function guard() {
-    return !dirty || window.confirm("尚有未保存的修改，确定离开？");
+    return !dirtyRef.current || window.confirm("尚有未保存的修改，确定离开？");
   }
-  async function open(name: string, discard = false) {
-    if (!discard && !guard()) return;
+  async function loadRoute() {
+    const request = ++routeLoad.current;
+    if (!location.pathname.startsWith("/edit/")) {
+      setEditing(false);
+      setOriginal(null);
+      dirtyRef.current = false;
+      const p = new URLSearchParams(location.search);
+      setQuery(p.get("q") || "");
+      setCategory(p.get("category") || "");
+      setLanguage(p.get("language") || "");
+      setDraft(p.get("draft") || "");
+      setTag(p.get("tag") || "");
+      setSort(p.get("sort") || "date");
+      setAscending(p.get("order") === "asc");
+      requestAnimationFrame(() => {
+        if (dashboard.current) dashboard.current.scrollTop = dashboardScroll.current;
+      });
+      return;
+    }
+    const name = decodeURIComponent(location.pathname.slice(6));
+    setEditing(true);
+    setOriginal(null);
     const data = await api(`post?path=${encodeURIComponent(name)}`);
+    if (request !== routeLoad.current) return;
     setOriginal(data);
     setFields(structuredClone(data.fields));
     setBody(data.body);
     setPath(name);
-    setEditing(true);
+    dirtyRef.current = false;
+  }
+  function navigate(url: string) {
+    if (dashboard.current) {
+      dashboardScroll.current = dashboard.current.scrollTop;
+      sessionStorage.setItem("admin-scroll", String(dashboardScroll.current));
+    }
+    historyIndex.current += 1;
+    history.pushState({ adminIndex: historyIndex.current }, "", url);
+    void run(loadRoute);
+  }
+  useEffect(() => {
+    history.replaceState({ adminIndex: historyIndex.current }, "");
+    history.scrollRestoration = "manual";
+    void run(loadRoute);
+    let reverting = false;
+    const pop = (event: PopStateEvent) => {
+      if (reverting) { reverting = false; return; }
+      const next = event.state?.adminIndex || 0;
+      if (!guard()) {
+        reverting = true;
+        history.go(historyIndex.current - next);
+        return;
+      }
+      historyIndex.current = next;
+      void run(loadRoute);
+    };
+    const links = (event: MouseEvent) => {
+      const link = (event.target as Element).closest("a[href]") as HTMLAnchorElement | null;
+      if (!link || link.target === "_blank" || event.ctrlKey || event.metaKey || event.button !== 0) return;
+      if (!guard()) { event.preventDefault(); return; }
+      if (link.origin === location.origin) { event.preventDefault(); navigate(link.pathname + link.search); }
+    };
+    window.addEventListener("popstate", pop);
+    document.addEventListener("click", links);
+    return () => { window.removeEventListener("popstate", pop); document.removeEventListener("click", links); };
+  }, []);
+  useEffect(() => {
+    if (location.pathname !== "/") return;
+    const p = new URLSearchParams();
+    Object.entries({ q: query, category, language, draft, tag, sort: sort === "date" ? "" : sort, order: ascending ? "asc" : "" }).forEach(([key, value]) => { if (value) p.set(key, value); });
+    dashboardUrl.current = "/" + (p.size ? `?${p}` : "");
+    sessionStorage.setItem("admin-dashboard", dashboardUrl.current);
+    history.replaceState(history.state, "", dashboardUrl.current);
+  }, [query, category, language, draft, tag, sort, ascending, editing]);
+  async function open(name: string, discard = false) {
+    if (!discard && !guard()) return;
+    navigate(`/edit/${name.split("/").map(encodeURIComponent).join("/")}`);
   }
   async function save() {
     if (!original || saving) return;
@@ -385,14 +474,15 @@ function App() {
               post.section === category ||
               post.categories?.includes(category)) &&
             (!language || post.language === language) &&
-            (!draft || String(!!post.draft) === draft),
+            (!draft || String(!!post.draft) === draft) &&
+            (!tag || post.tags?.includes(tag)),
         )
         .sort(
           (a, b) =>
-            ((Date.parse(b.date) || 0) - (Date.parse(a.date) || 0)) *
+            (sort === "date" ? ((Date.parse(b.date) || 0) - (Date.parse(a.date) || 0)) : String(b[sort] ?? "").localeCompare(String(a[sort] ?? ""))) *
             (ascending ? -1 : 1),
         ),
-    [posts, query, category, language, draft, ascending],
+    [posts, query, category, language, draft, tag, sort, ascending],
   );
   async function upload(file: File) {
     if (file.size > 10000000) throw Error("图片须小于 10 MB");
@@ -455,7 +545,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline enableColorScheme />
-      <AppBar
+      {!editing && <AppBar
         position="static"
         color="transparent"
         elevation={0}
@@ -565,10 +655,11 @@ function App() {
             新建<span className="desktop-only">文章</span>
           </Button>
         </Toolbar>
-      </AppBar>
+      </AppBar>}
       <Box className={`workspace ${editing ? "is-editing" : ""}`}>
-        <Box
-          component="aside"
+        {!editing && <Box
+          ref={dashboard}
+          component="main"
           className="sidebar"
           sx={{
             bgcolor: "background.paper",
@@ -576,7 +667,19 @@ function App() {
             borderColor: "divider",
           }}
         >
-          <Box sx={{ p: 2.5, pb: 1.5 }}>
+          <Box className="dashboard-heading">
+            <Typography variant="overline" color="text.secondary">CONTENT STUDIO</Typography>
+            <Typography variant="h4" fontWeight={700}>管理面板</Typography>
+            <Typography color="text.secondary" mt={1}>整理文章，留住每一个值得记录的想法。</Typography>
+          </Box>
+          <Box className="summary-grid">
+            {[["文章总数", posts.length], ["草稿", posts.filter(p => p.draft).length], ["中文 / English", `${posts.filter(p => p.language === "zh").length} / ${posts.filter(p => p.language === "en").length}`], ["Git 未提交变更", gitCount ?? "—"]].map(([label, value]) => <Box key={label} className="summary-card" sx={{bgcolor:"background.paper", border:1, borderColor:"divider"}}><Typography variant="body2" color="text.secondary">{label}</Typography><Typography variant="h4" fontWeight={650} mt={1}>{value}</Typography></Box>)}
+          </Box>
+          <Accordion className="taxonomy" disableGutters>
+            <AccordionSummary expandIcon={<ExpandMore/>}>标签与分类 · 点击筛选</AccordionSummary>
+            <AccordionDetails>{["categories", "tags"].map(key => <Box key={key} mb={2}><Typography variant="body2" mb={1}>{key === "tags" ? "标签" : "分类"}</Typography><Stack direction="row" flexWrap="wrap" gap={1}>{counts(key).map(([name,count]) => <Chip key={name} size="small" variant="outlined" label={`${name} · ${count}`} onClick={() => key === "tags" ? setTag(name) : setCategory(name)}/>)}</Stack></Box>)}</AccordionDetails>
+          </Accordion>
+          <Box className="dashboard-filters" sx={{ p: 2.5, pb: 1.5 }}>
             <Stack
               direction="row"
               alignItems="center"
@@ -675,75 +778,19 @@ function App() {
               按日期{ascending ? "升序" : "降序"}
             </Typography>
           </Stack>
-          <List className="post-list" disablePadding aria-label="文章列表">
-            {filtered.map((post) => (
-              <ListItemButton
-                key={post.path}
-                selected={post.path === path}
-                onClick={() => void run(() => open(post.path))}
-                sx={{
-                  mx: 1.25,
-                  mb: 0.5,
-                  borderRadius: 1.5,
-                  alignItems: "flex-start",
-                  py: 1.5,
-                  "&.Mui-selected": {
-                    bgcolor: "action.selected",
-                    boxShadow: "inset 3px 0 0",
-                    color: "primary.main",
-                  },
-                }}
-              >
-                <Box sx={{ minWidth: 0, width: "100%" }}>
-                  <Typography
-                    fontSize={14}
-                    fontWeight={post.path === path ? 700 : 550}
-                    className="post-title"
-                  >
-                    {post.title || post.path}
-                  </Typography>
-                  <Typography
-                    variant="caption"
-                    color="text.secondary"
-                    display="block"
-                    noWrap
-                    mt={0.7}
-                  >
-                    {String(post.date || "").slice(0, 10)}
-                    <span className="meta-dot">·</span>
-                    {post.section}
-                  </Typography>
-                  <Stack direction="row" gap={0.6} mt={1}>
-                    <Chip
-                      label={post.language?.toUpperCase() || "?"}
-                      size="small"
-                      variant="outlined"
-                    />
-                    {post.draft && (
-                      <Chip
-                        label="草稿"
-                        size="small"
-                        color="secondary"
-                        variant="outlined"
-                      />
-                    )}
-                    {Array.isArray(post.tags) &&
-                      post.tags.slice(0, 2).map((tag: string) => (
-                        <Typography
-                          key={tag}
-                          variant="caption"
-                          color="text.secondary"
-                          noWrap
-                          sx={{ pt: 0.3 }}
-                        >
-                          #{tag}
-                        </Typography>
-                      ))}
-                  </Stack>
-                </Box>
-              </ListItemButton>
-            ))}
-          </List>
+          <TableContainer ref={element => { if (element) element.scrollTop = tableScroll.current; }} onScroll={event => { tableScroll.current = event.currentTarget.scrollTop; sessionStorage.setItem("admin-table-scroll", String(tableScroll.current)); }} className="post-table" sx={{bgcolor:"background.paper", border:1, borderColor:"divider", borderRadius:2}}>
+            <Table stickyHeader aria-label="文章列表">
+              <TableHead><TableRow>{[["title","标题"],["language","语言"],["categories","分类"],["tags","标签"],["date","日期"],["draft","状态"]].map(([key,label]) => <TableCell key={key}><TableSortLabel active={sort === key} direction={ascending ? "asc" : "desc"} onClick={() => {setSort(key); setAscending(sort === key ? !ascending : true);}}>{label}</TableSortLabel></TableCell>)}<TableCell>操作</TableCell></TableRow></TableHead>
+              <TableBody>{filtered.map(post => <TableRow hover key={post.path} onClick={() => void run(() => open(post.path))} sx={{cursor:"pointer"}}>
+                <TableCell sx={{maxWidth:360}}><Typography fontSize={14} fontWeight={600}>{post.title || post.path}</Typography><Typography variant="caption" color="text.secondary" sx={{overflowWrap:"anywhere"}}>{post.path}</Typography></TableCell>
+                <TableCell>{post.language.toUpperCase()}</TableCell><TableCell>{(post.categories || []).join("、") || post.section}</TableCell><TableCell sx={{maxWidth:220}}>{(post.tags || []).slice(0,3).join(" · ")}</TableCell><TableCell sx={{whiteSpace:"nowrap"}}>{String(post.date || "").slice(0,10)}</TableCell><TableCell><Chip size="small" variant="outlined" color={post.draft ? "secondary" : "default"} label={post.draft ? "草稿" : "已发布"}/></TableCell>
+                <TableCell sx={{whiteSpace:"nowrap"}} onClick={e => e.stopPropagation()}><Button size="small" onClick={() => void run(() => open(post.path))}>编辑</Button><IconButton aria-label={`重命名 ${post.title}`} onClick={() => {setActionPath(post.path);setMoveTarget(post.path);setDialog("move");}}><DriveFileMoveOutlined fontSize="small"/></IconButton><IconButton aria-label={`删除 ${post.title}`} onClick={() => {setActionPath(post.path);setDeleteOpen(true);}}><DeleteOutline fontSize="small"/></IconButton></TableCell>
+              </TableRow>)}</TableBody>
+            </Table>
+          </TableContainer>
+          <List className="mobile-posts" aria-label="文章卡片列表">{filtered.map(post => <Box key={post.path} sx={{bgcolor:"background.paper", border:1, borderColor:"divider", borderRadius:2, mb:1.5, p:2}}><ListItemButton onClick={() => void run(() => open(post.path))}><Box><Typography fontWeight={650}>{post.title || post.path}</Typography><Typography variant="caption" color="text.secondary">{post.language.toUpperCase()} · {String(post.date || "").slice(0,10)} · {post.section}</Typography></Box></ListItemButton><Stack direction="row" justifyContent="space-between"><Chip size="small" variant="outlined" label={post.draft ? "草稿" : "已发布"}/><Button size="small" onClick={() => void run(() => open(post.path))}>编辑</Button><IconButton aria-label={`重命名 ${post.title}`} onClick={() => {setActionPath(post.path);setMoveTarget(post.path);setDialog("move");}}><DriveFileMoveOutlined fontSize="small"/></IconButton><IconButton aria-label={`删除 ${post.title}`} onClick={() => {setActionPath(post.path);setDeleteOpen(true);}}><DeleteOutline fontSize="small"/></IconButton></Stack></Box>)}</List>
+          {!filtered.length && <Typography textAlign="center" p={5} color="text.secondary">没有匹配的文章</Typography>}
+          {(tag || category || query || language || draft) && <Button onClick={() => {setTag("");setCategory("");setQuery("");setLanguage("");setDraft("");}}>清除筛选 {tag}</Button>}
           {mobile && (
             <Stack
               direction="row"
@@ -771,28 +818,10 @@ function App() {
               )}
             </Stack>
           )}
-        </Box>
-        <Box component="main" className="main-pane">
+        </Box>}
+        {editing && <Box component="main" className="main-pane">
           {!original ? (
-            <Box className="welcome">
-              <Box className="welcome-icon">
-                <AutoStoriesOutlined sx={{ fontSize: 44 }} />
-              </Box>
-              <Typography variant="h4" fontWeight={650} mt={3}>
-                让想法，在这里成文。
-              </Typography>
-              <Typography color="text.secondary" mt={2}>
-                从左侧挑选一篇文章，或开始一份新的草稿。
-              </Typography>
-              <Button
-                startIcon={<Add />}
-                variant="contained"
-                sx={{ mt: 4 }}
-                onClick={() => setDialog("new")}
-              >
-                写一篇新文章
-              </Button>
-            </Box>
+            <Box className="welcome"><Typography>正在打开文章…</Typography><Button onClick={() => navigate(dashboardUrl.current)}>返回管理面板</Button></Box>
           ) : (
             <>
               <Stack
@@ -802,6 +831,8 @@ function App() {
                 gap={1.5}
                 sx={{ borderBottom: 1, borderColor: "divider" }}
               >
+                {icon("返回管理面板", <ArrowBack />, () => { if (guard()) navigate(dashboardUrl.current); })}
+                {icon(dark ? "切换浅色模式" : "切换深色模式", dark ? <LightModeOutlined/> : <DarkModeOutlined/>, () => { const next = dark ? "light" : "dark"; setPreference(next);localStorage.setItem("admin-theme",next); })}
                 <FolderOutlined
                   fontSize="small"
                   color="disabled"
@@ -847,7 +878,8 @@ function App() {
                   <MoreHoriz />
                 </IconButton>
               </Stack>
-              <Box className="document-scroll">
+              <Box className={`document-scroll ${collapsed ? "is-collapsed" : ""}`}>
+                <Button className="metadata-toggle" startIcon={<TuneRounded/>} onClick={() => setCollapsed(!collapsed)}>{collapsed ? "展开文章信息" : "收起文章信息"}</Button>
                 <Box className="metadata" sx={{ bgcolor: "background.paper" }}>
                   <Typography
                     variant="overline"
@@ -1224,13 +1256,14 @@ function App() {
               </Box>
             </>
           )}
-        </Box>
+        </Box>}
       </Box>
       <Menu anchorEl={menu} open={!!menu} onClose={() => setMenu(null)}>
         <MenuItem
           onClick={() => {
             setMenu(null);
             if (guard()) {
+              setActionPath(path);
               setMoveTarget(path);
               setDialog("move");
             }
@@ -1242,6 +1275,7 @@ function App() {
         <MenuItem
           onClick={() => {
             setMenu(null);
+            setActionPath(path);
             setDeleteOpen(true);
           }}
           sx={{ color: "error.main" }}
@@ -1269,7 +1303,7 @@ function App() {
         <DialogTitle>删除这篇文章？</DialogTitle>
         <DialogContent>
           <Typography color="text.secondary" sx={{ overflowWrap: "anywhere" }}>
-            {path}
+            {actionPath}
           </Typography>
           <Typography mt={2}>
             文章将移入回收目录。未保存的修改会丢失。
@@ -1282,7 +1316,9 @@ function App() {
             variant="contained"
             onClick={() =>
               void run(async () => {
-                await api("delete", { path });
+                await api("delete", { path: actionPath });
+                dirtyRef.current = false;
+                if (editing) navigate(dashboardUrl.current);
                 setOriginal(null);
                 setPath("");
                 setEditing(false);
@@ -1469,10 +1505,10 @@ function App() {
                 variant="contained"
                 onClick={() =>
                   void run(async () => {
-                    await api("move", { path, target: moveTarget });
+                    await api("move", { path: actionPath, target: moveTarget });
                     setDialog("");
                     await refresh();
-                    await open(moveTarget, true);
+                    if (editing) { dirtyRef.current = false; await open(moveTarget, true); }
                   })
                 }
               >
