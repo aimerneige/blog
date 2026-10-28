@@ -69,6 +69,7 @@ import {
   TuneRounded,
   ViewSidebarOutlined,
   VisibilityOutlined,
+  VisibilityOffOutlined,
   AutoStoriesOutlined,
   AccountTreeOutlined,
   OpenInNew,
@@ -112,6 +113,7 @@ async function api(route: string, data?: unknown) {
         },
   );
   const result = await response.json();
+  if (response.status === 401) window.dispatchEvent(new Event("admin-unauthorized"));
   if (!response.ok) throw Error(result.error);
   return result;
 }
@@ -167,6 +169,54 @@ function Log({ text }: { text: string }) {
       ))}
     </Box>
   );
+}
+function AuthGate() {
+  const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const [token, setToken] = useState("");
+  const [visible, setVisible] = useState(false);
+  const [error, setError] = useState("");
+  const [busy, setBusy] = useState(false);
+  const systemDark = useMediaQuery("(prefers-color-scheme: dark)");
+  const preference = localStorage.getItem("admin-theme");
+  const dark = preference ? preference === "dark" : systemDark;
+  const theme = createTheme({ palette: { mode: dark ? "dark" : "light", primary: { main: dark ? "#9fbdac" : "#365e4a" }, background: { default: dark ? "#171c1a" : "#f5f6f3", paper: dark ? "#202724" : "#ffffff" } }, shape: { borderRadius: 10 } });
+  useEffect(() => {
+    const unauthorized = () => setAuthenticated(false);
+    window.addEventListener("admin-unauthorized", unauthorized);
+    void api("session").then(result => {
+      setAuthenticated(result.authenticated);
+      if (result.authenticated) setMounted(true);
+    }).catch(() => { setAuthenticated(false); setError("无法连接服务，请稍后重试"); });
+    return () => window.removeEventListener("admin-unauthorized", unauthorized);
+  }, []);
+  async function login(event: React.FormEvent) {
+    event.preventDefault();
+    setBusy(true); setError("");
+    try {
+      const response = await fetch("/api/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token }) });
+      if (!response.ok) { setError(response.status === 429 ? "尝试过多，请稍后再试" : "Token 错误"); return; }
+      setToken(""); setMounted(true); setAuthenticated(true);
+    } catch { setError("无法连接服务，请稍后重试"); }
+    finally { setBusy(false); }
+  }
+  return <>
+    <Box sx={{ display: authenticated ? "contents" : "none" }}>{mounted && <App />}</Box>
+    {authenticated !== true && <ThemeProvider theme={theme}><CssBaseline enableColorScheme />
+      <Box sx={{ position: "fixed", inset: 0, zIndex: 2000, bgcolor: "background.default", display: "grid", placeItems: "center", p: 3 }}>
+        {authenticated === null ? <CircularProgress /> : <Box component="form" onSubmit={login} sx={{ width: "100%", maxWidth: 400, p: 4, bgcolor: "background.paper", borderRadius: 3, boxShadow: 3 }}>
+          <Stack spacing={3}>
+            <AutoStoriesOutlined color="primary" sx={{ fontSize: 40 }} />
+            <Typography variant="h5" fontWeight={700}>博客管理</Typography>
+            <Typography color="text.secondary">输入管理 Token 继续。当前页面与未保存的编辑会保留。</Typography>
+            <TextField autoFocus label="Token" type={visible ? "text" : "password"} value={token} onChange={event => setToken(event.target.value)} slotProps={{ input: { endAdornment: <InputAdornment position="end"><IconButton aria-label={visible ? "隐藏 Token" : "显示 Token"} onClick={() => setVisible(!visible)}>{visible ? <VisibilityOffOutlined /> : <VisibilityOutlined />}</IconButton></InputAdornment> } }} />
+            {error && <Alert severity="error">{error}</Alert>}
+            <Button variant="contained" type="submit" disabled={busy || !token}>{busy ? "登录中…" : "登录"}</Button>
+          </Stack>
+        </Box>}
+      </Box>
+    </ThemeProvider>}
+  </>;
 }
 function App() {
   const systemDark = useMediaQuery("(prefers-color-scheme: dark)");
@@ -283,6 +333,10 @@ function App() {
     setFolders(data.folders);
     const git = await api("git");
     setGitCount(git.status.output.trim().split("\n").filter(Boolean).length);
+  }
+  async function logout() {
+    await api("logout", {});
+    window.dispatchEvent(new Event("admin-unauthorized"));
   }
   useEffect(() => {
     void run(async () => {
@@ -556,6 +610,7 @@ function App() {
         }}
       >
         <Toolbar className="app-toolbar" sx={{ gap: 1.5 }}>
+          <Button sx={{ whiteSpace: "nowrap" }} onClick={() => void run(logout)}>退出登录</Button>
           {mobile && editing ? (
             icon("返回文章列表", <ArrowBack />, () => {
               if (guard()) setEditing(false);
@@ -1259,6 +1314,7 @@ function App() {
         </Box>}
       </Box>
       <Menu anchorEl={menu} open={!!menu} onClose={() => setMenu(null)}>
+        <MenuItem onClick={() => { setMenu(null); void run(logout); }}>退出登录</MenuItem>
         <MenuItem
           onClick={() => {
             setMenu(null);
@@ -1627,4 +1683,4 @@ function App() {
     </ThemeProvider>
   );
 }
-createRoot(document.getElementById("root")!).render(<App />);
+createRoot(document.getElementById("root")!).render(<AuthGate />);

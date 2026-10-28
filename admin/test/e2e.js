@@ -8,6 +8,7 @@ import { parsePost } from "../server.js";
 
 const root = await fs.mkdtemp(path.join(os.tmpdir(), "admin-mui-"));
 const shots = "/tmp/admin-shots-v4";
+const token = 'e2e-admin-token-at-least-16';
 let browser, child, devChild;
 try {
   await fs.cp(
@@ -47,7 +48,7 @@ try {
   );
   child = spawn("npm", ["start"], {
     cwd: new URL("..", import.meta.url),
-    env: { ...process.env, BLOG_ROOT: root, PORT: "0" },
+    env: { ...process.env, ADMIN_TOKEN: token, BLOG_ROOT: root, PORT: "0" },
     stdio: ["ignore", "pipe", "pipe"],
     detached: true,
   });
@@ -86,7 +87,10 @@ try {
     external = [];
   page.on("pageerror", (error) => errors.push(error.message));
   page.on("console", (message) => {
-    if (message.type() === "error") errors.push(message.text());
+    const expectedAuthError =
+      /\/api\/(login|save)$/.test(message.location().url) &&
+      /status of (401|429) /.test(message.text());
+    if (message.type() === "error" && !expectedAuthError) errors.push(message.text());
   });
   page.on("request", (request) => {
     const url = new URL(request.url());
@@ -97,6 +101,19 @@ try {
       external.push(request.url());
   });
   await page.goto(base.replace("127.0.0.1", "localhost"));
+  await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  const login = async () => {
+    await page.getByLabel("Token", {exact:true}).fill(token);
+    await page.getByRole("button", {name:"登录",exact:true}).click();
+  };
+  await page.getByLabel("Token", {exact:true}).fill('wrong');
+  await page.getByLabel("Token", {exact:true}).press('Enter');
+  await page.getByText('Token 错误',{exact:true}).waitFor();
+  await page.route('**/api/login', route => route.fulfill({status:429,contentType:'application/json',body:JSON.stringify({error:'尝试过多，请稍后再试'})}));
+  await page.getByRole('button',{name:'登录',exact:true}).click();
+  await page.getByText('尝试过多，请稍后再试',{exact:true}).waitFor();
+  await page.unroute('**/api/login');
+  await login();
   await page.getByRole("heading", {name:"管理面板"}).waitFor();
   await page.waitForFunction(() => !document.querySelector(".summary-grid")?.textContent.includes("—"));
   assert.equal(await page.getByTestId("monaco").count(), 0);
@@ -396,7 +413,7 @@ try {
   await assert.rejects(fs.stat(path.join(root,"content/post/Studio/new-journey.zh.md")));
   devChild = spawn(process.execPath, ["dev.js"], {
     cwd: new URL("..", import.meta.url),
-    env: { ...process.env, BLOG_ROOT: root, ADMIN_DEV_PORT: "5175" },
+    env: { ...process.env, ADMIN_TOKEN: token, BLOG_ROOT: root, ADMIN_DEV_PORT: "5175" },
     stdio: ["ignore", "pipe", "pipe"],
   });
   await new Promise((resolve, reject) => {
@@ -408,7 +425,7 @@ try {
   });
   const devBase = "http://127.0.0.1:5175";
   assert.equal(
-    (await fetch(devBase + "/api/posts", { headers: { Origin: devBase } }))
+    (await fetch(devBase + "/api/posts", { headers: { Origin: devBase, Authorization: `Bearer ${token}` } }))
       .status,
     200,
   );
@@ -421,6 +438,8 @@ try {
     403,
   );
   await page.goto(devBase);
+  await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  await login();
   await page.getByText("unsaved title", {exact:true}).filter({visible:true}).first().click();
   await page.getByTestId("monaco").waitFor();
   await page
@@ -433,6 +452,27 @@ try {
       .data.title,
     "Dev proxy saved",
   );
+  await page.getByRole("button", {name:"文章操作"}).click();
+  await page.getByRole("menuitem", {name:"退出登录"}).click();
+  await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  await page.goto(`${devBase}/edit/${filename.split('/').map(encodeURIComponent).join('/')}?q=keep`);
+  await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  await login();
+  await page.getByTestId("filepath").waitFor();
+  assert.equal(decodeURIComponent(new URL(page.url()).pathname), `/edit/${filename}`);
+  assert.equal(new URL(page.url()).search, '?q=keep');
+  await page.getByRole("textbox", {name:"标题",exact:true}).fill('retained after 401');
+  await page.getByTestId('monaco').click();
+  await page.keyboard.press('Control+End');
+  await page.keyboard.type('\nRetained editor body after 401.');
+  await page.context().clearCookies();
+  await page.keyboard.press('Control+s');
+  await page.getByRole("heading", {name:"博客管理"}).waitFor();
+  await login();
+  assert.equal(await page.getByRole("textbox", {name:"标题",exact:true}).inputValue(),'retained after 401');
+  await page.keyboard.press('Control+s');
+  await page.getByText('已保存',{exact:true}).waitFor();
+  assert.match(await fs.readFile(path.join(root,'content',filename),'utf8'),/Retained editor body after 401\./);
   assert.deepEqual(errors, []);
   assert.deepEqual(external, []);
   console.log(

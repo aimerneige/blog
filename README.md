@@ -46,7 +46,20 @@ hugo
 
 ## Local Admin
 
-Run `npm --prefix admin install` and `npm --prefix admin start` to manage content locally.
+Run `npm --prefix admin install`, set a token, then start the local admin:
+
+```bash
+export ADMIN_TOKEN=$(openssl rand -hex 24)
+npm --prefix admin start
+```
+
+Enter the same token on the login page. `ADMIN_TOKEN` is required for both production and development; use at least 16 characters. Scripts can authenticate with Bearer:
+
+```bash
+curl -H "Authorization: Bearer $ADMIN_TOKEN" http://127.0.0.1:4321/api/posts
+```
+
+Changing the token and restarting invalidates existing login cookies. Logout clears the browser cookie.
 See [本地管理工具说明](admin/README.md) for usage, security boundaries, and tests.
 
 ## Deploy

@@ -3,7 +3,7 @@ import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
-import { randomUUID, createHash } from 'node:crypto';
+import { randomUUID, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import YAML from 'yaml';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
@@ -94,6 +94,16 @@ function command(root, executable, args) {
   });
 }
 export function createApp(root) {
+  const token = process.env.ADMIN_TOKEN;
+  if (!token) throw Error('请设置 ADMIN_TOKEN，例如：ADMIN_TOKEN=xxx npm --prefix admin start');
+  if (token.length < 16) console.warn('警告：ADMIN_TOKEN 建议至少 16 个字符');
+  const session = createHmac('sha256', token).update('blog-admin-session-v1').digest('hex');
+  const equal = (value, expected) => {
+    const a = Buffer.from(typeof value === 'string' ? value : '');
+    const b = Buffer.from(expected);
+    return a.length === b.length && timingSafeEqual(a, b);
+  };
+  let failures = 0, windowStart = Date.now();
   root = path.resolve(root);
   let preview, busy = false, logs = '';
   const previewPort = Number(process.env.HUGO_PORT || 1313);
@@ -109,6 +119,11 @@ export function createApp(root) {
       }
       if (!hosts.includes(req.headers.host) || (req.headers.origin && !origins.includes(req.headers.origin))) throw fail('仅允许本地同源请求', 403);
       const url = new URL(req.url, `http://${expected}`);
+      const cookie = req.headers.cookie?.split(';').map(value => value.trim()).find(value => value.startsWith('admin_session='))?.slice('admin_session='.length);
+      const authenticated = equal(req.headers.authorization, `Bearer ${token}`) || equal(cookie, session);
+      const route = `${req.method} ${url.pathname}`;
+      const publicRoute = ['POST /api/login', 'POST /api/logout', 'GET /api/session'].includes(route);
+      if ((url.pathname.startsWith('/api/') && !publicRoute || url.pathname.startsWith('/images/')) && !authenticated) throw fail('未授权', 401);
       if (!url.pathname.startsWith('/api/')) {
         if (req.method !== 'GET') throw fail('方法不允许', 405);
         if (url.pathname.startsWith('/images/')) {
@@ -128,13 +143,24 @@ export function createApp(root) {
         res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'none'" });
         res.end(await fs.readFile(target)); return;
       }
+      if (route === 'GET /api/session') { send({ authenticated }); return; }
+      if (route === 'POST /api/logout') {
+        res.setHeader('Set-Cookie', 'admin_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0');
+        send({ ok: true }); return;
+      }
       let input = {};
       if (req.method === 'POST') {
         if (!req.headers['content-type']?.startsWith('application/json')) throw fail('需要 JSON', 415);
         let raw = ''; for await (const chunk of req) { raw += chunk; if (raw.length > 16000000) throw fail('请求过大', 413); }
         input = JSON.parse(raw);
       } else if (req.method !== 'GET') throw fail('方法不允许', 405);
-      const route = `${req.method} ${url.pathname}`;
+      if (route === 'POST /api/login') {
+        if (Date.now() - windowStart >= 60000) { failures = 0; windowStart = Date.now(); }
+        if (failures >= 10) throw fail('尝试过多，请稍后再试', 429);
+        if (!equal(input?.token, token)) { failures++; throw fail('未授权', 401); }
+        res.setHeader('Set-Cookie', `admin_session=${session}; HttpOnly; SameSite=Strict; Path=/`);
+        send({ ok: true }); return;
+      }
       const postPath = async name => { if (!name?.endsWith('.md')) throw fail('需要 Markdown 路径'); return safePath(root, name); };
       if (route === 'GET /api/posts') {
         const posts = [];

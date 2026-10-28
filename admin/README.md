@@ -6,6 +6,7 @@
 git submodule update --init --recursive
 cd admin
 npm install
+export ADMIN_TOKEN=$(openssl rand -hex 24)
 npm start
 ```
 
@@ -43,7 +44,17 @@ npm run dev
 
 ## 安全与限制
 
-这是单用户本地工具，无登录。使用 127.0.0.1 或 localhost 访问，Host 必须匹配本机监听端口；有 Origin 时必须与请求的 Host 同源（开发模式额外允许配置的 Vite 本机端口）。写接口只接受 JSON。请勿代理到公网或在不可信共享主机运行。
+这是单用户本地工具，启动和开发模式都必须设置非空 `ADMIN_TOKEN`，否则以非零状态退出。建议至少 16 个字符；启动日志不输出 Token。可用 `export ADMIN_TOKEN=$(openssl rand -hex 24)` 生成，再执行 `npm --prefix admin start`（或 `npm --prefix admin run dev`）。浏览器输入同一 Token 登录，顶栏或文章操作菜单可退出。API 与 `/images/` 需要鉴权，前端静态资源公开。
+
+脚本可使用 Bearer：
+
+```bash
+curl -H "Authorization: Bearer $ADMIN_TOKEN" http://127.0.0.1:4321/api/posts
+```
+
+登录 Cookie 为 Token 派生的 HMAC，设置 HttpOnly、SameSite=Strict、Path=/，本地 HTTP 不设置 Secure。相同 Token 重启后已有 Cookie 仍有效，更换 Token 并重启会使旧 Cookie 失效。退出清除浏览器 Cookie，不撤销已复制的凭据；需撤销时更换 Token。失败登录按进程计数，每分钟最多 10 次失败，此后返回 429（正确 Token 也需等待窗口结束）。会话失效时显示登录页，当前地址和已挂载编辑器中的未保存修改保留；刷新或关闭页面仍可能丢失未保存内容。
+
+使用 127.0.0.1 或 localhost 访问，Host 必须匹配本机监听端口；有 Origin 时必须与请求的 Host 同源（开发模式额外允许配置的 Vite 本机端口）。写接口只接受 JSON。请勿代理到公网或在不可信共享主机运行。
 
 Node 从 `dist/` 提供带哈希资源，并对无扩展名路由及 `/edit/` 编辑路由回退到 index.html；JS、CSS 与字体提供正确 MIME。CSP 保持 default-src / script-src self，额外仅允许 Emotion 内联样式、本站 / blob worker 和本站 / data 字体与图片，不允许外部来源、iframe 或 object。
 
@@ -60,6 +71,8 @@ npm run test:e2e
 ```
 
 测试使用独立临时博客目录（作为 BLOG_ROOT 传入应用），覆盖 YAML round-trip、无变化不写入、版本冲突、路径与符号链接拒绝、Host/Origin、防重复创建、双语创建、移动、回收删除和上传，不修改真实 content。
+
+鉴权测试使用独立测试 Token，覆盖缺失 Token 时生产与开发进程退出、Bearer、登录 Cookie、退出、Token 变更与重启、图片保护、静态资源公开和失败登录限速。浏览器测试先登录，再运行原有用例，并验证错误与 429 提示、编辑深链接、退出及 401 后重新登录仍保留未保存的标题和 Monaco 正文。
 
 `npm test` 仅运行快速单元/API 测试，并将全部真实文章复制到临时 Git 仓库验证无变化保存与仅标题修改。浏览器测试单独运行，通过 npm start 自动构建；需要 Playwright Chromium（首次可执行 `npx playwright install chromium`）。它将真实 content / static 复制到临时 BLOG_ROOT，添加测试文章后验证 Autocomplete 添加标签、Monaco 输入、内外快捷键保存及逐字节文件差异、新建、Git 与统计筛选、主题持久化、按钮 / 拖放 / 粘贴上传、未保存提醒、手机列表→编辑→返回、生产资源 MIME/CSP/路径限制和 Vite 代理的正常 / 恶意 Origin。断言没有页面 / console 错误，并通过 page.on('request') 断言没有访问非 localhost / 127.0.0.1 主机。开发测试使用 5175 端口，API 使用 4321。
 
