@@ -18,12 +18,47 @@ export function parsePost(raw) {
 }
 export function updatePost(raw, fields, body) {
   const { doc, data, match } = parsePost(raw);
-  let changed = false;
+  let source = match[2];
+  const edits = [];
+  const newline = match[1].includes('\r') ? '\r\n' : '\n';
   for (const [key, value] of Object.entries(fields)) {
     if (!editable.has(key)) throw fail(`不可编辑字段：${key}`);
-    if (JSON.stringify(data[key]) !== JSON.stringify(value)) { doc.set(key, value); changed = true; }
+    if (JSON.stringify(data[key]) === JSON.stringify(value)) continue;
+    const pair = doc.contents.items.find(item => item.key.value === key);
+    if (value === null || value === undefined || value === '') {
+      if (pair) {
+        let start = source.lastIndexOf('\n', pair.key.range[0] - 1) + 1;
+        const end = pair.value?.range[2] ?? pair.key.range[2];
+        if (end >= source.length && start > 0) start -= newline.length;
+        edits.push([start, end, '']);
+      }
+      continue;
+    }
+    const fragment = new YAML.Document(value);
+    if (YAML.isScalar(fragment.contents) && YAML.isScalar(pair?.value)) fragment.contents.type = pair.value.type;
+    if (YAML.isCollection(fragment.contents) && pair?.value?.flow) fragment.contents.flow = true;
+    let text = fragment.toString({ lineWidth: 0 }).trimEnd().replaceAll('\n', newline);
+    if (pair?.value?.flow && Array.isArray(value)) {
+      const old = source.slice(pair.value.range[0], pair.value.range[1]);
+      const items = value.map(item => YAML.stringify([item], { collectionStyle: 'flow', lineWidth: 0 }).trimEnd().slice(2, -2));
+      text = `[${/^\[\s/.test(old) ? ' ' : ''}${items.join(/,\s/.test(old) ? ', ' : ',')}${/\s\]$/.test(old) ? ' ' : ''}]`;
+    }
+    if (YAML.isCollection(pair?.value) && !pair.value.flow) {
+      const start = source.lastIndexOf('\n', pair.key.range[0] - 1) + 1;
+      const end = pair.value.range[1];
+      const replacement = YAML.stringify({ [key]: value }, { lineWidth: 0 }).trimEnd().replaceAll('\n', newline);
+      edits.push([start, end, replacement + (source.slice(start, end).endsWith('\n') ? newline : '')]);
+    }
+    else if (pair?.value) edits.push([pair.value.range[0], pair.value.range[1], text]);
+    else edits.push([source.length, source.length, newline + YAML.stringify({ [key]: value }, {lineWidth:0}).trimEnd().replaceAll('\n', newline)]);
   }
-  return (changed ? `${match[1]}${String(doc).trimEnd()}${match[3]}` : match[0]) + body;
+  for (const [start, end, text] of edits.sort((a, b) => b[0] - a[0])) source = source.slice(0, start) + text + source.slice(end);
+  return `${match[1]}${source}${match[3]}` + body;
+}
+export function localDate(date = new Date()) {
+  const offset = -date.getTimezoneOffset();
+  const local = new Date(date.getTime() + offset * 60000).toISOString().slice(0, 19);
+  return `${local}${offset < 0 ? '-' : '+'}${String(Math.floor(Math.abs(offset) / 60)).padStart(2, '0')}:${String(Math.abs(offset) % 60).padStart(2, '0')}`;
 }
 const revision = raw => createHash('sha256').update(raw).digest('hex');
 export async function safePath(root, relative, area = 'content') {
@@ -66,12 +101,20 @@ export function createApp(root) {
     const send = (data, status = 200) => { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(data)); };
     try {
       const expected = `127.0.0.1:${server.address().port}`;
-      if (req.headers.host !== expected || (req.headers.origin && req.headers.origin !== `http://${expected}`)) throw fail('仅允许本地同源请求', 403);
+      const hosts = [expected, `localhost:${server.address().port}`];
+      if (!hosts.includes(req.headers.host) || (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`)) throw fail('仅允许本地同源请求', 403);
       const url = new URL(req.url, `http://${expected}`);
       if (!url.pathname.startsWith('/api/')) {
         if (req.method !== 'GET') throw fail('方法不允许', 405);
         const files = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
-        const item = files[url.pathname]; if (!item) throw fail('不存在', 404);
+        const item = files[url.pathname];
+        if (!item) {
+          const target = await safePath(root, decodeURIComponent(url.pathname).slice(1), 'static');
+          const types = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
+          const bytes = await fs.readFile(target);
+          res.writeHead(200, { 'Content-Type': types[path.extname(target).toLowerCase()] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'none'; sandbox" });
+          res.end(bytes); return;
+        }
         res.writeHead(200, { 'Content-Type': `${item[1]}; charset=utf-8`, 'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self'; script-src 'self'; frame-src 'none'; object-src 'none'" });
         res.end(await fs.readFile(path.join(here, 'web', item[0]))); return;
       }
@@ -110,7 +153,7 @@ export function createApp(root) {
         for (const name of names) { try { await fs.access(await postPath(name)); throw fail('文件已存在', 409); } catch (error) { if (error.code !== 'ENOENT') throw error; } }
         for (const name of names) {
           const target = await postPath(name); await fs.mkdir(path.dirname(target), { recursive: true });
-          await fs.writeFile(target, `---\n${YAML.stringify({ title: input.title || input.slug.replaceAll('-', ' '), date: new Date().toISOString().replace('Z', '+00:00'), draft: true, ShowToc: true, categories: [input.category], tags: [] })}---\n\n`, { flag: 'wx' });
+          await fs.writeFile(target, `---\ntitle: ${JSON.stringify(input.title || input.slug.replaceAll('-', ' '))}\ndate: ${localDate()}\ndraft: true\nShowToc: true\ncategories: ${YAML.stringify([input.category], {collectionStyle:'flow'}).trimEnd().replace(/^\[ /,'[').replace(/ \]$/,']')}\ntags: []\n---\n\n`, { flag: 'wx' });
         }
         send({ paths: names });
       } else if (route === 'POST /api/move') {

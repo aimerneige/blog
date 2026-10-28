@@ -33,6 +33,7 @@ let getters = {};
 async function open(name) {
   if (!guard()) return;
   original = await api(`post?path=${encodeURIComponent(name)}`); current = name; dirty = false;
+  document.body.classList.add('editing');
   $('welcome').hidden = true; $('editor').hidden = false; $('filepath').textContent = name; $('fields').replaceChildren(); getters = {};
   known.forEach(key => {
     const label = document.createElement('label'); label.textContent = ({title:'标题',date:'日期（含时区）',draft:'草稿',ShowToc:'显示目录',tags:'标签',categories:'分类',summary:'摘要',description:'描述',url:'固定链接',layout:'布局',cover:'封面（JSON）'})[key];
@@ -40,7 +41,7 @@ async function open(name) {
     if (key === 'tags' || key === 'categories') getters[key] = chips(label, Array.isArray(value) ? value : []);
     else {
       const input = document.createElement(key === 'cover' ? 'textarea' : 'input'); input.id = `field-${key}`;
-      input.type = ['draft','ShowToc'].includes(key) ? 'checkbox' : 'text';
+      if (key !== 'cover') input.type = ['draft','ShowToc'].includes(key) ? 'checkbox' : 'text';
       if (input.type === 'checkbox') input.checked = Boolean(value); else input.value = key === 'cover' ? (value === undefined ? '' : JSON.stringify(value,null,2)) : (value ?? '');
       input.oninput = () => { dirty = true; }; label.append(input);
       getters[key] = () => input.type === 'checkbox' ? input.checked : key === 'cover' ? (input.value.trim() ? JSON.parse(input.value) : undefined) : input.value;
@@ -58,7 +59,10 @@ function render() {
     if (line.startsWith('```')) { code = !code; return code ? '<pre><code>' : '</code></pre>'; }
     if (code) return escape(line)+'\n';
     let text = escape(line).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/`([^`]+)`/g,'<code>$1</code>');
-    text = text.replace(/!\[([^\]]*)\]\(([^\s)]+)\)/g, (_,alt,url) => /^(https:\/\/|data:image\/(png|jpeg|gif|webp);base64,)/.test(url) ? `<img alt="${alt}" src="${url}">` : `[图片：${alt}] ${url}`);
+    text = text.replace(/!\[([^\]]*)\]\(([^\s)]+)\)/g, (_,alt,url) => {
+      if (url.startsWith('images/')) url = '/' + url;
+      return /^(https:\/\/|\/(?!\/)|data:image\/(png|jpeg|gif|webp);base64,)/.test(url) && !url.includes('\\') ? `<img alt="${alt}" src="${url}">` : `[图片：${alt}] ${url}`;
+    });
     const heading = /^(#{1,6}) (.*)/.exec(text); return heading ? `<h${heading[1].length}>${heading[2]}</h${heading[1].length}>` : `<div>${text || '<br>'}</div>`;
   }).join('');
 }
@@ -68,7 +72,7 @@ $('body').oninput = () => { dirty = true; render(); };
 $('fields').onsubmit = e => e.preventDefault();
 $('save').onclick = () => run(async () => {
   const fields = {};
-  for (const [key,get] of Object.entries(getters)) { const value = get(); if (value !== undefined && (key in original.fields || !['',false].includes(value) && !(Array.isArray(value) && !value.length))) fields[key] = value; }
+  for (const [key,get] of Object.entries(getters)) { const value = get(); if (key in original.fields || value !== undefined && !['',false].includes(value) && !(Array.isArray(value) && !value.length)) fields[key] = value === undefined || value === '' ? null : value; }
   const result = await api('save',{ path:current, fields, body:$('body').value, revision:original.revision }); original.revision = result.revision; dirty = false; say('已保存'); await refresh();
 });
 $('new').onclick = () => {
@@ -88,5 +92,6 @@ $('previewStop').onclick = () => run(async()=>{ await api('preview',{action:'sto
 $('theme').onclick = () => { document.documentElement.classList.toggle('dark'); localStorage.setItem('theme',document.documentElement.classList.contains('dark')?'dark':'light'); };
 if (localStorage.getItem('theme') === 'dark' || !localStorage.getItem('theme') && matchMedia('(prefers-color-scheme: dark)').matches) document.documentElement.classList.add('dark');
 $('close').onclick = () => $('panel').close();
+$('back').onclick = () => { if (guard()) document.body.classList.remove('editing'); };
 window.addEventListener('beforeunload',e=>{ if (dirty) { e.preventDefault(); e.returnValue=''; } });
 run(refresh);

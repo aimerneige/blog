@@ -33,6 +33,12 @@ test('API CRUD and security use an isolated BLOG_ROOT fixture', async t => {
     const req = http.get(`${base}/api/posts`,{headers:{Host:'evil.test'}},res=>{ res.resume(); resolve(res.statusCode); }); req.on('error',reject);
   });
   assert.equal(badHost,403);
+  const localHeaders = {Host:`localhost:${server.address().port}`, Origin:`http://localhost:${server.address().port}`};
+  const hostRequest = headers => new Promise((resolve,reject) => {
+    const req = http.get(`${base}/api/posts`,{headers},res => { res.resume(); resolve(res.statusCode); }); req.on('error',reject);
+  });
+  assert.equal(await hostRequest(localHeaders),200);
+  assert.equal(await hostRequest({...localHeaders,Origin:base}),403);
   for (const relative of ['../config.yml','/etc/passwd','post/../../config.yml','post\\x.md']) await assert.rejects(safePath(root,relative));
   await fs.symlink(os.tmpdir(),path.join(root,'content','escape'));
   await assert.rejects(safePath(root,'escape/out.md'),/符号链接/);
@@ -53,6 +59,14 @@ test('API CRUD and security use an isolated BLOG_ROOT fixture', async t => {
   assert.equal(await fs.readFile(path.join(root,deleted.trash),'utf8').then(v=>parsePost(v).body),'New body');
   const upload = await (await request('upload',{name:'a.png',data:Buffer.from('fixture').toString('base64')})).json();
   assert.equal(await fs.readFile(path.join(root,'static',upload.url),'utf8'),'fixture');
+  const image = await fetch(base + upload.url);
+  assert.equal(image.status,200); assert.equal(image.headers.get('content-type'),'image/png');
+  assert.equal(await image.text(),'fixture');
+  assert.equal((await fetch(base + upload.url,{method:'POST'})).status,405);
+  await fs.symlink(os.tmpdir(),path.join(root,'static','escape'));
+  assert.equal((await fetch(base + '/escape/file.png')).status,400);
+  assert.equal((await fetch(base + '/images/%2e%2e%2f%2e%2e%2fsecret.png')).status,400);
+  assert.equal((await fetch(base + '/missing.png')).status,404);
   assert.equal((await request('upload',{name:'x.html',data:''})).status,400);
   assert.equal((await request('move',{path:created.paths[0],target:'../escape.md'})).status,400);
 });
