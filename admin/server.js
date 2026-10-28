@@ -102,21 +102,31 @@ export function createApp(root) {
     try {
       const expected = `127.0.0.1:${server.address().port}`;
       const hosts = [expected, `localhost:${server.address().port}`];
-      if (!hosts.includes(req.headers.host) || (req.headers.origin && req.headers.origin !== `http://${req.headers.host}`)) throw fail('仅允许本地同源请求', 403);
+      const origins = [`http://${req.headers.host}`];
+      if (process.env.ADMIN_DEV === '1') {
+        const devPort = Number(process.env.ADMIN_DEV_PORT || 5173);
+        origins.push(`http://127.0.0.1:${devPort}`, `http://localhost:${devPort}`);
+      }
+      if (!hosts.includes(req.headers.host) || (req.headers.origin && !origins.includes(req.headers.origin))) throw fail('仅允许本地同源请求', 403);
       const url = new URL(req.url, `http://${expected}`);
       if (!url.pathname.startsWith('/api/')) {
         if (req.method !== 'GET') throw fail('方法不允许', 405);
-        const files = { '/': ['index.html', 'text/html'], '/app.js': ['app.js', 'text/javascript'], '/style.css': ['style.css', 'text/css'] };
-        const item = files[url.pathname];
-        if (!item) {
+        if (url.pathname.startsWith('/images/')) {
           const target = await safePath(root, decodeURIComponent(url.pathname).slice(1), 'static');
           const types = { '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.webp': 'image/webp', '.avif': 'image/avif', '.svg': 'image/svg+xml', '.ico': 'image/x-icon' };
           const bytes = await fs.readFile(target);
           res.writeHead(200, { 'Content-Type': types[path.extname(target).toLowerCase()] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'none'; sandbox" });
           res.end(bytes); return;
         }
-        res.writeHead(200, { 'Content-Type': `${item[1]}; charset=utf-8`, 'Content-Security-Policy': "default-src 'self'; img-src 'self' data: https:; style-src 'self'; script-src 'self'; frame-src 'none'; object-src 'none'" });
-        res.end(await fs.readFile(path.join(here, 'web', item[0]))); return;
+        const relative = decodeURIComponent(url.pathname).slice(1) || 'index.html';
+        // 保留原有静态目录的路径与符号链接校验。
+        if (relative !== 'index.html' && !relative.startsWith('assets/')) await safePath(root, relative, 'static');
+        let target = await safePath(here, relative, 'dist');
+        try { if (!(await fs.stat(target)).isFile()) target = await safePath(here, 'index.html', 'dist'); }
+        catch (error) { if (error.code !== 'ENOENT') throw error; if (path.extname(relative)) throw error; target = await safePath(here, 'index.html', 'dist'); }
+        const types = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.ttf': 'font/ttf', '.woff2': 'font/woff2', '.woff': 'font/woff', '.svg': 'image/svg+xml' };
+        res.writeHead(200, { 'Content-Type': types[path.extname(target)] || 'application/octet-stream', 'X-Content-Type-Options': 'nosniff', 'Content-Security-Policy': "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; worker-src 'self' blob:; font-src 'self' data:; frame-src 'none'; object-src 'none'; base-uri 'none'" });
+        res.end(await fs.readFile(target)); return;
       }
       let input = {};
       if (req.method === 'POST') {

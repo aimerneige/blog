@@ -1,16 +1,35 @@
 {
   "name": "blog-local-admin",
   "private": true,
+  "overrides": {
+    "dompurify": "^3.4.17"
+  },
   "type": "module",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node server.js",
+    "dev": "node dev.js",
+    "build": "tsc --noEmit && vite build",
     "test": "node --test test/*.test.js",
     "test:e2e": "node test/e2e.js"
   },
   "dependencies": {
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@mui/icons-material": "^7.3.11",
+    "@mui/material": "^7.3.11",
+    "markdown-it": "^15.0.3",
+    "monaco-editor": "^0.57.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "yaml": "^2.8.1"
   },
   "devDependencies": {
-    "playwright": "^1.64.1"
+    "@types/markdown-it": "^14.2.0",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "playwright": "^1.64.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   }
 }

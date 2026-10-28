@@ -39,6 +39,18 @@ test('API CRUD and security use an isolated BLOG_ROOT fixture', async t => {
   });
   assert.equal(await hostRequest(localHeaders),200);
   assert.equal(await hostRequest({...localHeaders,Origin:base}),403);
+  assert.equal(await hostRequest({Origin:'http://127.0.0.1:5173'}),403);
+  const previousDev = process.env.ADMIN_DEV;
+  process.env.ADMIN_DEV = '1';
+  try {
+    assert.equal(await hostRequest({Origin:'http://127.0.0.1:5173'}),200);
+    assert.equal(await hostRequest({Origin:'http://localhost:5173'}),200);
+    assert.equal(await hostRequest({Origin:'http://127.0.0.1:5174'}),403);
+    assert.equal(await hostRequest({Origin:'https://evil.test'}),403);
+  } finally {
+    if (previousDev === undefined) delete process.env.ADMIN_DEV;
+    else process.env.ADMIN_DEV = previousDev;
+  }
   for (const relative of ['../config.yml','/etc/passwd','post/../../config.yml','post\\x.md']) await assert.rejects(safePath(root,relative));
   await fs.symlink(os.tmpdir(),path.join(root,'content','escape'));
   await assert.rejects(safePath(root,'escape/out.md'),/符号链接/);

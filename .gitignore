@@ -1,4 +1,5 @@
 .hugo_build.lock
 public
 admin/node_modules/
+admin/dist/
 content/.admin-trash/
